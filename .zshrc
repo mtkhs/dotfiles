@@ -25,7 +25,7 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 
 # コマンドのスペルチェック
-setopt correct
+#setopt correct
 # サスペンド中のプロセスと同じコマンド名を実行したらリジューム
 #setopt auto_resume
 # 補完可能な一覧を表示

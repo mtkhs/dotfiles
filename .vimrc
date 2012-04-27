@@ -4,6 +4,22 @@ set nocompatible " vim の機能を使う
 		" 元から入ってるvimなら~/.vimrcがあれば自動で有効になるらしいけど
 		" kaoriyaだとそれが無いっぽい
 
+" vundle
+filetype off
+
+set rtp+=~/.vim/vundle.git/
+call vundle#rc()
+
+" vim-scripts リポジトリ (1)
+Bundle "rails.vim"
+" github の任意のリポジトリ (2)
+Bundle "tpope/vim-fugitive"
+" github 以外のリポジトリ (3)
+Bundle "git://git.wincent.com/command-t.git"
+
+filetype plugin indent on
+
+
 " <status line>
 set laststatus=2 " 常にステータスラインを表示
 set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
