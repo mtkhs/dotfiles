@@ -64,7 +64,7 @@ set hlsearch     " 検索文字をハイライト
 " <completion>
 set wildmenu           " コマンド補完を強化
 set wildmode=list:full " リスト表示，最長マッチ
-set history=1000       " コマンド・検索パターンの履歴数
+set history=100        " コマンド・検索パターンの履歴数
 
 " <keymapping>
 " 行単位で移動(1行が長い場合に便利)
