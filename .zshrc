@@ -84,7 +84,9 @@ HISTSIZE=100000
 SAVEHIST=100000
 
 #function cd() {builtin cd $@ && ls -v -F --color=auto}
-function chpwd() { ls -v -F }
+
+# cd時に自動ls
+#function chpwd() { ls -v -F }
 
 #
 # extract http://d.hatena.ne.jp/jeneshicc/20110215/1297778049
@@ -117,13 +119,13 @@ alias ex='extract'
 case "${OSTYPE}" in
 # Mac(Unix)
 darwin*)
-	[ -f ~/dotfiles/.zshrc.mac ] && source ~/dotfiles/.zshrc.mac
-	[ -f ~/dotfiles/.zshrc.mac.alias ] && source ~/dotfiles/.zshrc.mac.alias
+	[ -f ~/.zshrc.mac ] && source ~/.zshrc.mac
+	[ -f ~/.zshrc.mac.alias ] && source ~/.zshrc.mac.alias
 	;;
 # Linux
 linux*)
-	[ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
-	[ -f ~/dotfiles/.zshrc.linux.alias ] && source ~/dotfiles/.zshrc.linux.alias
+	[ -f ~/.zshrc.linux ] && source ~/.zshrc.linux
+	[ -f ~/.zshrc.linux.alias ] && source ~/.zshrc.linux.alias
     ;;
 esac
 
