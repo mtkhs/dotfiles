@@ -1,0 +1,2 @@
+[ -f ~/.zshrc.alias.common ] && source ~/.zshrc.alias.common
+
