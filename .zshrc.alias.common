@@ -2,7 +2,6 @@ alias sl='ls'
 alias ls='LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx ls -G'
 alias la='ls -l -A -v -F'
 alias ll='ls -l'
-#alias ls='ls -F --color=auto'
 
 alias sha1='openssl sha1'
 alias grep='grep --color=auto'

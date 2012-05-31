@@ -1,5 +1,7 @@
 [ -f ~/.zshrc.alias.common ] && source ~/.zshrc.alias.common
 
+alias ls='LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx ls -G'
+
 alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -u $HOME/.vimrc "$@"'
 alias emacs='/usr/local/Cellar/emacs/23.3a/Emacs.app/Contents/MacOS/Emacs -nw'
 #alias emacs='/usr/local/Cellar/emacs/23.3a/Emacs.app/Contents/MacOS/Emacs'
