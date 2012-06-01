@@ -52,7 +52,7 @@ set listchars=tab:>-,trail:-
 
 " <indent>
 " set expandtab     " tab をスペースに展開
-" set shiftwidth=4  " 自動インデントの幅
+set shiftwidth=4  " 自動インデントの幅
 set tabstop=4     " タブ幅
 
 " <search>
