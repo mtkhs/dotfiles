@@ -12,6 +12,7 @@ call vundle#rc()
 
 " vim-scripts リポジトリ (1)
 Bundle "rails.vim"
+Bundle "opsplorer"
 " github の任意のリポジトリ (2)
 Bundle "tpope/vim-fugitive"
 " github 以外のリポジトリ (3)
@@ -19,16 +20,6 @@ Bundle "git://git.wincent.com/command-t.git"
 
 filetype plugin indent on
 
-
-" <status line>
-set laststatus=2 " 常にステータスラインを表示
-set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
-
-" <encoding>
-set encoding=utf-8
-set fileencodings=euc-jp,cp932,iso-2022-jp
-
-" <basic>
 syntax on
 colorscheme desert
 let mapleader = ","            " キーマップリーダー 
@@ -41,40 +32,48 @@ set autoread                   " 他で書き換えられたら自動で読み�
 set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらないようにする
 set scrolloff=5                " スクロール時の余白確保
 set clipboard+=unnamed
+set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
 
-" <display>
+" ステータスライン
+set laststatus=2 " 常にステータスラインを表示
+set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
+
+" エンコーディング
+set encoding=utf-8
+set fileencodings=euc-jp,cp932,iso-2022-jp
+
+" 画面表示
 set showmatch         " 括弧の対応をハイライト
+set matchtime=1       " 括弧の始めを表示する時間
 set number            " 行番号表示
 set list              " 不可視文字表示
-" 不可視文字の表現設定
-set listchars=tab:>-,trail:-
-",eol:<
+set listchars=tab:>-,trail:- " 不可視文字の表現設定
+"set listchars=tab:>-,trail:-,eol:<
 
-" <indent>
+" インデント
 " set expandtab     " tab をスペースに展開
 set shiftwidth=4  " 自動インデントの幅
 set tabstop=4     " タブ幅
 
-" <search>
+" 検索
 set wrapscan     " 最後まで検索したら先頭へ戻る
 set ignorecase   " 大文字小文字無視
 set smartcase    " 大文字ではじめたら大文字小文字無視しない
 set noincsearch  " インクリメンタルサーチOFF
 set hlsearch     " 検索文字をハイライト
 
-" <completion>
+" 補完
 set wildmenu           " コマンド補完を強化
 set wildmode=list:full " リスト表示，最長マッチ
 set history=100        " コマンド・検索パターンの履歴数
 
-" <keymapping>
+" キーマップ
 " 行単位で移動(1行が長い場合に便利)
 nnoremap j gj
 nnoremap k gk
-
 " Esc2回押しでハイライト解除
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
-
+" 行頭,行末移動
 map! <C-a> <Home>
 map! <C-e> <End>
 
@@ -96,11 +95,23 @@ nnoremap : ;
 noremap <Space>y "+y
 noremap <Space>p "+p
 
-inoremap <C-d> <Delete>
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
+" 括弧の自動補完
+"inoremap { {}<LEFT>
+"inoremap [ []<LEFT>
+"inoremap ( ()<LEFT>
+"inoremap " ""<LEFT>
+"inoremap ' ''<LEFT>
+"vnoremap { "zdi^V{<C-R>z}<ESC>
+"vnoremap [ "zdi^V[<C-R>z]<ESC>
+"vnoremap ( "zdi^V(<C-R>z)<ESC>
+"vnoremap " "zdi^V"<C-R>z^V"<ESC>
+"vnoremap ' "zdi'<C-R>z'<ESC>
+
+"inoremap <C-d> <Delete>
+"inoremap <C-f> <Right>
+"inoremap <C-b> <Left>
+"inoremap <C-j> <Down>
+"inoremap <C-k> <Up>
 
 " 対応するカッコに移動
 nnoremap [ %
