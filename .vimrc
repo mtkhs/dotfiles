@@ -4,22 +4,42 @@ set nocompatible " vim の機能を使う
 		" 元から入ってるvimなら~/.vimrcがあれば自動で有効になるらしいけど
 		" kaoriyaだとそれが無いっぽい
 
-" vundle
+" =======================================================================
+" for plugin settings
+" =======================================================================
+" vundle {{{
 filetype off
 
-set rtp+=~/.vim/vundle.git/
-call vundle#rc()
+if has('vim_starting')
+	set rtp+=~/.vim/neobundle.vim
+	call neobundle#rc('~/.vim/.neobundle/')
+endif
 
-" vim-scripts リポジトリ (1)
-Bundle "rails.vim"
-Bundle "opsplorer"
-" github の任意のリポジトリ (2)
-Bundle "tpope/vim-fugitive"
-" github 以外のリポジトリ (3)
-Bundle "git://git.wincent.com/command-t.git"
+
+NeoBundle "Shougo/neocomplcache"
+NeoBundle "Shougo/unite.vim"
+NeoBundle "tpope/vim-rails"
+NeoBundle "tpope/vim-haml"
+NeoBundle "vim-ruby/vim-ruby"
+NeoBundle "scrooloose/nerdtree"
+
 
 filetype plugin indent on
 
+" }}}
+
+" NERDTree {{{
+	" 引数無しで vim 開いたら NERDTree 起動
+	let file_name = expand( "%" )
+	if has( 'vim_starting' ) && file_name == ""
+		autocmd VimEnter * NERDTree ./
+	endif
+
+	nnoremap <Space>tr :<C-u>NERDTreeToggle<Enter>
+	let NERDTreeShowHidden = 1
+" }}}
+
+" basic
 syntax on
 colorscheme desert
 let mapleader = ","            " キーマップリーダー 
