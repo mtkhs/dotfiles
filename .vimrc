@@ -30,13 +30,32 @@ filetype plugin indent on
 
 " NERDTree {{{
 	" 引数無しで vim 開いたら NERDTree 起動
-	let file_name = expand( "%" )
-	if has( 'vim_starting' ) && file_name == ""
-		autocmd VimEnter * NERDTree ./
-	endif
+"	let file_name = expand( "%" )
+"	if has( 'vim_starting' ) && file_name == ""
+"		autocmd VimEnter * NERDTree ./
+"	endif
+"	
+	"引数なしでvimを開いたらNERDTreeを起動、
+	"引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
+	autocmd vimenter * if !argc() | NERDTree | endif
+	"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
+	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-	nnoremap <Space>tr :<C-u>NERDTreeToggle<Enter>
-	let NERDTreeShowHidden = 1
+	nnoremap <silent> <C-e>      :NERDTreeToggle<CR>
+	vnoremap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+	onoremap <silent> <C-e>      :NERDTreeToggle<CR>
+	inoremap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+	cnoremap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
+
+	"NERDTreeIgnore 無視するファイルを設定する。
+	let g:NERDTreeIgnore = ['\.swp$', '\~$']
+	"NERDTreeShowHidden 隠しファイルを表示するか？
+	let g:NERDTreeShowHidden = 1
+	"ブックマークや、ヘルプのショートカットをメニューに表示する。
+	let g:NERDTreeMinimalUI = 1
+	"NERDTreeを+|`などを使ってツリー表示をする。
+	let g:NERDTreeDirArrows=0
+
 " }}}
 
 " basic
@@ -101,9 +120,10 @@ nnoremap j gj
 nnoremap k gk
 " Esc2回押しでハイライト解除
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
+
 " 行頭,行末移動
-map! <C-a> <Home>
-map! <C-e> <End>
+"map! <C-a> <Home>
+"map! <C-e> <End>
 
 "inoremap <S-CR> <End>
 "map! <S-Return> <End>
@@ -155,11 +175,11 @@ nnoremap <C-k> ;<C-k>j
 nnoremap <C-l> ;<C-l>j
 
 " F2で前のバッファ
-map <F2> <ESC>;bp<CR>
+"map <F2> <ESC>;bp<CR>
 " F3で次のバッファ
-map <F3> <ESC>;bn<CR>
+"map <F3> <ESC>;bn<CR>
 " F4でバッファを削除する
-map <F4> <ESC>;bw<CR>
+"map <F4> <ESC>;bw<CR>
 
 " <command>
 " insert mode
@@ -178,10 +198,6 @@ inoremap <Leader>date <C-R>=strftime('%Y/%m/%d (%a)')<CR>
 ""  autocmd BufWritePost $HOME/var/log/changelog/Changelog silent :!$HOME/bin/chalow
 ""augroup END
 
-" <plugins>
-" BufExplorer
-""nnoremap <C-l> :BufExplorer<CR>
-
 " FuzzyFinder
 ""nnoremap <silent> fb :<C-u>FuzzyFinderBuffer!<CR>
 ""nnoremap <silent> ff :<C-u>FuzzyFinderFile! <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
@@ -198,7 +214,3 @@ inoremap <Leader>date <C-R>=strftime('%Y/%m/%d (%a)')<CR>
 " rails.vim
 ""let g:rails_level = 4
 ""let g:rails_devalut_database = 'mysql'
-
-" vimwiki
-""let g:vimwiki_list = [{'path': '~/var/vimwiki/', 'path_html': '~/Sites/vimwiki/'}]
-
