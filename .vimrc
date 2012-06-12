@@ -11,7 +11,7 @@ set nocompatible " vim の機能を使う
 filetype off
 
 if has('vim_starting')
-	set rtp+=~/.vim/neobundle.vim
+	set rtp+=~/.vim/neobundle.vim.git
 	call neobundle#rc('~/.vim/.neobundle/')
 endif
 
