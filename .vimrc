@@ -4,10 +4,10 @@ set nocompatible " vim の機能を使う
 		" 元から入ってるvimなら~/.vimrcがあれば自動で有効になるらしいけど
 		" kaoriyaだとそれが無いっぽい
 
-" =======================================================================
+" =============================================================================
 " for plugin settings
-" =======================================================================
-" vundle {{{
+" =============================================================================
+" NeoBundle {{{
 filetype off
 
 if has('vim_starting')
@@ -56,7 +56,15 @@ set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
 
 " ステータスライン
 set laststatus=2 " 常にステータスラインを表示
-set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+
+" ステータスラインに日時を表示する
+function! g:Date()
+	return strftime("%x %H:%M")
+endfunction
+
+set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %{b:charCounterCount}%m%=%{g:Date()}
+"set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
 
 " エンコーディング
 set encoding=utf-8
@@ -96,6 +104,9 @@ nmap <ESC><ESC> ;nohlsearch<CR><ESC>
 " 行頭,行末移動
 map! <C-a> <Home>
 map! <C-e> <End>
+
+"inoremap <S-CR> <End>
+"map! <S-Return> <End>
 
 " nnoremap <Space>. :<C-u>edit $MYVIMRC<CR>
 " nnoremap <Space>s. :<C-u>source $MYVIMRC<CR> :<C-u>source $MYGVIMRC<CR>
