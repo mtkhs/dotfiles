@@ -4,6 +4,8 @@ set nocompatible " vim の機能を使う
 		" 元から入ってるvimなら~/.vimrcがあれば自動で有効になるらしいけど
 		" kaoriyaだとそれが無いっぽい
 
+let s:iswin = has('win32') || has('win64')
+
 " =============================================================================
 " for plugin settings
 " =============================================================================
@@ -11,30 +13,124 @@ set nocompatible " vim の機能を使う
 filetype off
 
 if has('vim_starting')
-	set rtp+=~/.vim/neobundle.vim.git
+"	set rtp+=~/.vim/neobundle.vim.git
+	set runtimepath+=~/.vim/.neobundle/neobundle.vim/
 	call neobundle#rc('~/.vim/.neobundle/')
 endif
 
 
+NeoBundle 'Shougo/neobundle.vim'
+NeoBundle 'thinca/vim-localrc'
+NeoBundle 'Shougo/vimproc'
+"after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
+" $ cd ~/.vim/.neobundle/vimproc
+" $ make -f make_mac.mak
+
+" Explore/FileSystem
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Shougo/vimfiler'
+"NeoBundle 'project-1.4.1'
+
+" Filetypes
+NeoBundle 'vim-ruby/vim-ruby'
+if !s:iswin
+  NeoBundle 'tpope/vim-rvm'
+endif
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-rake'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'othree/html5.vim'
+NeoBundle 'cakebaker/scss-syntax.vim'
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'groenewege/vim-less'
+NeoBundle 'JavaScript-syntax'
+NeoBundle 'vim-creole'
+" Syntax Check
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'vim-scripts/javacomplete'
+
 NeoBundle "Shougo/neocomplcache"
+NeoBundle 'Shougo/neocomplcache-snippets-complete'
+
 NeoBundle "Shougo/unite.vim"
-NeoBundle "tpope/vim-rails"
-NeoBundle "tpope/vim-haml"
-NeoBundle "vim-ruby/vim-ruby"
-NeoBundle "scrooloose/nerdtree"
+NeoBundle "thinca/vim-ref"
 
+NeoBundle 'vim-jp/vimdoc-ja'
+NeoBundle 'Align'
 
-filetype plugin indent on
+" colorschemes
+"NeoBundle "altercation/vim-colors-solarized"
 
 " }}}
 
+" NeoComplcache {{{
+	" 補完ウィンドウの設定
+	set completeopt=menuone
+	" 起動時に有効化
+	let g:neocomplcache_enable_at_startup = 1
+	" 大文字が入力されるまで大文字小文字の区別を無視する
+	let g:neocomplcache_enable_smart_case = 1
+	" _(アンダースコア)区切りの補完を有効化
+	let g:neocomplcache_enable_underbar_completion = 1
+	" ポップアップメニューで表示される候補の数
+	let g:neocomplcache_max_list = 20
+	" シンタックスをキャッシュするときの最小文字長
+	let g:neocomplcache_min_syntax_length = 3
+	" 挿入モードのカーソル移動であんまり補完しないように
+	let g:NeoComplCache_EnableSkipCompletion = 1
+	let g:NeoComplCache_SkipInputTime = '0.5'
+	inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
+	inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
+
+	" ディクショナリ定義
+	let g:neocomplcache_dictionary_filetype_lists = {
+		\ 'default' : '',
+		\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
+		\ 'nb' : $HOME . '/.vim/dict/ruby.dict',
+		\ 'c' : $HOME . '/.vim/dict/c.dict',
+		\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
+		\ 'php' : $HOME . '/.vim/dict/php.dict',
+		\ 'ctp' : $HOME . '/.vim/dict/php.dict',
+		\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+		\ 'perl' : $HOME . '/.vim/dict/perl.dict',
+		\ 'java' : $HOME . '/.vim/dict/java.dict',
+		\ }
+	
+	if !exists('g:neocomplcache_keyword_patterns')
+	        let g:neocomplcache_keyword_patterns = {}
+	endif
+	let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+	" スニペット
+	" 配置場所
+	let g:neocomplcache_snippets_dir = '~/.vim/snippets'
+	" スニペットを展開する。スニペットが関係しないところでは行末まで削除
+	imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
+	smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
+
+	" TABでスニペットを展開
+"	imap  neocomplcache#plugin#snippets_complete#expandable() ? "\(neocomplcache_snippets_expand)" : "\"
+"	smap  (neocomplcache_snippets_expand)
+
+	" 前回行われた補完をキャンセルします
+	inoremap <expr><C-g> neocomplcache#undo_completion()
+	" 補完候補のなかから、共通する部分を補完します
+	inoremap <expr><C-l> neocomplcache#complete_common_string()
+	" 改行で補完ウィンドウを閉じる
+	inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
+	" tabで補完候補の選択を行う
+	inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
+	inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
+	" <C-h>や<BS>を押したときに確実にポップアップを削除します
+	inoremap <expr><C-h> neocomplcache#smart_close_popup().”\<C-h>”
+	" 現在選択している候補を確定します
+"	inoremap <expr><C-y> neocomplcache#close_popup()
+	" 現在選択している候補をキャンセルし、ポップアップを閉じます
+"	inoremap <expr><C-e> neocomplcache#cancel_popup()
+" }}}
+
 " NERDTree {{{
-	" 引数無しで vim 開いたら NERDTree 起動
-"	let file_name = expand( "%" )
-"	if has( 'vim_starting' ) && file_name == ""
-"		autocmd VimEnter * NERDTree ./
-"	endif
-"	
 	"引数なしでvimを開いたらNERDTreeを起動、
 	"引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
 	autocmd vimenter * if !argc() | NERDTree | endif
@@ -54,14 +150,21 @@ filetype plugin indent on
 	"ブックマークや、ヘルプのショートカットをメニューに表示する。
 	let g:NERDTreeMinimalUI = 1
 	"NERDTreeを+|`などを使ってツリー表示をする。
-	let g:NERDTreeDirArrows=0
+	let g:NERDTreeDirArrows = 0
 
+" }}}
+
+" Ref.vim {{{
+	let g:ref_alc_cmd = 'w3m -dump %s'
 " }}}
 
 " basic
 syntax on
 colorscheme desert
-let mapleader = ","            " キーマップリーダー 
+filetype plugin on
+filetype indent on
+
+"let mapleader = ","            " キーマップリーダー
 set nobackup                   " バックアップ取らない
 set hidden                     " 編集中でも他のファイルを開けるようにする
 set formatoptions=lmoq         " テキスト整形オプション，マルチバイト系を追加
@@ -128,12 +231,6 @@ nmap <ESC><ESC> ;nohlsearch<CR><ESC>
 "inoremap <S-CR> <End>
 "map! <S-Return> <End>
 
-" nnoremap <Space>. :<C-u>edit $MYVIMRC<CR>
-" nnoremap <Space>s. :<C-u>source $MYVIMRC<CR> :<C-u>source $MYGVIMRC<CR>
-" nnoremap <Space>w :write<CR>
-" nnoremap <Space>d :bd<CR>
-" nnoremap <Space>q :q<CR>
-
 " ヘルプ
 nnoremap <C-h> :<C-u>help<Space>
 nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
@@ -158,12 +255,6 @@ noremap <Space>p "+p
 "vnoremap " "zdi^V"<C-R>z^V"<ESC>
 "vnoremap ' "zdi'<C-R>z'<ESC>
 
-"inoremap <C-d> <Delete>
-"inoremap <C-f> <Right>
-"inoremap <C-b> <Left>
-"inoremap <C-j> <Down>
-"inoremap <C-k> <Up>
-
 " 対応するカッコに移動
 nnoremap [ %
 nnoremap ] %
@@ -186,31 +277,3 @@ nnoremap <C-l> ;<C-l>j
 " \date で日付
 inoremap <Leader>date <C-R>=strftime('%Y/%m/%d (%a)')<CR>
 
-" <autocommand>
-""augroup BufferAu
-""    autocmd!
-""    " カレントディレクトリを自動的に移動
-""    autocmd BufNewFile,BufRead,BufEnter * if isdirectory(expand("%:p:h")) && bufname("%") !~ "NERD_tree" | cd %:p:h | endif
-""augroup END
-
-""augroup Chalow
-""  autocmd!
-""  autocmd BufWritePost $HOME/var/log/changelog/Changelog silent :!$HOME/bin/chalow
-""augroup END
-
-" FuzzyFinder
-""nnoremap <silent> fb :<C-u>FuzzyFinderBuffer!<CR>
-""nnoremap <silent> ff :<C-u>FuzzyFinderFile! <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
-""nnoremap <silent> fm :<C-u>FuzzyFinderMruFile!<CR>
-""nnoremap <silent> fc :<C-u>FuzzyFinderMruCmd<CR>
-
-" Vim/Ruby
-" http://blog.blueblack.net/item_133
-" Rubyのオムニ補完を設定(ft-ruby-omni)
-""let g:rubycomplete_buffer_loading = 1
-""let g:rubycomplete_classes_in_global = 1
-""let g:rubycomplete_rails = 1
-
-" rails.vim
-""let g:rails_level = 4
-""let g:rails_devalut_database = 'mysql'
