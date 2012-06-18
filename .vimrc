@@ -13,13 +13,13 @@ let s:iswin = has('win32') || has('win64')
 filetype off
 
 if has('vim_starting')
-"	set rtp+=~/.vim/neobundle.vim.git
-	set runtimepath+=~/.vim/.neobundle/neobundle.vim/
-	call neobundle#rc('~/.vim/.neobundle/')
+	set rtp+=~/.vim/neobundle.vim.git
+"	set runtimepath+=~/.vim/.neobundle/neobundle.vim
+	call neobundle#rc('~/.vim/.neobundle')
 endif
 
 
-NeoBundle 'Shougo/neobundle.vim'
+"NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'thinca/vim-localrc'
 NeoBundle 'Shougo/vimproc'
 "after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
@@ -62,6 +62,14 @@ NeoBundle 'Align'
 " colorschemes
 "NeoBundle "altercation/vim-colors-solarized"
 
+" }}}
+
+" syntastic {{{
+	let g:syntastic_mode_map = {
+		\  'mode': 'active',
+		\ 'active_filetypes': [ 'ruby', 'javascript' ],
+		\ 'passive_filetypes': []
+		\ }
 " }}}
 
 " NeoComplcache {{{
@@ -161,8 +169,7 @@ NeoBundle 'Align'
 " basic
 syntax on
 colorscheme desert
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 
 "let mapleader = ","            " キーマップリーダー
 set nobackup                   " バックアップ取らない

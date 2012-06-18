@@ -1,4 +1,0 @@
-[ -f ~/.zshrc.alias.common ] && source ~/.zshrc.alias.common
-
-alias ls='ls -F --color=auto'
-

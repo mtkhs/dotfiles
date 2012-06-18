@@ -1,15 +1,14 @@
 PROMPT='%n:%~$ '
+PROMPT2='%n:%_$ '
+#SPROMPT='%r is correct? [n,y,a,e]: '
 
 bindkey -e
 
-autoload -U colors
-colors
+#autoload -U colors
+#colors
 
 autoload -U compinit
 compinit
-
-# alias
-[ -f ~/.zshrc.alias ] && source ~/.zshrc.alias
 
 # 予測補完
 #autoload predict-on
@@ -22,6 +21,16 @@ compinit
 #preexec(){ print -nP '%f' }
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
+
+
+# プロンプト
+## PROMPT内で変数展開・コマンド置換・算術演算を実行する。
+setopt prompt_subst
+## PROMPT内で「%」文字から始まる置換機能を有効にする。
+#setopt prompt_percent
+## コピペしやすいようにコマンド実行後は右プロンプトを消す。
+setopt transient_rprompt
+
 
 # cd を入力しなくてもディレクトリに遷移
 setopt auto_cd
@@ -69,8 +78,6 @@ setopt long_list_jobs
 
 # 補完候補リストの日本語を適正表示
 setopt print_eight_bit
-# プロンプトにエスケープシーケンス（環境変数）を通す
-setopt prompt_subst
 
 # no beep
 setopt no_beep
