@@ -41,26 +41,45 @@ NeoBundle 'tpope/vim-rake'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'othree/html5.vim'
-NeoBundle 'cakebaker/scss-syntax.vim'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'groenewege/vim-less'
 NeoBundle 'JavaScript-syntax'
 NeoBundle 'vim-creole'
+
+" css
+NeoBundle 'skammer/vim-css-color'
+NeoBundle 'hail2u/vim-css3-syntax'
+"NeoBundle 'hokaccha/vim-css3-syntax'
+NeoBundle 'groenewege/vim-less'
+
+NeoBundle 'cakebaker/scss-syntax.vim'
+
 " Syntax Check
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-scripts/javacomplete'
 
 NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neocomplcache-snippets-complete'
+NeoBundle 'ujihisa/neco-look'
 
 NeoBundle "Shougo/unite.vim"
-NeoBundle "thinca/vim-ref"
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'ujihisa/unite-font'
 
+NeoBundle "thinca/vim-ref"
+NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
+NeoBundle 'sudo.vim'
+NeoBundle 'othree/eregex.vim'
+NeoBundle 'kana/vim-smartchr'
+"NeoBundle 'mileszs/ack.vim'
+
+NeoBundle 'thinca/vim-fontzoom'
 
 " colorschemes
 "NeoBundle "altercation/vim-colors-solarized"
+NeoBundle 'vim-scripts/Lucius'
+NeoBundle 'vim-scripts/mrkn256.vim'
+
 
 " }}}
 
@@ -70,6 +89,47 @@ NeoBundle 'Align'
 		\ 'active_filetypes': [ 'ruby', 'javascript' ],
 		\ 'passive_filetypes': []
 		\ }
+" }}}
+
+" unite.vim {{{
+	"unite prefix key.
+"	nnoremap [unite] <Nop>
+"	nmap <Space>f [unite]
+
+	" バッファ一覧
+	nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+	" ファイル一覧
+	nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+	" レジスタ一覧
+	nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+	" 最近使用したファイル一覧
+	nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+	" 常用セット
+	nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
+	" 全部乗せ
+	nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+
+	"file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
+	let g:unite_source_file_mru_filename_format = ''
+" }}}
+
+" vimfiler {{{
+	"vimデフォルトのエクスプローラをvimfilerで置き換える
+	let g:vimfiler_as_default_explorer = 1
+	"セーフモードを無効にした状態で起動する
+	let g:vimfiler_safe_mode_by_default = 0
+
+	autocmd! FileType vimfiler call g:my_vimfiler_settings()
+	function! g:my_vimfiler_settings()
+		nmap     <buffer><S-o>         <Plug>(vimfiler_open_file_in_another_vimfiler)
+		nmap     <buffer>o             <Plug>(vimfiler_sync_with_another_vimfiler)
+		nmap     <buffer><backspace>   <Plug>(vimfiler_smart_h)
+		nmap     <buffer><Nul>     <Plug>(vimfiler_toggle_mark_current_line_up)
+"		nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+"		nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
+"		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
+	endfunction
+
 " }}}
 
 " NeoComplcache {{{
@@ -94,15 +154,15 @@ NeoBundle 'Align'
 	" ディクショナリ定義
 	let g:neocomplcache_dictionary_filetype_lists = {
 		\ 'default' : '',
-		\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
-		\ 'nb' : $HOME . '/.vim/dict/ruby.dict',
-		\ 'c' : $HOME . '/.vim/dict/c.dict',
-		\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
-		\ 'php' : $HOME . '/.vim/dict/php.dict',
-		\ 'ctp' : $HOME . '/.vim/dict/php.dict',
-		\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
-		\ 'perl' : $HOME . '/.vim/dict/perl.dict',
-		\ 'java' : $HOME . '/.vim/dict/java.dict',
+		\ 'ruby' : '~/.vim/dict/ruby.dict',
+		\ 'nb' : '~/.vim/dict/ruby.dict',
+		\ 'c' : '~/.vim/dict/c.dict',
+		\ 'cpp' : '~/.vim/dict/cpp.dict',
+		\ 'php' : '~/.vim/dict/php.dict',
+		\ 'ctp' : '~/.vim/dict/php.dict',
+		\ 'javascript' : '~/.vim/dict/javascript.dict',
+		\ 'perl' : '~/.vim/dict/perl.dict',
+		\ 'java' : '~/.vim/dict/java.dict',
 		\ }
 	
 	if !exists('g:neocomplcache_keyword_patterns')
@@ -125,13 +185,14 @@ NeoBundle 'Align'
 	inoremap <expr><C-g> neocomplcache#undo_completion()
 	" 補完候補のなかから、共通する部分を補完します
 	inoremap <expr><C-l> neocomplcache#complete_common_string()
-	" 改行で補完ウィンドウを閉じる
-	inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
-	" tabで補完候補の選択を行う
+	" close popup and save indent
+	inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+	" completion
 	inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
 	inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
 	" <C-h>や<BS>を押したときに確実にポップアップを削除します
-	inoremap <expr><C-h> neocomplcache#smart_close_popup().”\<C-h>”
+	inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
+	inoremap <expr><C-h> neocomplcache#smart_close_popup() . "\<C-h>"
 	" 現在選択している候補を確定します
 "	inoremap <expr><C-y> neocomplcache#close_popup()
 	" 現在選択している候補をキャンセルし、ポップアップを閉じます
@@ -162,13 +223,35 @@ NeoBundle 'Align'
 
 " }}}
 
+" NERDCommenter {{{
+	" Nerd_Commenter の基本設定
+	let g:NERDCreateDefaultMappings = 0
+	let NERDSpaceDelims = 1
+
+	map <C-/> <Plug>NERDCommenterToggle
+
+	nmap <Leader>/ <Plug>NERDCommenterToggle
+	vmap <Leader>/ <Plug>NERDCommenterToggle
+
+"	nmap <Leader>/a <Plug>NERDCommenterAppend
+"	nmap <leader>/9 <Plug>NERDCommenterToEOL
+"	vmap <Leader>/s <Plug>NERDCommenterSexy
+"	vmap <Leader>/b <Plug>NERDCommenterMinimal
+" }}}
+
 " Ref.vim {{{
 	let g:ref_alc_cmd = 'w3m -dump %s'
 " }}}
 
+" smartchr {{{
+"	inoremap <buffer> <expr> <S-=> smartchr#loop(' + ', '++')
+"	inoremap <buffer> <expr> - smartchr#loop(' - ', '--')
+"	inoremap <buffer> <expr> , smartchr#loop(', ', ',,')
+" }}}
+
 " basic
 syntax on
-colorscheme desert
+colorscheme mrkn256
 filetype plugin indent on
 
 "let mapleader = ","            " キーマップリーダー
@@ -247,8 +330,8 @@ nnoremap ; :
 nnoremap : ;
 
 " yank, paste with os clipboard http://relaxedcolumn.blog8.fc2.com/blog-entry-125.html
-noremap <Space>y "+y
-noremap <Space>p "+p
+"noremap <Space>y "+y
+"noremap <Space>p "+p
 
 " 括弧の自動補完
 "inoremap { {}<LEFT>
@@ -282,5 +365,5 @@ nnoremap <C-l> ;<C-l>j
 " <command>
 " insert mode
 " \date で日付
-inoremap <Leader>date <C-R>=strftime('%Y/%m/%d (%a)')<CR>
+"inoremap <Leader>date <C-R>=strftime('%Y/%m/%d (%a)')<CR>
 

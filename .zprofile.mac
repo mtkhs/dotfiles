@@ -23,3 +23,6 @@ export PATH=/Applications/Wine.app/Contents/Resources/bin:$PATH
 # homebrew
 export PATH=~/bin:/usr/local/bin:$PATH
 
+# review
+export PATH=~/review/bin:$PATH
+
