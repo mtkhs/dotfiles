@@ -152,16 +152,3 @@ sudo() {
   esac
 }
 
-#case "${OSTYPE}" in
-# Mac(Unix)
-#darwin*)
-#	[ -f ~/.zshrc.mac ] && source ~/.zshrc.mac
-#	[ -f ~/.zshrc.mac.alias ] && source ~/.zshrc.mac.alias
-#	;;
-# Linux
-#linux*)
-#	[ -f ~/.zshrc.linux ] && source ~/.zshrc.linux
-#	[ -f ~/.zshrc.linux.alias ] && source ~/.zshrc.linux.alias
-#    ;;
-#esac
-
