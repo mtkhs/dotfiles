@@ -79,7 +79,7 @@ NeoBundle 'thinca/vim-fontzoom'
 "NeoBundle "altercation/vim-colors-solarized"
 NeoBundle 'vim-scripts/Lucius'
 NeoBundle 'vim-scripts/mrkn256.vim'
-
+NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 
 " }}}
 
@@ -121,9 +121,9 @@ NeoBundle 'vim-scripts/mrkn256.vim'
 
 	autocmd! FileType vimfiler call g:my_vimfiler_settings()
 	function! g:my_vimfiler_settings()
-		nmap     <buffer><S-o>         <Plug>(vimfiler_open_file_in_another_vimfiler)
+		nmap     <buffer><S-o>         <Plug>(vimfiler_sync_with_another_vimfiler)
 		nmap     <buffer>o             <Plug>(vimfiler_sync_with_another_vimfiler)
-		nmap     <buffer><backspace>   <Plug>(vimfiler_smart_h)
+		nmap     <buffer><backspace>   <Plug>(vimfiler_switch_to_parent_directory)
 		nmap     <buffer><Nul>     <Plug>(vimfiler_toggle_mark_current_line_up)
 "		nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 "		nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
@@ -228,7 +228,7 @@ NeoBundle 'vim-scripts/mrkn256.vim'
 	let g:NERDCreateDefaultMappings = 0
 	let NERDSpaceDelims = 1
 
-	map <C-/> <Plug>NERDCommenterToggle
+	map <C- <Plug>NERDCommenterToggle
 
 	nmap <Leader>/ <Plug>NERDCommenterToggle
 	vmap <Leader>/ <Plug>NERDCommenterToggle
@@ -251,10 +251,13 @@ NeoBundle 'vim-scripts/mrkn256.vim'
 
 " basic
 syntax on
-colorscheme mrkn256
+colorscheme railscasts
 filetype plugin indent on
 
 "let mapleader = ","            " キーマップリーダー
+
+let mapleader = '\'
+
 set nobackup                   " バックアップ取らない
 set hidden                     " 編集中でも他のファイルを開けるようにする
 set formatoptions=lmoq         " テキスト整形オプション，マルチバイト系を追加
