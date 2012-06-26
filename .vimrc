@@ -97,17 +97,18 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 "	nmap <Space>f [unite]
 
 	" バッファ一覧
-	nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+"	nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+	nnoremap <silent> <Leader>b :<C-u>Unite buffer<CR>
 	" ファイル一覧
-	nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+	nnoremap <silent> <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 	" レジスタ一覧
-	nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+	nnoremap <silent> <Leader>r :<C-u>Unite -buffer-name=register register<CR>
 	" 最近使用したファイル一覧
-	nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+	nnoremap <silent> <Leader>m :<C-u>Unite file_mru<CR>
 	" 常用セット
-	nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
+	nnoremap <silent> <Leader>u :<C-u>Unite buffer file_mru<CR>
 	" 全部乗せ
-	nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+	nnoremap <silent> <Leader>a :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
 	"file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
 	let g:unite_source_file_mru_filename_format = ''
@@ -124,7 +125,9 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 		nmap     <buffer><S-o>         <Plug>(vimfiler_sync_with_another_vimfiler)
 		nmap     <buffer>o             <Plug>(vimfiler_sync_with_another_vimfiler)
 		nmap     <buffer><backspace>   <Plug>(vimfiler_switch_to_parent_directory)
-		nmap     <buffer><Nul>     <Plug>(vimfiler_toggle_mark_current_line_up)
+		nmap     <buffer><Nul>         <Plug>(vimfiler_toggle_mark_current_line_up)
+		nmap     <buffer><Left>        <Plug>(vimfiler_switch_to_other_window)
+		nmap     <buffer><Right>       <Plug>(vimfiler_switch_to_other_window)
 "		nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 "		nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
 "		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
@@ -202,7 +205,7 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 " NERDTree {{{
 	"引数なしでvimを開いたらNERDTreeを起動、
 	"引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
-	autocmd vimenter * if !argc() | NERDTree | endif
+"	autocmd vimenter * if !argc() | NERDTree | endif
 	"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
 	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
@@ -249,7 +252,9 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 "	inoremap <buffer> <expr> , smartchr#loop(', ', ',,')
 " }}}
 
+"
 " basic
+"
 syntax on
 colorscheme railscasts
 filetype plugin indent on
@@ -269,7 +274,10 @@ set scrolloff=5                " スクロール時の余白確保
 set clipboard+=unnamed
 set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
 
-" ステータスライン
+"
+" statusline
+"
+set cmdheight=2 " コマンド行の高さ
 set laststatus=2 " 常にステータスラインを表示
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
@@ -281,11 +289,15 @@ endfunction
 set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %{b:charCounterCount}%m%=%{g:Date()}
 "set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
 
-" エンコーディング
+"
+" encoding
+"
 set encoding=utf-8
 set fileencodings=euc-jp,cp932,iso-2022-jp
 
-" 画面表示
+"
+" display
+"
 set showmatch         " 括弧の対応をハイライト
 set matchtime=1       " 括弧の始めを表示する時間
 set number            " 行番号表示
@@ -293,29 +305,39 @@ set list              " 不可視文字表示
 set listchars=tab:>-,trail:- " 不可視文字の表現設定
 "set listchars=tab:>-,trail:-,eol:<
 
-" インデント
-" set expandtab     " tab をスペースに展開
+"
+" indent
+"
 set shiftwidth=4  " 自動インデントの幅
 set tabstop=4     " タブ幅
 
-" 検索
+"
+" search
+"
 set wrapscan     " 最後まで検索したら先頭へ戻る
 set ignorecase   " 大文字小文字無視
 set smartcase    " 大文字ではじめたら大文字小文字無視しない
 set noincsearch  " インクリメンタルサーチOFF
 set hlsearch     " 検索文字をハイライト
 
-" 補完
+"
+" complement
+"
 set wildmenu           " コマンド補完を強化
 set wildmode=list:full " リスト表示，最長マッチ
 set history=100        " コマンド・検索パターンの履歴数
 
-" キーマップ
+"
+" keymap
+"
 " 行単位で移動(1行が長い場合に便利)
 nnoremap j gj
 nnoremap k gk
 " Esc2回押しでハイライト解除
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
+
+"バッファ切り替え
+nnoremap <silent> <Tab> :bn<CR>
 
 " 行頭,行末移動
 "map! <C-a> <Home>
