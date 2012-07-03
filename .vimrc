@@ -30,6 +30,7 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/vimfiler'
 "NeoBundle 'project-1.4.1'
+"NeoBundle 'fholgado/minibufexpl.vim'
 
 " Filetypes
 NeoBundle 'vim-ruby/vim-ruby'
@@ -257,7 +258,9 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 "
 syntax on
 colorscheme railscasts
-filetype plugin indent on
+filetype on
+filetype plugin on
+filetype indent on
 
 "let mapleader = ","            " キーマップリーダー
 
@@ -266,6 +269,7 @@ let mapleader = '\'
 set nobackup                   " バックアップ取らない
 set hidden                     " 編集中でも他のファイルを開けるようにする
 set formatoptions=lmoq         " テキスト整形オプション，マルチバイト系を追加
+set formatoptions+=mM          " 日本語の行を連結時には空白を入力しない
 set vb t_vb=                   " ビープをならさない
 set backspace=indent,eol,start " バックスペースでなんでも消せるように
 set autoread                   " 他で書き換えられたら自動で読み直す
@@ -273,6 +277,8 @@ set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらな�
 set scrolloff=5                " スクロール時の余白確保
 set clipboard+=unnamed
 set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
+set ambiwidth=double           " ■や◯の文字があってもカーソル位置がずれないようにする
+
 
 "
 " statusline
@@ -298,6 +304,7 @@ set fileencodings=euc-jp,cp932,iso-2022-jp
 "
 " display
 "
+set display+=lastline " 画面最後の行をできる限り表示する
 set showmatch         " 括弧の対応をハイライト
 set matchtime=1       " 括弧の始めを表示する時間
 set number            " 行番号表示

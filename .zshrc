@@ -1,7 +1,3 @@
-PROMPT='%n:%~$ '
-PROMPT2='%n:%_$ '
-#SPROMPT='%r is correct? [n,y,a,e]: '
-
 bindkey -e
 
 #autoload -U colors
@@ -22,8 +18,9 @@ compinit
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 
-
+#
 # プロンプト
+#
 ## PROMPT内で変数展開・コマンド置換・算術演算を実行する。
 setopt prompt_subst
 ## PROMPT内で「%」文字から始まる置換機能を有効にする。
@@ -31,6 +28,20 @@ setopt prompt_subst
 ## コピペしやすいようにコマンド実行後は右プロンプトを消す。
 setopt transient_rprompt
 
+case ${UID} in
+0)
+	PROMPT='%n@%m:%~# '
+	PROMPT2="%n@%m:%_# "
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+		PROMPT="%{[37m%}${PROMPT}%{[m%}"
+	;;
+*)
+	PROMPT='%n@%m:%~$ '
+	PROMPT2='%n@%m:%_$ '
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+		PROMPT="%{[37m%}${PROMPT}%{[m%}"
+	;;
+esac
 
 # cd を入力しなくてもディレクトリに遷移
 setopt auto_cd
@@ -150,5 +161,21 @@ sudo() {
       command sudo $@
       ;;
   esac
+}
+
+# http://www.commandlinefu.com/commands/view/10889/hourglass
+# hourglass 5
+hourglass() {
+	trap 'tput cnorm' EXIT INT;
+	local s=$(($SECONDS +$1));
+	(
+		tput civis;
+		while [[ $SECONDS -lt $s ]];
+			do for f in '|' '\' '-' '/';
+				do echo -n "$f" && sleep .2s && echo -n $'\b';
+			done;
+		done;
+	);
+	tput cnorm;
 }
 
