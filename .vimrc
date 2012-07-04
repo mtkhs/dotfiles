@@ -5,6 +5,7 @@ set nocompatible " vim の機能を使う
 		" kaoriyaだとそれが無いっぽい
 
 let s:iswin = has('win32') || has('win64')
+"autocmd!
 
 " =============================================================================
 " for plugin settings
@@ -13,7 +14,7 @@ let s:iswin = has('win32') || has('win64')
 filetype off
 
 if has('vim_starting')
-	set rtp+=~/.vim/neobundle.vim.git
+	set rtp & rtp+=~/.vim/neobundle.vim.git
 "	set runtimepath+=~/.vim/.neobundle/neobundle.vim
 	call neobundle#rc('~/.vim/.neobundle')
 endif
@@ -120,6 +121,8 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 	let g:vimfiler_as_default_explorer = 1
 	"セーフモードを無効にした状態で起動する
 	let g:vimfiler_safe_mode_by_default = 0
+	" カレントディレクトリを自動で同期
+	let g:vimfiler_enable_auto_cd = 1
 
 	autocmd! FileType vimfiler call g:my_vimfiler_settings()
 	function! g:my_vimfiler_settings()
@@ -133,6 +136,11 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 "		nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
 "		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 	endfunction
+
+	"<Leader>e で現在開いているバッファのディレクトリを開く
+	nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>
+	nnoremap <silent> <Leader>fi :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
+	
 
 " }}}
 
@@ -275,7 +283,7 @@ set backspace=indent,eol,start " バックスペースでなんでも消せる�
 set autoread                   " 他で書き換えられたら自動で読み直す
 set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらないようにする
 set scrolloff=5                " スクロール時の余白確保
-set clipboard+=unnamed
+set clipboard & clipboard+=unnamed
 set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
 set ambiwidth=double           " ■や◯の文字があってもカーソル位置がずれないようにする
 
@@ -304,7 +312,7 @@ set fileencodings=euc-jp,cp932,iso-2022-jp
 "
 " display
 "
-set display+=lastline " 画面最後の行をできる限り表示する
+set display & display+=lastline " 画面最後の行をできる限り表示する
 set showmatch         " 括弧の対応をハイライト
 set matchtime=1       " 括弧の始めを表示する時間
 set number            " 行番号表示
