@@ -33,6 +33,9 @@ NeoBundle 'Shougo/vimfiler'
 "NeoBundle 'project-1.4.1'
 "NeoBundle 'fholgado/minibufexpl.vim'
 
+NeoBundle 'buftabs'
+NeoBundle 'anekos/char-counter-vim'
+
 " Filetypes
 NeoBundle 'vim-ruby/vim-ruby'
 if !s:iswin
@@ -211,6 +214,19 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 "	inoremap <expr><C-e> neocomplcache#cancel_popup()
 " }}}
 
+" buftabs {{{
+	"バッファタブにパスを省略してファイル名のみ表示する
+	let g:buftabs_only_basename=1
+	" バッファタブをステータスライン内に表示する
+"	let g:buftabs_in_statusline=1
+	" 現在のバッファをハイライト
+	let g:buftabs_active_highlight_group="Visual"
+	" ステータスライン
+"	set statusline=%=\ [%{(&fenc!=''?&fenc:&enc)}/%{&ff}]\[%Y]\[%04l,%04v][%p%%]
+	" ステータスラインを常に表示
+"	set laststatus=2
+" }}}
+
 " NERDTree {{{
 	"引数なしでvimを開いたらNERDTreeを起動、
 	"引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
@@ -352,7 +368,9 @@ nnoremap k gk
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
 
 "バッファ切り替え
-nnoremap <silent> <Tab> :bn<CR>
+"nnoremap <silent> <Tab> :bn<CR>
+noremap <Space> :bnext<CR> "Space, Shift+Space でバッファを切り替え
+noremap <S-Space> :bprev<CR>
 
 " 行頭,行末移動
 "map! <C-a> <Home>
