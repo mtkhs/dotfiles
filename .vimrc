@@ -299,7 +299,8 @@ set backspace=indent,eol,start " バックスペースでなんでも消せる�
 set autoread                   " 他で書き換えられたら自動で読み直す
 set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらないようにする
 set scrolloff=5                " スクロール時の余白確保
-set clipboard & clipboard+=unnamed
+"set clipboard & clipboard+=unnamed
+set clipboard+=unnamed
 set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
 set ambiwidth=double           " ■や◯の文字があってもカーソル位置がずれないようにする
 
