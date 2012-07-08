@@ -1,5 +1,6 @@
 
 export PATH=/sbin:/usr/sbin:$PATH
+export EDITOR='vim'
 
 #
 # Attach tmux

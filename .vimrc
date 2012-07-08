@@ -84,6 +84,7 @@ NeoBundle 'thinca/vim-fontzoom'
 "NeoBundle "altercation/vim-colors-solarized"
 NeoBundle 'vim-scripts/Lucius'
 NeoBundle 'vim-scripts/mrkn256.vim'
+"NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 
 " }}}
@@ -281,7 +282,7 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 " basic
 "
 syntax on
-colorscheme railscasts
+colorscheme default
 filetype on
 filetype plugin on
 filetype indent on
