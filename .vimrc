@@ -16,7 +16,7 @@ filetype off
 if has('vim_starting')
 	set rtp & rtp+=~/.vim/neobundle.vim.git
 "	set runtimepath+=~/.vim/.neobundle/neobundle.vim
-	call neobundle#rc('~/.vim/.neobundle')
+	call neobundle#rc( expand( '~/.vim/.neobundle' ) )
 endif
 
 
