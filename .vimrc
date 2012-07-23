@@ -14,11 +14,10 @@ let s:iswin = has('win32') || has('win64')
 filetype off
 
 if has('vim_starting')
-	set rtp & rtp+=~/.vim/neobundle.vim.git
+	set rtp+=~/.vim/neobundle.vim.git
 "	set runtimepath+=~/.vim/.neobundle/neobundle.vim
 	call neobundle#rc( expand( '~/.vim/.neobundle' ) )
 endif
-
 
 "NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'thinca/vim-localrc'
@@ -32,6 +31,7 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/vimfiler'
 "NeoBundle 'project-1.4.1'
 "NeoBundle 'fholgado/minibufexpl.vim'
+NeoBundle 'Shougo/vinarise'
 
 NeoBundle 'buftabs'
 NeoBundle 'anekos/char-counter-vim'
@@ -61,21 +61,25 @@ NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-scripts/javacomplete'
 
+" neocomplcache
 NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neocomplcache-snippets-complete'
 NeoBundle 'ujihisa/neco-look'
 
+" unite
 NeoBundle "Shougo/unite.vim"
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'ujihisa/unite-font'
+
 
 NeoBundle "thinca/vim-ref"
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
+"NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'sudo.vim'
 NeoBundle 'othree/eregex.vim'
-NeoBundle 'kana/vim-smartchr'
+"NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
 
 NeoBundle 'thinca/vim-fontzoom'
@@ -279,6 +283,13 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 " }}}
 
 "
+" macros
+"
+source $VIMRUNTIME/macros/matchit.vim
+let b:match_words = "if:endif,foreach:endforeach,\<begin\>:\<end\>"
+
+
+"
 " basic
 "
 syntax on
@@ -318,6 +329,7 @@ function! g:Date()
 	return strftime("%x %H:%M")
 endfunction
 
+"set statusline=%{b:charCounterCount}
 set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %{b:charCounterCount}%m%=%{g:Date()}
 "set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
 
@@ -330,7 +342,7 @@ set fileencodings=euc-jp,cp932,iso-2022-jp
 "
 " display
 "
-set display & display+=lastline " 画面最後の行をできる限り表示する
+"set display+=lastline " 画面最後の行をできる限り表示する
 set showmatch         " 括弧の対応をハイライト
 set matchtime=1       " 括弧の始めを表示する時間
 set number            " 行番号表示
@@ -373,6 +385,7 @@ nmap <ESC><ESC> ;nohlsearch<CR><ESC>
 "nnoremap <silent> <Tab> :bn<CR>
 noremap <Space> :bnext<CR> "Space, Shift+Space でバッファを切り替え
 noremap <S-Space> :bprev<CR>
+noremap <Tab> :bprev<CR>
 
 " 行頭,行末移動
 "map! <C-a> <Home>
