@@ -1,11 +1,12 @@
-" for macvim-kaoriya http://code.google.com/p/macvim-kaoriya/
+set nocompatible " vi互換モードを切る
+				" 元から入ってるvimなら~/.vimrcがあれば自動で有効になるらしいけど
+				" kaoriyaだとそれが無いっぽい？
 
-set nocompatible " vim の機能を使う
-		" 元から入ってるvimなら~/.vimrcがあれば自動で有効になるらしいけど
-		" kaoriyaだとそれが無いっぽい
+" autocmdを初期化
+autocmd!
 
+" 環境変数
 let s:iswin = has('win32') || has('win64')
-"autocmd!
 
 " =============================================================================
 " for plugin settings
@@ -33,7 +34,12 @@ NeoBundle 'Shougo/vimfiler'
 "NeoBundle 'fholgado/minibufexpl.vim'
 NeoBundle 'Shougo/vinarise'
 
-NeoBundle 'buftabs'
+"NeoBundle 'Shougo/vim-vcs'
+NeoBundle 'vim-scripts/gtags.vim'
+
+" Display
+NeoBundle 'sjl/gundo.vim'
+"NeoBundle 'buftabs'
 NeoBundle 'anekos/char-counter-vim'
 
 " Filetypes
@@ -219,6 +225,10 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 "	inoremap <expr><C-e> neocomplcache#cancel_popup()
 " }}}
 
+" Gundo {{{
+	nnoremap U :<C-u>GundoToggle<CR>
+" }}}
+
 " buftabs {{{
 	"バッファタブにパスを省略してファイル名のみ表示する
 	let g:buftabs_only_basename=1
@@ -298,9 +308,12 @@ filetype on
 filetype plugin on
 filetype indent on
 
-"let mapleader = ","            " キーマップリーダー
+" Rubyのタブ幅を2にする。
+autocmd FileType ruby setlocal tabstop=2 shiftwidth=2
+autocmd FileType eruby setlocal tabstop=2 shiftwidth=2
 
-let mapleader = '\'
+"let mapleader = ','
+"let mapleader = '\'
 
 set nobackup                   " バックアップ取らない
 set hidden                     " 編集中でも他のファイルを開けるようにする
@@ -314,7 +327,27 @@ set scrolloff=5                " スクロール時の余白確保
 "set clipboard & clipboard+=unnamed
 set clipboard+=unnamed
 set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
-set ambiwidth=double           " ■や◯の文字があってもカーソル位置がずれないようにする
+
+
+" https://github.com/amothic/dotfiles/blob/master/.vimrc
+" キーコードはすぐにタイムアウトし、マッピングはタイムアウトしない
+set notimeout ttimeout ttimeoutlen=200
+
+" 全角記号が、半角幅で表示されるのを防ぐ
+if exists('&ambiwidth')
+	set ambiwidth=double
+endif
+
+" http://vim-users.jp/2009/06/hack32/
+set directory-=.
+" http://vim-users.jp/2010/07/hack162/
+if has('persistent_undo')
+  set undodir=~/.vimundo
+  augroup vimrc-undofile
+    autocmd!
+    autocmd BufReadPre ~/* setlocal undofile
+  augroup END
+endif
 
 
 "
@@ -322,22 +355,25 @@ set ambiwidth=double           " ■や◯の文字があってもカーソル�
 "
 set cmdheight=2 " コマンド行の高さ
 set laststatus=2 " 常にステータスラインを表示
-"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
 " ステータスラインに日時を表示する
 function! g:Date()
 	return strftime("%x %H:%M")
 endfunction
 
-"set statusline=%{b:charCounterCount}
 set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %{b:charCounterCount}%m%=%{g:Date()}
-"set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
+" 確認用
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+
 
 "
 " encoding
 "
 set encoding=utf-8
-set fileencodings=euc-jp,cp932,iso-2022-jp
+set termencoding=utf-8
+set fileencodings=ucs-bom,euc-jp,cp932,iso-2022-jp
+set fileformats=unix,dos,mac
+
 
 "
 " display
@@ -350,11 +386,13 @@ set list              " 不可視文字表示
 set listchars=tab:>-,trail:- " 不可視文字の表現設定
 "set listchars=tab:>-,trail:-,eol:<
 
+
 "
 " indent
 "
 set shiftwidth=4  " 自動インデントの幅
 set tabstop=4     " タブ幅
+
 
 "
 " search
@@ -365,12 +403,14 @@ set smartcase    " 大文字ではじめたら大文字小文字無視しない
 set noincsearch  " インクリメンタルサーチOFF
 set hlsearch     " 検索文字をハイライト
 
+
 "
 " complement
 "
 set wildmenu           " コマンド補完を強化
 set wildmode=list:full " リスト表示，最長マッチ
 set history=100        " コマンド・検索パターンの履歴数
+
 
 "
 " keymap
@@ -382,10 +422,9 @@ nnoremap k gk
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
 
 "バッファ切り替え
-"nnoremap <silent> <Tab> :bn<CR>
-noremap <Space> :bnext<CR> "Space, Shift+Space でバッファを切り替え
-noremap <S-Space> :bprev<CR>
-noremap <Tab> :bprev<CR>
+noremap <silent> <Space> :bnext<CR>
+"noremap <silent> <S-Space> :bprev<CR>
+noremap <silent> <Tab> :bprev<CR>
 
 " 行頭,行末移動
 "map! <C-a> <Home>
@@ -419,8 +458,8 @@ nnoremap : ;
 "vnoremap ' "zdi'<C-R>z'<ESC>
 
 " 対応するカッコに移動
-nnoremap [ %
-nnoremap ] %
+"nnoremap [ %
+"nnoremap ] %
 
 " Ctrl-hjklでウィンドウ移動
 nnoremap <C-h> ;<C-h>j
@@ -435,8 +474,29 @@ nnoremap <C-l> ;<C-l>j
 " F4でバッファを削除する
 "map <F4> <ESC>;bw<CR>
 
+
 " <command>
+" 文字エンコーディングを指定して、ファイルを開く
+command! Cp932 edit ++enc=cp932
+command! Eucjp edit ++enc=euc-jp
+command! Iso2022jp edit ++enc=iso-2022-jp
+command! Utf8 edit ++enc=utf-8
+
+command! Jis Iso2022jp
+command! Sjis Cp932
+
 " insert mode
 " \date で日付
 "inoremap <Leader>date <C-R>=strftime('%Y/%m/%d (%a)')<CR>
+
+" https://github.com/ujihisa/config/blob/master/_vimrc
+command! SplitNicely call s:split_nicely() " {{{
+function! s:split_nicely()
+  if 80*2 * 15/16 <= winwidth(0) " FIXME: threshold customization
+    vsplit
+  else
+    split
+  endif
+endfunction
+" }}}
 

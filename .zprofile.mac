@@ -23,7 +23,7 @@ if [[ -s "$HOME/.pythonbrew/etc/bashrc" ]]; then
 fi
 
 # Wine
-export PATH=/Applications/Wine.app/Contents/Resources/bin:$PATH
+#export PATH=/Applications/Wine.app/Contents/Resources/bin:$PATH
 
 # homebrew
 export PATH=~/bin:/usr/local/bin:$PATH
