@@ -35,7 +35,7 @@ NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vinarise'
 
 "NeoBundle 'Shougo/vim-vcs'
-NeoBundle 'vim-scripts/gtags.vim'
+NeoBundle 'gtags.vim'
 
 " Display
 NeoBundle 'sjl/gundo.vim'
@@ -223,6 +223,12 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 "	inoremap <expr><C-y> neocomplcache#close_popup()
 	" 現在選択している候補をキャンセルし、ポップアップを閉じます
 "	inoremap <expr><C-e> neocomplcache#cancel_popup()
+" }}}
+
+" Gtags {{{
+	map <F3> :GtagsCursor<CR>
+	map <C-n> :cn<CR>
+	map <C-p> :cp<CR>
 " }}}
 
 " Gundo {{{
@@ -484,10 +490,6 @@ command! Utf8 edit ++enc=utf-8
 
 command! Jis Iso2022jp
 command! Sjis Cp932
-
-" insert mode
-" \date で日付
-"inoremap <Leader>date <C-R>=strftime('%Y/%m/%d (%a)')<CR>
 
 " https://github.com/ujihisa/config/blob/master/_vimrc
 command! SplitNicely call s:split_nicely() " {{{
