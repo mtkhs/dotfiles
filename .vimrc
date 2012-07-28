@@ -15,9 +15,9 @@ let s:iswin = has('win32') || has('win64')
 filetype off
 
 if has('vim_starting')
-	set rtp+=~/.vim/neobundle.vim.git
+	set rtp+=$HOME/.vim/neobundle.vim.git
 "	set runtimepath+=~/.vim/.neobundle/neobundle.vim
-	call neobundle#rc( expand( '~/.vim/.neobundle' ) )
+	call neobundle#rc( expand( $HOME . '/.vim/.neobundle' ) )
 endif
 
 "NeoBundle 'Shougo/neobundle.vim'
@@ -180,15 +180,15 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 	" ディクショナリ定義
 	let g:neocomplcache_dictionary_filetype_lists = {
 		\ 'default' : '',
-		\ 'ruby' : '~/.vim/dict/ruby.dict',
-		\ 'nb' : '~/.vim/dict/ruby.dict',
-		\ 'c' : '~/.vim/dict/c.dict',
-		\ 'cpp' : '~/.vim/dict/cpp.dict',
-		\ 'php' : '~/.vim/dict/php.dict',
-		\ 'ctp' : '~/.vim/dict/php.dict',
-		\ 'javascript' : '~/.vim/dict/javascript.dict',
-		\ 'perl' : '~/.vim/dict/perl.dict',
-		\ 'java' : '~/.vim/dict/java.dict',
+		\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
+		\ 'nb' : $HOME . '/.vim/dict/ruby.dict',
+		\ 'c' : $HOME . '/.vim/dict/c.dict',
+		\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
+		\ 'php' : $HOME . '/.vim/dict/php.dict',
+		\ 'ctp' : $HOME . '/.vim/dict/php.dict',
+		\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+		\ 'perl' : $HOME . '/.vim/dict/perl.dict',
+		\ 'java' : $HOME . '/.vim/dict/java.dict',
 		\ }
 	
 	if !exists('g:neocomplcache_keyword_patterns')

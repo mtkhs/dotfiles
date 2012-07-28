@@ -10,6 +10,8 @@ alias du='du -h'
 alias df='df -h'
 alias duh='du -h -d 1 .'
 
+alias vimfiler='vim -c VimFiler'
+
 case ${OSTYPE} in
 	darwin*)
 		alias ls='LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx ls -G'
@@ -20,7 +22,6 @@ case ${OSTYPE} in
 		#alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 		alias vim='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 		alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
-		alias vimfiler='vim -c VimFiler'
 		alias emacs='/usr/local/Cellar/emacs/23.3a/Emacs.app/Contents/MacOS/Emacs -nw'
 		alias mfiler3='/usr/local/bin/mfiler3'
 		alias rmdolipocache='rm -rf ~/Library/Application\ Support/dolipo/Cache/*'
