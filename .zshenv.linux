@@ -1,4 +1,0 @@
-[ -f ~/.zshenv.common ] && source ~/.zshenv.common
-
-alias ls='ls -F --color=auto'
-
