@@ -1,6 +1,5 @@
-set nocompatible " vi互換モードを切る
-				" 元から入ってるvimなら~/.vimrcがあれば自動で有効になるらしいけど
-				" kaoriyaだとそれが無いっぽい？
+" vi互換モードを切る
+set nocompatible
 
 " autocmdを初期化
 autocmd!
@@ -44,19 +43,16 @@ NeoBundle 'anekos/char-counter-vim'
 
 " Filetypes
 NeoBundle 'vim-ruby/vim-ruby'
-if !s:iswin
-  NeoBundle 'tpope/vim-rvm'
-endif
+NeoBundle 'tpope/vim-rvm'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'othree/html5.vim'
 NeoBundle 'JavaScript-syntax'
-NeoBundle 'vim-creole'
 
 " css
-NeoBundle 'skammer/vim-css-color'
+NeoBundle 'lilydjwg/colorizer'
 NeoBundle 'hail2u/vim-css3-syntax'
 "NeoBundle 'hokaccha/vim-css3-syntax'
 NeoBundle 'groenewege/vim-less'
@@ -97,6 +93,10 @@ NeoBundle 'vim-scripts/mrkn256.vim'
 "NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 
+" recognize_charcode
+if !has('kaoriya')
+	NeoBundle 'banyan/recognize_charcode.vim'
+endif
 " }}}
 
 " syntastic {{{
@@ -192,7 +192,7 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 		\ }
 	
 	if !exists('g:neocomplcache_keyword_patterns')
-	        let g:neocomplcache_keyword_patterns = {}
+		let g:neocomplcache_keyword_patterns = {}
 	endif
 	let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
@@ -224,6 +224,11 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 	" 現在選択している候補をキャンセルし、ポップアップを閉じます
 "	inoremap <expr><C-e> neocomplcache#cancel_popup()
 " }}}
+
+" colorizer {{{
+	" pluginによるmap設定をしない
+	let g:colorizer_nomap = 1
+"}}}
 
 " Gtags {{{
 	map <F3> :GtagsCursor<CR>
@@ -377,7 +382,7 @@ set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l
 "
 set encoding=utf-8
 set termencoding=utf-8
-set fileencodings=ucs-bom,euc-jp,cp932,iso-2022-jp
+set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp
 set fileformats=unix,dos,mac
 
 
@@ -398,6 +403,13 @@ set listchars=tab:>-,trail:- " 不可視文字の表現設定
 "
 set shiftwidth=4  " 自動インデントの幅
 set tabstop=4     " タブ幅
+" コメントのオートインデントを止める
+" http://d.hatena.ne.jp/dayflower/20081208/1228725403
+if has("autocmd")
+  autocmd FileType *
+    \ let &l:comments
+          \=join(filter(split(&l:comments, ','), 'v:val =~ "^[sme]"'), ',')
+endif
 
 
 "

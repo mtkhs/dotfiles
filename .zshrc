@@ -109,6 +109,23 @@ SAVEHIST=10000
 
 #function cd() {builtin cd $@ && ls -v -F --color=auto}
 
+# http://homepage1.nifty.com/blankspace/zsh/zsh.html
+typeset -A myabbrev
+myabbrev=(
+    "ll"    "| less"
+    "lg"    "| grep"
+    "tx"    "tar -xvzf"
+)
+
+my-expand-abbrev() {
+    local left prefix
+    left=$(echo -nE "$LBUFFER" | sed -e "s/[_a-zA-Z0-9]*$//")
+    prefix=$(echo -nE "$LBUFFER" | sed -e "s/.*[^_a-zA-Z0-9]\([_a-zA-Z0-9]*\)$/\1/")
+    LBUFFER=$left${myabbrev[$prefix]:-$prefix}" "
+}
+zle -N my-expand-abbrev
+bindkey     " "         my-expand-abbrev
+
 # cd時に自動ls
 #function chpwd() { ls -v -F }
 
@@ -148,12 +165,12 @@ sudo() {
     vi|vim)
       args=()
       for arg in $@[2,-1]
-	  do
+      do
         if [ $arg[1] = '-' ]; then
           args[$(( 1+$#args ))]=$arg
         else
           args[$(( 1+$#args ))]="sudo:$arg"
-	  fi
+      fi
       done
       command vim $args
       ;;

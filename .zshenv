@@ -10,6 +10,9 @@ alias du='du -h'
 alias df='df -h'
 alias duh='du -h -d 1 .'
 
+alias v='vim'
+alias vf='vimfiler'
+
 alias vimfiler='vim -c VimFiler'
 
 case ${OSTYPE} in
