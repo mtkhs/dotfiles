@@ -48,8 +48,12 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'othree/html5.vim'
 NeoBundle 'JavaScript-syntax'
+
+" html
+NeoBundle 'othree/html5.vim'
+"NeoBundle 'rstacruz/sparkup'
+NeoBundle "mattn/zencoding-vim"
 
 " css
 NeoBundle 'lilydjwg/colorizer'

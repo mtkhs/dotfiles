@@ -13,3 +13,11 @@ ln -s $DOTFILES/.vim $HOME/.vim
 ln -s $DOTFILES/.vimrc $HOME/.vimrc
 ln -s $DOTFILES/.tmux.conf $HOME/.tmux.conf
 
+vim -c ':NeoBundleInstall'
+
+ZSH=`which zsh`
+
+echo ZSH
+echo ZSH
+echo ZSH
+
