@@ -4,7 +4,7 @@ DOTFILES="$HOME/dotfiles"
 
 cd $DOTFILES
 
-git submodule update --init
+git submodule update --init --recursive
 
 ln -s $DOTFILES/.zshrc      $HOME/.zshrc
 ln -s $DOTFILES/.zshenv     $HOME/.zshenv
