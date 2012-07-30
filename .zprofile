@@ -38,7 +38,7 @@ case ${OSTYPE} in
 				fi
 			else
 				echo "Create new tmux session."
-				tmux
+				tmux -l
 			fi
 		fi
 	;;
