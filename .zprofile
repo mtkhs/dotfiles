@@ -52,13 +52,13 @@ fi
 # rvm
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
 	export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-	source "$HOME/.rvm/scripts/rvm"
+	source $HOME/.rvm/scripts/rvm
 fi
 
 # pythonbrew
 if [[ -s "$HOME/.pythonbrew/etc/bashrc" ]]; then
 	source "$HOME/.pythonbrew/etc/bashrc"
-#	pybrew switch 2.7.2 > /dev/null
+#	pybrew switch 2.7.3 > /dev/null
 fi
 
 [ -f $HOME/.zprofile.local ] && source $HOME/.zprofile.local
