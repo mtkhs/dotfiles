@@ -104,6 +104,7 @@ endif
 " }}}
 
 " syntastic {{{
+	" http://d.hatena.ne.jp/heavenshell/20120109/1326089510
 	let g:syntastic_mode_map = {
 		\  'mode': 'active',
 		\ 'active_filetypes': [ 'ruby', 'javascript' ],
@@ -155,9 +156,9 @@ endif
 "		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 	endfunction
 
-	"<Leader>e で現在開いているバッファのディレクトリを開く
-	nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>
-	nnoremap <silent> <Leader>fi :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
+	" 現在開いているバッファのディレクトリを開く
+"	nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>
+"	nnoremap <silent> <Leader>fi :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
 	
 
 " }}}
@@ -282,11 +283,10 @@ endif
 " }}}
 
 " NERDCommenter {{{
-	" Nerd_Commenter の基本設定
 	let g:NERDCreateDefaultMappings = 0
 	let NERDSpaceDelims = 1
 
-	map <C- <Plug>NERDCommenterToggle
+	map <C-/> <Plug>NERDCommenterToggle
 
 	nmap <Leader>/ <Plug>NERDCommenterToggle
 	vmap <Leader>/ <Plug>NERDCommenterToggle
@@ -444,9 +444,9 @@ nnoremap k gk
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
 
 "バッファ切り替え
-noremap <silent> <Space> :bnext<CR>
+"noremap <silent> <Space> :bnext<CR>
 "noremap <silent> <S-Space> :bprev<CR>
-noremap <silent> <Tab> :bprev<CR>
+"noremap <silent> <Tab> :bprev<CR>
 
 " 行頭,行末移動
 "map! <C-a> <Home>
@@ -456,12 +456,14 @@ noremap <silent> <Tab> :bprev<CR>
 "map! <S-Return> <End>
 
 " ヘルプ
-nnoremap <C-h> :<C-u>help<Space>
+"nnoremap <C-h> :<C-u>help<Space>
 nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
 
 " US配列向け
 nnoremap ; :
 nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 
 " yank, paste with os clipboard http://relaxedcolumn.blog8.fc2.com/blog-entry-125.html
 "noremap <Space>y "+y
