@@ -330,6 +330,10 @@ autocmd FileType eruby setlocal tabstop=2 shiftwidth=2
 "let mapleader = ','
 "let mapleader = '\'
 
+if has('kaoriya')
+	set imdisable
+endif
+
 set nobackup                   " バックアップ取らない
 set hidden                     " 編集中でも他のファイルを開けるようにする
 set formatoptions=lmoq         " テキスト整形オプション，マルチバイト系を追加
@@ -371,7 +375,7 @@ endif
 set cmdheight=2 " コマンド行の高さ
 set laststatus=2 " 常にステータスラインを表示
 
-" ステータスラインに日時を表示する
+" 日時を表示
 function! g:Date()
 	return strftime("%x %H:%M")
 endfunction
@@ -398,13 +402,18 @@ set showmatch         " 括弧の対応をハイライト
 set matchtime=1       " 括弧の始めを表示する時間
 set number            " 行番号表示
 set list              " 不可視文字表示
-set listchars=tab:>-,trail:- " 不可視文字の表現設定
 "set listchars=tab:>-,trail:-,eol:<
+set listchars=tab:>-,trail:- " 不可視文字の表現設定
 
+"全角スペースを目立たせる
+"以下の設定だと赤い下線になる
+highlight ZenkakuSpace cterm=underline ctermfg=red guibg=white
+match ZenkakuSpace /　/
 
 "
 " indent
 "
+"set smartindent
 set shiftwidth=4  " 自動インデントの幅
 set tabstop=4     " タブ幅
 " コメントのオートインデントを止める
@@ -414,7 +423,6 @@ if has("autocmd")
     \ let &l:comments
           \=join(filter(split(&l:comments, ','), 'v:val =~ "^[sme]"'), ',')
 endif
-
 
 "
 " search
@@ -444,7 +452,7 @@ nnoremap k gk
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
 
 "バッファ切り替え
-"noremap <silent> <Space> :bnext<CR>
+noremap <Space> :bnext<CR>
 "noremap <silent> <S-Space> :bprev<CR>
 "noremap <silent> <Tab> :bprev<CR>
 
@@ -490,14 +498,6 @@ nnoremap <C-h> ;<C-h>j
 nnoremap <C-j> ;<C-w>j
 nnoremap <C-k> ;<C-k>j
 nnoremap <C-l> ;<C-l>j
-
-" F2で前のバッファ
-"map <F2> <ESC>;bp<CR>
-" F3で次のバッファ
-"map <F3> <ESC>;bn<CR>
-" F4でバッファを削除する
-"map <F4> <ESC>;bw<CR>
-
 
 " <command>
 " 文字エンコーディングを指定して、ファイルを開く
