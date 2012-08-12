@@ -21,10 +21,19 @@ endif
 
 "NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'thinca/vim-localrc'
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
 "after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
 " $ cd ~/.vim/.neobundle/vimproc
 " $ make -f make_mac.mak
+
+NeoBundle 'Shougo/vimshell'
 
 " Explore/FileSystem
 NeoBundle 'scrooloose/nerdtree'
@@ -135,6 +144,11 @@ endif
 	let g:unite_source_file_mru_filename_format = ''
 " }}}
 
+" vimshell {{{
+	nnoremap <silent> <Leader>vs :VimShell<CR>
+	nnoremap <silent> <Leader>vp :VimShellPop<CR>
+" }}}
+
 " vimfiler {{{
 	"vimデフォルトのエクスプローラをvimfilerで置き換える
 	let g:vimfiler_as_default_explorer = 1
@@ -155,6 +169,8 @@ endif
 "		nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
 "		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 	endfunction
+
+	nnoremap <silent> <leader>vf :VimFiler<CR>
 
 	" 現在開いているバッファのディレクトリを開く
 "	nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>

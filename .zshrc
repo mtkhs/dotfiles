@@ -6,20 +6,12 @@ bindkey -e
 autoload -U compinit
 compinit
 
-# 予測補完
-#autoload predict-on
-#predict-on
-
-# エディタ
-#autoload zed
-
-#PS1='$ %F{green}'
 #preexec(){ print -nP '%f' }
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 
 #
-# プロンプト
+# prompt
 #
 ## PROMPT内で変数展開・コマンド置換・算術演算を実行する。
 setopt prompt_subst
@@ -27,6 +19,8 @@ setopt prompt_subst
 #setopt prompt_percent
 ## コピペしやすいようにコマンド実行後は右プロンプトを消す。
 setopt transient_rprompt
+# 出力の文字列末尾に改行コードが無い場合でも表示
+#unsetopt promptcr
 
 case ${UID} in
 0)
@@ -106,6 +100,10 @@ setopt short_loops
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=10000
+
+#
+# fnctions
+#
 
 #function cd() {builtin cd $@ && ls -v -F --color=auto}
 
