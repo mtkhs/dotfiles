@@ -83,6 +83,7 @@ NeoBundle 'ujihisa/neco-look'
 
 " unite
 NeoBundle "Shougo/unite.vim"
+NeoBundle 'Shougo/unite-ssh'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'ujihisa/unite-font'
 
@@ -115,7 +116,7 @@ endif
 " syntastic {{{
 	" http://d.hatena.ne.jp/heavenshell/20120109/1326089510
 	let g:syntastic_mode_map = {
-		\  'mode': 'active',
+		\ 'mode': 'active',
 		\ 'active_filetypes': [ 'ruby', 'javascript' ],
 		\ 'passive_filetypes': []
 		\ }
@@ -126,27 +127,30 @@ endif
 "	nnoremap [unite] <Nop>
 "	nmap <Space>f [unite]
 
+	" file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
+	let g:unite_source_file_mru_filename_format = ''
+
 	" バッファ一覧
 "	nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-	nnoremap <silent> <Leader>b :<C-u>Unite buffer<CR>
+	nnoremap <Leader>b :<C-u>Unite buffer<CR>
 	" ファイル一覧
-	nnoremap <silent> <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+"	nnoremap <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 	" レジスタ一覧
-	nnoremap <silent> <Leader>r :<C-u>Unite -buffer-name=register register<CR>
+"	nnoremap <Leader>r :<C-u>Unite -buffer-name=register register<CR>
 	" 最近使用したファイル一覧
-	nnoremap <silent> <Leader>m :<C-u>Unite file_mru<CR>
+"	nnoremap <Leader>m :<C-u>Unite file_mru<CR>
 	" 常用セット
-	nnoremap <silent> <Leader>u :<C-u>Unite buffer file_mru<CR>
+"	nnoremap <Leader>u :<C-u>Unite buffer file_mru<CR>
 	" 全部乗せ
-	nnoremap <silent> <Leader>a :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+	nnoremap <Leader>a :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
-	"file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
-	let g:unite_source_file_mru_filename_format = ''
+	nnoremap <Leader>u :<C-u>Unite 
+
 " }}}
 
 " vimshell {{{
-	nnoremap <silent> <Leader>vs :VimShell<CR>
-	nnoremap <silent> <Leader>vp :VimShellPop<CR>
+	nnoremap <Leader>vs :VimShell<CR>
+	nnoremap <Leader>vp :VimShellPop<CR>
 " }}}
 
 " vimfiler {{{
@@ -159,7 +163,7 @@ endif
 
 	autocmd! FileType vimfiler call g:my_vimfiler_settings()
 	function! g:my_vimfiler_settings()
-		nmap     <buffer><S-o>         <Plug>(vimfiler_sync_with_another_vimfiler)
+		nmap     <buffer>O             <Plug>(vimfiler_sync_with_current_vimfiler)
 		nmap     <buffer>o             <Plug>(vimfiler_sync_with_another_vimfiler)
 		nmap     <buffer><backspace>   <Plug>(vimfiler_switch_to_parent_directory)
 		nmap     <buffer><Nul>         <Plug>(vimfiler_toggle_mark_current_line_up)
@@ -465,7 +469,7 @@ set history=100        " コマンド・検索パターンの履歴数
 nnoremap j gj
 nnoremap k gk
 " Esc2回押しでハイライト解除
-nmap <ESC><ESC> ;nohlsearch<CR><ESC>
+nmap <silent> <ESC><ESC> ;nohlsearch<CR><ESC>
 
 "バッファ切り替え
 noremap <Space> :bnext<CR>

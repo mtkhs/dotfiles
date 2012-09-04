@@ -31,10 +31,10 @@ case ${OSTYPE} in
 				session=`tmux list-sessions | grep -e '^[0-9].*]$' | head -n 1 | sed -e 's/^\([0-9]\+\).*$/\1/'`
 				if [ -n "$session" ]; then
 					echo "Attach tmux session $session."
-					tmux attach-session -t $session
+					tmux attach-session -l -t $session
 				else
 					echo "Session has been already attached."
-					tmux list-sessions
+					tmux list-sessions -l
 				fi
 			else
 				echo "Create new tmux session."
