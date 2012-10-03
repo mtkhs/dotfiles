@@ -15,6 +15,12 @@ case ${OSTYPE} in
 		# review
 		export PATH=$HOME/review/bin:$PATH
 		
+		# tex
+		export PATH=/usr/local/texlive/2011/bin/x86_64-darwin/:$PATH
+		
+		# cairo
+		export DYLD_LIBRARY_PATH=/usr/local/opt/cairo/lib
+		
 		# command
 		dict () { open dict://"$@"; }
 	;;

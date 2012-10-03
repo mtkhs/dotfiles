@@ -56,8 +56,11 @@ NeoBundle 'tpope/vim-rvm'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
 NeoBundle 'tpope/vim-haml'
-NeoBundle 'kchmck/vim-coffee-script'
+
+" javascript
+"NeoBundle 'taichouchou2/vim-javascript'
 NeoBundle 'JavaScript-syntax'
+NeoBundle 'kchmck/vim-coffee-script'
 
 " html
 NeoBundle 'othree/html5.vim'
@@ -65,11 +68,10 @@ NeoBundle 'othree/html5.vim'
 NeoBundle "mattn/zencoding-vim"
 
 " css
-NeoBundle 'lilydjwg/colorizer'
+"NeoBundle 'lilydjwg/colorizer'
 NeoBundle 'hail2u/vim-css3-syntax'
 "NeoBundle 'hokaccha/vim-css3-syntax'
 NeoBundle 'groenewege/vim-less'
-
 NeoBundle 'cakebaker/scss-syntax.vim'
 
 " Syntax Check
@@ -92,6 +94,7 @@ NeoBundle "thinca/vim-ref"
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
+NeoBundle 'tpope/vim-surround'
 "NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'sudo.vim'
 NeoBundle 'othree/eregex.vim'
@@ -132,7 +135,7 @@ endif
 
 	" バッファ一覧
 "	nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-	nnoremap <Leader>b :<C-u>Unite buffer<CR>
+	nnoremap <Space>b :<C-u>Unite buffer<CR>
 	" ファイル一覧
 "	nnoremap <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 	" レジスタ一覧
@@ -142,7 +145,7 @@ endif
 	" 常用セット
 "	nnoremap <Leader>u :<C-u>Unite buffer file_mru<CR>
 	" 全部乗せ
-	nnoremap <Leader>a :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+"	nnoremap <Leader>a :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
 	nnoremap <Leader>u :<C-u>Unite 
 
@@ -252,7 +255,7 @@ endif
 
 " colorizer {{{
 	" pluginによるmap設定をしない
-	let g:colorizer_nomap = 1
+"	let g:colorizer_nomap = 1
 "}}}
 
 " Gtags {{{
@@ -299,6 +302,8 @@ endif
 	let g:NERDTreeMinimalUI = 1
 	"NERDTreeを+|`などを使ってツリー表示をする。
 	let g:NERDTreeDirArrows = 0
+	
+	let g:NERDTreeHijackNetrw = 0
 
 " }}}
 
@@ -427,8 +432,8 @@ set listchars=tab:>-,trail:- " 不可視文字の表現設定
 
 "全角スペースを目立たせる
 "以下の設定だと赤い下線になる
-highlight ZenkakuSpace cterm=underline ctermfg=red guibg=white
-match ZenkakuSpace /　/
+"highlight ZenkakuSpace cterm=underline ctermfg=red guibg=white
+"match ZenkakuSpace /　/
 
 "
 " indent
@@ -471,10 +476,15 @@ nnoremap k gk
 " Esc2回押しでハイライト解除
 nmap <silent> <ESC><ESC> ;nohlsearch<CR><ESC>
 
-"バッファ切り替え
-noremap <Space> :bnext<CR>
-"noremap <silent> <S-Space> :bprev<CR>
-"noremap <silent> <Tab> :bprev<CR>
+"バッファ
+noremap <Space>n :bnext<CR>
+noremap <C-n> :bnext<CR>
+noremap <Space>p :bprevious<CR>
+noremap <C-p> :bprevious<CR>
+noremap <Space>w :bdelete<CR>
+noremap <C-w> :bdelete<CR>
+noremap <Space>s :update<CR>
+noremap <C-s> :update<CR>
 
 " 行頭,行末移動
 "map! <C-a> <Home>
@@ -513,6 +523,11 @@ vnoremap : ;
 "nnoremap [ %
 "nnoremap ] %
 
+"noremap <C-H> <C-W>h
+"noremap <C-J> <C-W>j
+"noremap <C-K> <C-W>k
+"noremap <C-L> <C-W>l
+
 " Ctrl-hjklでウィンドウ移動
 nnoremap <C-h> ;<C-h>j
 nnoremap <C-j> ;<C-w>j
@@ -539,4 +554,9 @@ function! s:split_nicely()
   endif
 endfunction
 " }}}
+
+" load ~/.vimrc.local
+if filereadable(expand('$HOME/.vimrc.local'))
+	source ~/.vimrc.local
+endif
 
