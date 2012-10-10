@@ -135,7 +135,7 @@ endif
 
 	" バッファ一覧
 "	nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-	nnoremap <Space>b :<C-u>Unite buffer<CR>
+	nnoremap <Leader>b :<C-u>Unite buffer<CR>
 	" ファイル一覧
 "	nnoremap <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 	" レジスタ一覧
@@ -318,7 +318,7 @@ endif
 
 "	nmap <Leader>/a <Plug>NERDCommenterAppend
 "	nmap <leader>/9 <Plug>NERDCommenterToEOL
-"	vmap <Leader>/s <Plug>NERDCommenterSexy
+	vmap <Leader>/s <Plug>NERDCommenterSexy
 "	vmap <Leader>/b <Plug>NERDCommenterMinimal
 " }}}
 
@@ -477,14 +477,12 @@ nnoremap k gk
 nmap <silent> <ESC><ESC> ;nohlsearch<CR><ESC>
 
 "バッファ
-noremap <Space>n :bnext<CR>
+noremap <Leader>n :bnext<CR>
 noremap <C-n> :bnext<CR>
-noremap <Space>p :bprevious<CR>
+noremap <Leader>p :bprevious<CR>
 noremap <C-p> :bprevious<CR>
-noremap <Space>w :bdelete<CR>
-noremap <C-w> :bdelete<CR>
-noremap <Space>s :update<CR>
-noremap <C-s> :update<CR>
+"noremap <Space>w :bdelete<CR>
+"noremap <Space>s :update<CR>
 
 " 行頭,行末移動
 "map! <C-a> <Home>
