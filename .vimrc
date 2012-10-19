@@ -14,12 +14,15 @@ let s:iswin = has('win32') || has('win64')
 filetype off
 
 if has('vim_starting')
-	set rtp+=$HOME/.vim/neobundle.vim.git
-"	set runtimepath+=~/.vim/.neobundle/neobundle.vim
+	if isdirectory( expand( $HOME . '/.vim/.neobundle/neobundle.vim') )
+		set runtimepath+=$HOME/.vim/.neobundle/neobundle.vim
+	else
+		set runtimepath+=$HOME/.vim/neobundle.vim.git
+	endif
 	call neobundle#rc( expand( $HOME . '/.vim/.neobundle' ) )
 endif
 
-"NeoBundle 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'thinca/vim-localrc'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
@@ -27,17 +30,28 @@ NeoBundle 'Shougo/vimproc', {
       \     'cygwin' : 'make -f make_cygwin.mak',
       \     'mac' : 'make -f make_mac.mak',
       \     'unix' : 'make -f make_unix.mak',
-      \    },
+      \   },
       \ }
 "after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
 " $ cd ~/.vim/.neobundle/vimproc
 " $ make -f make_mac.mak
 
 NeoBundle 'Shougo/vimshell'
+", {
+"      \ 'depends' : [
+"      \     'Shougo/vimproc'
+"      \   ]
+"      \ }
 
 " Explore/FileSystem
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/vimfiler'
+", {
+"      \ 'depends' : [
+"      \     'Shougo/unite.vim'
+"      \   ]
+"      \ }
+
 "NeoBundle 'project-1.4.1'
 "NeoBundle 'fholgado/minibufexpl.vim'
 NeoBundle 'Shougo/vinarise'
@@ -344,9 +358,7 @@ let b:match_words = "if:endif,foreach:endforeach,\<begin\>:\<end\>"
 "
 syntax on
 colorscheme default
-filetype on
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 
 " Rubyのタブ幅を2にする。
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2
