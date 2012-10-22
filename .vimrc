@@ -23,7 +23,6 @@ if has('vim_starting')
 endif
 
 NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'thinca/vim-localrc'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \     'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
@@ -32,26 +31,20 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \   },
       \ }
-"after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-" $ cd ~/.vim/.neobundle/vimproc
-" $ make -f make_mac.mak
-
 NeoBundle 'Shougo/vimshell'
-", {
-"      \ 'depends' : [
-"      \     'Shougo/vimproc'
-"      \   ]
-"      \ }
-
-" Explore/FileSystem
-NeoBundle 'scrooloose/nerdtree'
+      \ , {
+      \ 'depends' : [
+      \     'Shougo/vimproc'
+      \   ]
+      \ }
 NeoBundle 'Shougo/vimfiler'
-", {
-"      \ 'depends' : [
-"      \     'Shougo/unite.vim'
-"      \   ]
-"      \ }
+      \ , {
+      \ 'depends' : [
+      \     'Shougo/unite.vim'
+      \   ]
+      \ }
 
+NeoBundle 'scrooloose/nerdtree'
 "NeoBundle 'project-1.4.1'
 "NeoBundle 'fholgado/minibufexpl.vim'
 NeoBundle 'Shougo/vinarise'
@@ -59,12 +52,25 @@ NeoBundle 'Shougo/vinarise'
 "NeoBundle 'Shougo/vim-vcs'
 NeoBundle 'gtags.vim'
 
-" Display
-NeoBundle 'sjl/gundo.vim'
-"NeoBundle 'buftabs'
-NeoBundle 'anekos/char-counter-vim'
+" neocomplcache
+NeoBundle "Shougo/neocomplcache"
+NeoBundle 'ujihisa/neco-look'
+NeoBundle 'ujihisa/neco-ruby'
+NeoBundle 'ujihisa/neco-ghc'
 
+" neosnippet
+NeoBundle 'Shougo/neosnippet'
+
+" unite
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-ssh'
+NeoBundle 'hrsh7th/vim-unite-vcs'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'ujihisa/unite-font'
+
+"
 " Filetypes
+"
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rvm'
 NeoBundle 'tpope/vim-rails'
@@ -92,18 +98,12 @@ NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-scripts/javacomplete'
 
-" neocomplcache
-NeoBundle "Shougo/neocomplcache"
-NeoBundle 'Shougo/neocomplcache-snippets-complete'
-NeoBundle 'ujihisa/neco-look'
+" test
+NeoBundle 'janx/vim-rubytest'
 
-" unite
-NeoBundle "Shougo/unite.vim"
-NeoBundle 'Shougo/unite-ssh'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'ujihisa/unite-font'
-
-
+"
+" misc
+"
 NeoBundle "thinca/vim-ref"
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vim-jp/vimdoc-ja'
@@ -114,14 +114,13 @@ NeoBundle 'sudo.vim'
 NeoBundle 'othree/eregex.vim'
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
-
-NeoBundle 'thinca/vim-fontzoom'
+NeoBundle 'sjl/gundo.vim'
+NeoBundle 'anekos/char-counter-vim'
+NeoBundle 'thinca/vim-localrc'
 
 " colorschemes
-"NeoBundle "altercation/vim-colors-solarized"
 NeoBundle 'vim-scripts/Lucius'
 NeoBundle 'vim-scripts/mrkn256.vim'
-"NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 
 " recognize_charcode
@@ -200,7 +199,7 @@ endif
 
 " }}}
 
-" NeoComplcache {{{
+" neocomplcache {{{
 	" 補完ウィンドウの設定
 	set completeopt=menuone
 	" 起動時に有効化
@@ -209,6 +208,7 @@ endif
 	let g:neocomplcache_enable_smart_case = 1
 	" _(アンダースコア)区切りの補完を有効化
 	let g:neocomplcache_enable_underbar_completion = 1
+	let g:neocomplcache_enable_camel_case_completion = 1
 	" ポップアップメニューで表示される候補の数
 	let g:neocomplcache_max_list = 20
 	" シンタックスをキャッシュするときの最小文字長
@@ -216,9 +216,6 @@ endif
 	" 挿入モードのカーソル移動であんまり補完しないように
 	let g:NeoComplCache_EnableSkipCompletion = 1
 	let g:NeoComplCache_SkipInputTime = '0.5'
-	inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
-	inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
-
 	" ディクショナリ定義
 	let g:neocomplcache_dictionary_filetype_lists = {
 		\ 'default' : '',
@@ -238,39 +235,40 @@ endif
 	endif
 	let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
-	" スニペット
-	" 配置場所
-	let g:neocomplcache_snippets_dir = '~/.vim/snippets'
-	" スニペットを展開する。スニペットが関係しないところでは行末まで削除
-	imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
-	smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
 
-	" TABでスニペットを展開
-"	imap  neocomplcache#plugin#snippets_complete#expandable() ? "\(neocomplcache_snippets_expand)" : "\"
-"	smap  (neocomplcache_snippets_expand)
+	" カーソル上下で補完選択
+	inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
+	inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
 
 	" 前回行われた補完をキャンセルします
 	inoremap <expr><C-g> neocomplcache#undo_completion()
 	" 補完候補のなかから、共通する部分を補完します
 	inoremap <expr><C-l> neocomplcache#complete_common_string()
-	" close popup and save indent
+	" 改行で確定して補完ウィンドウを閉じる
 	inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-	" completion
+	" <TAB>で補完候補の選択
 	inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
 	inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
 	" <C-h>や<BS>を押したときに確実にポップアップを削除します
 	inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
-	inoremap <expr><C-h> neocomplcache#smart_close_popup() . "\<C-h>"
-	" 現在選択している候補を確定します
-"	inoremap <expr><C-y> neocomplcache#close_popup()
 	" 現在選択している候補をキャンセルし、ポップアップを閉じます
-"	inoremap <expr><C-e> neocomplcache#cancel_popup()
+	inoremap <expr><C-e> neocomplcache#cancel_popup()
+" }}}
+
+" neosnippet {{{
+	" 配置場所
+	let g:neosnippet#snippets_directory = '~/.vim/snippets'
+	" スニペットを展開する。スニペットが関係しないところでは行末まで削除
+	imap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
+	smap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
+"	imap <C-k> <Plug>(neosnippet_start_unite_snippet)
+"	smap <C-k> <Plug>(neosnippet_start_unite_snippet)
 " }}}
 
 " colorizer {{{
 	" pluginによるmap設定をしない
 "	let g:colorizer_nomap = 1
-"}}}
+" }}}
 
 " Gtags {{{
 	map <F3> :GtagsCursor<CR>
