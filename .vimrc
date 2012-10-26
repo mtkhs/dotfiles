@@ -118,6 +118,8 @@ NeoBundle 'sjl/gundo.vim'
 NeoBundle 'anekos/char-counter-vim'
 NeoBundle 'thinca/vim-localrc'
 
+"NeoBundle 'kana/vim-fakeclip'
+
 " colorschemes
 NeoBundle 'vim-scripts/Lucius'
 NeoBundle 'vim-scripts/mrkn256.vim'
@@ -272,8 +274,8 @@ endif
 
 " Gtags {{{
 	map <F3> :GtagsCursor<CR>
-	map <C-n> :cn<CR>
-	map <C-p> :cp<CR>
+"	map <C-n> :cn<CR>
+"	map <C-p> :cp<CR>
 " }}}
 
 " Gundo {{{
@@ -488,9 +490,9 @@ nmap <silent> <ESC><ESC> ;nohlsearch<CR><ESC>
 
 "バッファ
 noremap <Leader>n :bnext<CR>
-noremap <C-n> :bnext<CR>
+"noremap <C-n> :bnext<CR>
 noremap <Leader>p :bprevious<CR>
-noremap <C-p> :bprevious<CR>
+"noremap <C-p> :bprevious<CR>
 "noremap <Space>w :bdelete<CR>
 "noremap <Space>s :update<CR>
 
