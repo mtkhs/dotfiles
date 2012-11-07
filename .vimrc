@@ -13,6 +13,9 @@ let s:iswin = has('win32') || has('win64')
 " NeoBundle {{{
 filetype off
 
+" githubで使用するプロトコルをhttpsに
+let g:neobundle_default_git_protocol='https'
+
 if has('vim_starting')
 	if isdirectory( expand( $HOME . '/.vim/.neobundle/neobundle.vim') )
 		set runtimepath+=$HOME/.vim/.neobundle/neobundle.vim
@@ -100,6 +103,7 @@ NeoBundle 'vim-scripts/javacomplete'
 
 " test
 NeoBundle 'janx/vim-rubytest'
+NeoBundle 'thinca/vim-quickrun'
 
 "
 " misc
@@ -129,6 +133,10 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 if !has('kaoriya')
 	NeoBundle 'banyan/recognize_charcode.vim'
 endif
+" }}}
+
+" quickrun {{{
+	nmap <Leader>r <Plug>(quickrun)
 " }}}
 
 " syntastic {{{
@@ -360,6 +368,9 @@ syntax on
 colorscheme default
 filetype plugin indent on
 
+" ファイルタイプ追加
+autocmd BufNewFile,BufRead *.nb set filetype=ruby
+
 " Rubyのタブ幅を2にする。
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2
 autocmd FileType eruby setlocal tabstop=2 shiftwidth=2
@@ -368,6 +379,7 @@ autocmd FileType eruby setlocal tabstop=2 shiftwidth=2
 "let mapleader = '\'
 
 if has('kaoriya')
+	" IMEを制御させない
 	set imdisable
 endif
 
@@ -387,9 +399,12 @@ set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
 
 " https://github.com/amothic/dotfiles/blob/master/.vimrc
 " キーコードはすぐにタイムアウトし、マッピングはタイムアウトしない
-set notimeout ttimeout ttimeoutlen=200
+"set notimeout ttimeout ttimeoutlen=200
 
 " 全角記号が、半角幅で表示されるのを防ぐ
+" MacでTerminal.appを使っている場合は、下記も必要
+" https://kita.dyndns.org/wiki/?TerminalEastAsianAmbiguousClearer
+" https://github.com/Nyoho/TerminalEastAsianAmbiguousClearer
 if exists('&ambiwidth')
 	set ambiwidth=double
 endif
@@ -512,6 +527,9 @@ nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
+
+"inoremap <C-d> $
+"inoremap <C-a> @
 
 " yank, paste with os clipboard http://relaxedcolumn.blog8.fc2.com/blog-entry-125.html
 "noremap <Space>y "+y

@@ -9,6 +9,7 @@ alias su='su -l'
 alias du='du -h'
 alias df='df -h'
 alias duh='du -h -d 1 .'
+alias cl='clear'
 
 alias v='vim'
 alias vf='vimfiler'
