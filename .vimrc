@@ -5,7 +5,8 @@ set nocompatible
 autocmd!
 
 " 環境変数
-let s:iswin = has('win32') || has('win64')
+let s:is_mac = has('macunix') || ( executable('uname') && system('uname') =~? '^darwin' )
+let s:is_win = has('win32') || has('win64')
 
 " =============================================================================
 " for plugin settings
@@ -17,7 +18,7 @@ filetype off
 let g:neobundle_default_git_protocol='https'
 
 if has('vim_starting')
-	if isdirectory( expand( $HOME . '/.vim/.neobundle/neobundle.vim') )
+	if isdirectory( expand( $HOME . '/.vim/.neobundle/neobundle.vim' ) )
 		set runtimepath+=$HOME/.vim/.neobundle/neobundle.vim
 	else
 		set runtimepath+=$HOME/.vim/neobundle.vim.git
@@ -68,34 +69,37 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-ssh'
 NeoBundle 'hrsh7th/vim-unite-vcs'
+NeoBundle 'pasela/unite-webcolorname'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'ujihisa/unite-font'
 
 "
 " Filetypes
 "
+" ruby
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rvm'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
 NeoBundle 'tpope/vim-haml'
+NeoBundle 'semmons99/vim-ruby-matchit'
+
 
 " javascript
 "NeoBundle 'taichouchou2/vim-javascript'
 NeoBundle 'JavaScript-syntax'
 NeoBundle 'kchmck/vim-coffee-script'
 
-" html
+" html/css
 NeoBundle 'othree/html5.vim'
 "NeoBundle 'rstacruz/sparkup'
 NeoBundle "mattn/zencoding-vim"
-
-" css
 "NeoBundle 'lilydjwg/colorizer'
 NeoBundle 'hail2u/vim-css3-syntax'
 "NeoBundle 'hokaccha/vim-css3-syntax'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'cakebaker/scss-syntax.vim'
+NeoBundle 'Rykka/colorv.vim'
 
 " Syntax Check
 NeoBundle 'scrooloose/syntastic'
@@ -113,19 +117,24 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-endwise'
 "NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'sudo.vim'
 NeoBundle 'othree/eregex.vim'
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
 NeoBundle 'sjl/gundo.vim'
-NeoBundle 'anekos/char-counter-vim'
+"NeoBundle 'anekos/char-counter-vim'
 NeoBundle 'thinca/vim-localrc'
 
 "NeoBundle 'kana/vim-fakeclip'
 
+NeoBundle 'syngan/vim-pukiwiki'
+
+
 " colorschemes
-NeoBundle 'vim-scripts/Lucius'
+NeoBundle 'jnurmine/Zenburn'
+NeoBundle 'jonathanfilip/vim-lucius'
 NeoBundle 'vim-scripts/mrkn256.vim'
 NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 
@@ -149,15 +158,10 @@ endif
 " }}}
 
 " unite.vim {{{
-	"unite prefix key.
-"	nnoremap [unite] <Nop>
-"	nmap <Space>f [unite]
-
 	" file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
 	let g:unite_source_file_mru_filename_format = ''
 
 	" バッファ一覧
-"	nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 	nnoremap <Leader>b :<C-u>Unite buffer<CR>
 	" ファイル一覧
 "	nnoremap <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
@@ -175,8 +179,9 @@ endif
 " }}}
 
 " vimshell {{{
-	nnoremap <Leader>vs :VimShell<CR>
-	nnoremap <Leader>vp :VimShellPop<CR>
+	nnoremap <C-1> :VimShellPop<CR>
+	nnoremap <Leader>s :VimShell<CR>
+"	nnoremap <Leader>sp :VimShellPop<CR>
 " }}}
 
 " vimfiler {{{
@@ -200,7 +205,7 @@ endif
 "		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 	endfunction
 
-	nnoremap <silent> <leader>vf :VimFiler<CR>
+	nnoremap <silent> <leader>f :VimFiler<CR>
 
 	" 現在開いているバッファのディレクトリを開く
 "	nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>
@@ -230,11 +235,9 @@ endif
 	let g:neocomplcache_dictionary_filetype_lists = {
 		\ 'default' : '',
 		\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
-		\ 'nb' : $HOME . '/.vim/dict/ruby.dict',
 		\ 'c' : $HOME . '/.vim/dict/c.dict',
 		\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
 		\ 'php' : $HOME . '/.vim/dict/php.dict',
-		\ 'ctp' : $HOME . '/.vim/dict/php.dict',
 		\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
 		\ 'perl' : $HOME . '/.vim/dict/perl.dict',
 		\ 'java' : $HOME . '/.vim/dict/java.dict',
@@ -249,20 +252,30 @@ endif
 	" カーソル上下で補完選択
 	inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
 	inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
-
+	
 	" 前回行われた補完をキャンセルします
 	inoremap <expr><C-g> neocomplcache#undo_completion()
+	
 	" 補完候補のなかから、共通する部分を補完します
 	inoremap <expr><C-l> neocomplcache#complete_common_string()
+	
 	" 改行で確定して補完ウィンドウを閉じる
-	inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+"	inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+	" endwiseと干渉するので http://d.hatena.ne.jp/tacahiroy/20111006/1317851233
+	function! s:CrInInsertModeBetterWay()
+		return pumvisible() ? neocomplcache#close_popup() : "\<Cr>"
+	endfunction
+	inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
+
 	" <TAB>で補完候補の選択
 	inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
 	inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
+	
 	" <C-h>や<BS>を押したときに確実にポップアップを削除します
 	inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
+	
 	" 現在選択している候補をキャンセルし、ポップアップを閉じます
-	inoremap <expr><C-e> neocomplcache#cancel_popup()
+"	inoremap <expr><C-e> neocomplcache#cancel_popup()
 " }}}
 
 " neosnippet {{{
@@ -273,6 +286,10 @@ endif
 	smap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
 "	imap <C-k> <Plug>(neosnippet_start_unite_snippet)
 "	smap <C-k> <Plug>(neosnippet_start_unite_snippet)
+" }}}
+
+" ColorV {{{
+	let g:colorv_preview_ftype = 'css,scss,sass,less,html,javascript'
 " }}}
 
 " colorizer {{{
@@ -375,6 +392,9 @@ autocmd BufNewFile,BufRead *.nb set filetype=ruby
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2
 autocmd FileType eruby setlocal tabstop=2 shiftwidth=2
 
+" デフォルトvimrc_exampleのtextwidth設定上書き
+autocmd FileType text setlocal textwidth=0
+
 "let mapleader = ','
 "let mapleader = '\'
 
@@ -389,7 +409,7 @@ set formatoptions=lmoq         " テキスト整形オプション，マルチ�
 set formatoptions+=mM          " 日本語の行を連結時には空白を入力しない
 set vb t_vb=                   " ビープをならさない
 set backspace=indent,eol,start " バックスペースでなんでも消せるように
-set autoread                   " 他で書き換えられたら自動で読み直す
+"set autoread                   " 他で書き換えられたら自動で読み直す
 set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらないようにする
 set scrolloff=5                " スクロール時の余白確保
 "set clipboard & clipboard+=unnamed
@@ -399,7 +419,7 @@ set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
 
 " https://github.com/amothic/dotfiles/blob/master/.vimrc
 " キーコードはすぐにタイムアウトし、マッピングはタイムアウトしない
-"set notimeout ttimeout ttimeoutlen=200
+set notimeout ttimeout ttimeoutlen=200
 
 " 全角記号が、半角幅で表示されるのを防ぐ
 " MacでTerminal.appを使っている場合は、下記も必要
@@ -413,11 +433,11 @@ endif
 set directory-=.
 " http://vim-users.jp/2010/07/hack162/
 if has('persistent_undo')
-  set undodir=~/.vimundo
-  augroup vimrc-undofile
-    autocmd!
-    autocmd BufReadPre ~/* setlocal undofile
-  augroup END
+	set undodir=~/.vimundo
+	augroup vimrc-undofile
+		autocmd!
+		autocmd BufReadPre ~/* setlocal undofile
+	augroup END
 endif
 
 
@@ -432,7 +452,8 @@ function! g:Date()
 	return strftime("%x %H:%M")
 endfunction
 
-set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %{b:charCounterCount}%m%=%{g:Date()}
+"set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %{b:charCounterCount}%m%=%{g:Date()}
+set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %m%=%{g:Date()}
 " 確認用
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
@@ -449,6 +470,8 @@ set fileformats=unix,dos,mac
 "
 " display
 "
+set textwidth=0       " 入力されているテキストの最大幅
+set nowrap            " 行をウィンドウ幅で折り返さない
 "set display+=lastline " 画面最後の行をできる限り表示する
 set showmatch         " 括弧の対応をハイライト
 set matchtime=1       " 括弧の始めを表示する時間
@@ -456,6 +479,7 @@ set number            " 行番号表示
 set list              " 不可視文字表示
 "set listchars=tab:>-,trail:-,eol:<
 set listchars=tab:>-,trail:- " 不可視文字の表現設定
+set cmdheight=2       " コマンドラインの表示行数
 
 "全角スペースを目立たせる
 "以下の設定だと赤い下線になる
@@ -497,26 +521,25 @@ set history=100        " コマンド・検索パターンの履歴数
 "
 " keymap
 "
-" 行単位で移動(1行が長い場合に便利)
+" 行単位で移動
 nnoremap j gj
 nnoremap k gk
+
+" 括弧の補完
+inoremap { {}<LEFT>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+
 " Esc2回押しでハイライト解除
 nmap <silent> <ESC><ESC> ;nohlsearch<CR><ESC>
 
 "バッファ
 noremap <Leader>n :bnext<CR>
-"noremap <C-n> :bnext<CR>
 noremap <Leader>p :bprevious<CR>
-"noremap <C-p> :bprevious<CR>
-"noremap <Space>w :bdelete<CR>
-"noremap <Space>s :update<CR>
 
-" 行頭,行末移動
-"map! <C-a> <Home>
-"map! <C-e> <End>
-
-"inoremap <S-CR> <End>
-"map! <S-Return> <End>
+" 行頭、行末へ移動
+map! <C-a> <Home>
+map! <C-e> <End>
 
 " ヘルプ
 "nnoremap <C-h> :<C-u>help<Space>
@@ -528,40 +551,31 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 
-"inoremap <C-d> $
-"inoremap <C-a> @
-
-" yank, paste with os clipboard http://relaxedcolumn.blog8.fc2.com/blog-entry-125.html
-"noremap <Space>y "+y
-"noremap <Space>p "+p
-
-" 括弧の自動補完
-"inoremap { {}<LEFT>
-"inoremap [ []<LEFT>
-"inoremap ( ()<LEFT>
-"inoremap " ""<LEFT>
-"inoremap ' ''<LEFT>
-"vnoremap { "zdi^V{<C-R>z}<ESC>
-"vnoremap [ "zdi^V[<C-R>z]<ESC>
-"vnoremap ( "zdi^V(<C-R>z)<ESC>
-"vnoremap " "zdi^V"<C-R>z^V"<ESC>
-"vnoremap ' "zdi'<C-R>z'<ESC>
-
-" 対応するカッコに移動
-"nnoremap [ %
-"nnoremap ] %
-
-"noremap <C-H> <C-W>h
-"noremap <C-J> <C-W>j
-"noremap <C-K> <C-W>k
-"noremap <C-L> <C-W>l
-
 " Ctrl-hjklでウィンドウ移動
-nnoremap <C-h> ;<C-h>j
-nnoremap <C-j> ;<C-w>j
-nnoremap <C-k> ;<C-k>j
-nnoremap <C-l> ;<C-l>j
+"nnoremap <C-h> ;<C-h>j
+"nnoremap <C-j> ;<C-w>j
+"nnoremap <C-k> ;<C-k>j
+"nnoremap <C-l> ;<C-l>j
 
+"
+" autocmd
+"
+" ファイルを開くとそのファイルの位置にカレントディレクトリを変更
+augroup BufferAu
+	autocmd!
+	" カレントディレクトリを自動的に移動
+	autocmd BufNewFile,BufRead,BufEnter * if isdirectory(expand("%:p:h")) && bufname("%") !~ "NERD_tree" | cd %:p:h | endif
+augroup END
+
+augroup SkeletonAu
+	autocmd!
+	autocmd BufNewFile *.html 0r $HOME/.vim/template/skel.html
+	autocmd BufNewFile *.rb 0r $HOME/.vim/template/skel.rb
+augroup END
+
+"
+" command
+"
 " 文字エンコーディングを指定して、ファイルを開く
 command! Cp932 edit ++enc=cp932
 command! Eucjp edit ++enc=euc-jp
