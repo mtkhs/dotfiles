@@ -562,7 +562,6 @@ nnoremap <C-j> ;<C-w>j
 nnoremap <C-k> ;<C-k>j
 nnoremap <C-l> ;<C-l>j
 
-" <command>
 " 文字エンコーディングを指定して、ファイルを開く
 command! Cp932 edit ++enc=cp932
 command! Eucjp edit ++enc=euc-jp

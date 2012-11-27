@@ -6,11 +6,18 @@ case ${OSTYPE} in
 		export CLICOLOR=1
 		export LSCOLORS=DxGxcxdxCxegedabagacad
 		
+		# Java
+		export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+		export PATH=$JAVA_HOME/bin:$PATH
+		export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8 # javacの出力文字コードがなぜかShift_JISで化けるので
+		
 		# Wine
 		#export PATH=/Applications/Wine.app/Contents/Resources/bin:$PATH
 		
 		# homebrew
-		export PATH=$HOME/bin:/usr/local/bin:$PATH
+		export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+		export HOMEBREW_MAKE_JOBS=3
+		export HOMEBREW_CACHE=~/Library/Caches/Homebrew
 		
 		# review
 		export PATH=$HOME/review/bin:$PATH
