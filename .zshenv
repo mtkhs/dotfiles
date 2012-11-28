@@ -4,12 +4,16 @@ alias la='ls -l -A -v -F'
 alias ll='ls -l'
 
 alias sha1='openssl sha1'
-alias grep='grep --color=auto'
 alias su='su -l'
 alias du='du -h'
 alias df='df -h'
 alias duh='du -h -d 1 .'
 alias cl='clear'
+
+## GNU grepがあったら優先して使う。
+if type ggrep > /dev/null 2>&1; then
+	alias grep=ggrep
+fi
 
 alias v='vim'
 alias vf='vimfiler'

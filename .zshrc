@@ -1,20 +1,24 @@
 bindkey -e
 
-#autoload -U colors
-#colors
+autoload -Uz colors
+colors
 
-autoload -U compinit
+autoload -Uz compinit
 compinit
 
-#preexec(){ print -nP '%f' }
+autoload -Uz bashcompinit
+bashcompinit
+source $HOME/.zsh/git-completion.bash
+
+autoload -Uz add-zsh-hook
+
+autoload -Uz vcs_info
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 
 #
 # prompt
 #
-## PROMPT内で変数展開・コマンド置換・算術演算を実行する。
-setopt prompt_subst
 ## PROMPT内で「%」文字から始まる置換機能を有効にする。
 #setopt prompt_percent
 ## コピペしやすいようにコマンド実行後は右プロンプトを消す。
@@ -22,18 +26,36 @@ setopt transient_rprompt
 # 出力の文字列末尾に改行コードが無い場合でも表示
 #unsetopt promptcr
 
+# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+# ※PROMPTへの代入文字列がシングルクォートで括らないとダメになるらしい
+setopt prompt_subst
+
+define_vcs_info() {
+	# http://liosk.blog103.fc2.com/blog-entry-209.html
+	psvar=()
+	LANG=en_US.UTF-8 vcs_info
+	psvar[1]=$vcs_info_msg_0_
+}
+add-zsh-hook precmd define_vcs_info
+
+function face {
+echo '%(?.%F{green}(^-^)%f.%F{red}(`-`%)%f)'
+}
+
 case ${UID} in
 0)
-	PROMPT='%n@%m:%~# '
-	PROMPT2="%n@%m:%_# "
+	PROMPT='`face` %n@%m:%~# '
+	PROMPT2='`face` %n@%m:%_# '
+	RPROMPT='%1v'
 	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
 		PROMPT="%{[37m%}${PROMPT}%{[m%}"
 	;;
 *)
-	PROMPT='%n@%m:%~$ '
-	PROMPT2='%n@%m:%_$ '
+	PROMPT='`face` %n@%m:%~$ '
+	PROMPT2='`face` %n@%m:%_$ '
+	RPROMPT='%1v'
 	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		PROMPT="%{[37m%}${PROMPT}%{[m%}"
+		PROMPT='%{[37m%}${PROMPT}%{[m%}'
 	;;
 esac
 
@@ -131,27 +153,27 @@ bindkey     " "         my-expand-abbrev
 # extract http://d.hatena.ne.jp/jeneshicc/20110215/1297778049
 #
 extract () {
-  if [ -f $1 ] ; then
-      case $1 in
-          *.tar.bz2) tar xvjf $1 ;;
-          *.tar.gz) tar xvzf $1 ;;
-          *.tar.xz) tar xvJf $1 ;;
-          *.bz2) bunzip2 $1 ;;
-          *.rar) unrar x $1 ;;
-          *.gz) gunzip $1 ;;
-          *.tar) tar xvf $1 ;;
-          *.tbz2) tar xvjf $1 ;;
-          *.tgz) tar xvzf $1 ;;
-          *.zip) unzip $1 ;;
-          *.Z) uncompress $1 ;;
-          *.7z) 7z x $1 ;;
-          *.lzma) lzma -dv $1 ;;
-          *.xz) xz -dv $1 ;;
-          *) echo "don't know how to extract '$1'..." ;;
-      esac
-  else
-      echo "'$1' is not a valid file!"
-  fi
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2) tar xvjf $1 ;;
+			*.tar.gz) tar xvzf $1 ;;
+			*.tar.xz) tar xvJf $1 ;;
+			*.bz2) bunzip2 $1 ;;
+			*.rar) unrar x $1 ;;
+			*.gz) gunzip $1 ;;
+			*.tar) tar xvf $1 ;;
+			*.tbz2) tar xvjf $1 ;;
+			*.tgz) tar xvzf $1 ;;
+			*.zip) unzip $1 ;;
+			*.Z) uncompress $1 ;;
+			*.7z) 7z x $1 ;;
+			*.lzma) lzma -dv $1 ;;
+			*.xz) xz -dv $1 ;;
+			*) echo "don't know how to extract '$1'..." ;;
+		esac
+	else
+		echo "'$1' is not a valid file!"
+	fi
 }
 alias ex='extract'
 

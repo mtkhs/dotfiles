@@ -526,9 +526,9 @@ nnoremap j gj
 nnoremap k gk
 
 " 括弧の補完
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
+"inoremap { {}<LEFT>
+"inoremap [ []<LEFT>
+"inoremap ( ()<LEFT>
 
 " Esc2回押しでハイライト解除
 nmap <silent> <ESC><ESC> ;nohlsearch<CR><ESC>
@@ -588,11 +588,11 @@ command! Sjis Cp932
 " https://github.com/ujihisa/config/blob/master/_vimrc
 command! SplitNicely call s:split_nicely() " {{{
 function! s:split_nicely()
-  if 80*2 * 15/16 <= winwidth(0) " FIXME: threshold customization
-    vsplit
-  else
-    split
-  endif
+	if 80*2 * 15/16 <= winwidth(0) " FIXME: threshold customization
+		vsplit
+	else
+		split
+	endif
 endfunction
 " }}}
 

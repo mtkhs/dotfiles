@@ -1,7 +1,35 @@
+### lv
+## -c: ANSIエスケープシーケンスの色付けなどを有効にする。
+## -l: 1行が長くと折り返されていても1行として扱う。
+##     （コピーしたときに余計な改行を入れない。）
+export LV="-c -l"
+
+### grep
+## デフォルトオプションの設定
+export GREP_OPTIONS
+### バイナリファイルにはマッチさせない。
+GREP_OPTIONS="--binary-files=without-match"
+### grep対象としてディレクトリを指定したらディレクトリ内を再帰的にgrepする。
+#GREP_OPTIONS="--directories=recurse $GREP_OPTIONS"
+### 拡張子が.tmpのファイルは無視する。
+GREP_OPTIONS="--exclude=\*.tmp $GREP_OPTIONS"
+## 管理用ディレクトリを無視する。
+if grep --help | grep -q -- --exclude-dir; then
+	GREP_OPTIONS="--exclude-dir=.svn $GREP_OPTIONS"
+	GREP_OPTIONS="--exclude-dir=.git $GREP_OPTIONS"
+	GREP_OPTIONS="--exclude-dir=.deps $GREP_OPTIONS"
+	GREP_OPTIONS="--exclude-dir=.libs $GREP_OPTIONS"
+fi
+### 可能なら色を付ける。
+if grep --help | grep -q -- --color; then
+	GREP_OPTIONS="--color=auto $GREP_OPTIONS"
+fi
+
 case ${OSTYPE} in
 	darwin*)
 		export LANG=ja_JP.UTF-8
 		export EDITOR='vim'
+		export PAGER='lv'
 		
 		export CLICOLOR=1
 		export LSCOLORS=DxGxcxdxCxegedabagacad
