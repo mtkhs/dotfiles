@@ -6,6 +6,7 @@ cd $DOTFILES
 
 case ${OSTYPE} in
 	darwin*)
+		ln -s -h $DOTFILES/.zsh        $HOME/.zsh
 		ln -s    $DOTFILES/.zshrc      $HOME/.zshrc
 		ln -s    $DOTFILES/.zshenv     $HOME/.zshenv
 		ln -s    $DOTFILES/.zprofile   $HOME/.zprofile
@@ -15,6 +16,7 @@ case ${OSTYPE} in
 		ln -s -h $DOTFILES/.bundler    $HOME/.bundler
 		;;
 	linux*)
+		ln -s -T $DOTFILES/.zsh        $HOME/.zsh
 		ln -s    $DOTFILES/.zshrc      $HOME/.zshrc
 		ln -s    $DOTFILES/.zshenv     $HOME/.zshenv
 		ln -s    $DOTFILES/.zprofile   $HOME/.zprofile

@@ -263,9 +263,10 @@ endif
 "	inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 	" endwiseと干渉するので http://d.hatena.ne.jp/tacahiroy/20111006/1317851233
 	function! s:CrInInsertModeBetterWay()
-		return pumvisible() ? neocomplcache#close_popup() : "\<Cr>"
+		return pumvisible() ? neocomplcache#close_popup()."\<CR>" : "\<CR>"
 	endfunction
-	inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
+"	inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
+	inoremap <expr> <silent> <CR> <SID>CrInInsertModeBetterWay()
 
 	" <TAB>で補完候補の選択
 	inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
