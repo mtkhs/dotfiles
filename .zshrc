@@ -55,7 +55,7 @@ case ${UID} in
 	PROMPT2='`face` %n@%m:%_$ '
 	RPROMPT='%1v'
 	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		PROMPT='%{[37m%}${PROMPT}%{[m%}'
+		PROMPT="%{[37m%}${PROMPT}%{[m%}"
 	;;
 esac
 
