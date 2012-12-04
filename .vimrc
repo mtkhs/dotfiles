@@ -526,6 +526,9 @@ set history=100        " コマンド・検索パターンの履歴数
 nnoremap j gj
 nnoremap k gk
 
+inoremap <C-b> <PageUp>
+inoremap <C-f> <PageDown>
+
 " 括弧の補完
 "inoremap { {}<LEFT>
 "inoremap [ []<LEFT>
