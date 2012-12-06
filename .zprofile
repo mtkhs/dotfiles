@@ -88,6 +88,7 @@ esac
 # nvm
 if [[ -f $HOME/.nvm/nvm.sh ]]; then
 	source $HOME/.nvm/nvm.sh
+	export NODE_PATH=${NVM_PATH}_modules${NODE_PATH:+:}${NODE_PATH}
 fi
 
 # rvm

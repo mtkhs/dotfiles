@@ -152,9 +152,14 @@ endif
 	" http://d.hatena.ne.jp/heavenshell/20120109/1326089510
 	let g:syntastic_mode_map = {
 		\ 'mode': 'active',
-		\ 'active_filetypes': [ 'ruby', 'javascript' ],
+		\ 'active_filetypes': [ 'ruby', 'javascript', 'python', 'php', 'perl', 'css', 'html' ],
 		\ 'passive_filetypes': []
 		\ }
+	let g:syntastic_auto_loc_list = 1
+	let g:syntastic_echo_current_error = 1
+	let g:syntastic_auto_jump = 0
+	let g:syntastic_loc_list_height = 5
+	let g:syntastic_javascript_checker = 'jshint'
 " }}}
 
 " unite.vim {{{
@@ -179,9 +184,8 @@ endif
 " }}}
 
 " vimshell {{{
-	nnoremap <C-1> :VimShellPop<CR>
-	nnoremap <Leader>s :VimShell<CR>
-"	nnoremap <Leader>sp :VimShellPop<CR>
+"	nnoremap <C-1> :VimShellPop<CR>
+	nnoremap <silent><Leader>] :VimShellPop<CR>
 " }}}
 
 " vimfiler {{{
@@ -205,7 +209,7 @@ endif
 "		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 	endfunction
 
-	nnoremap <silent> <leader>f :VimFiler<CR>
+	nnoremap <silent><leader>f :VimFiler<CR>
 
 	" 現在開いているバッファのディレクトリを開く
 "	nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>
@@ -266,7 +270,7 @@ endif
 		return pumvisible() ? neocomplcache#close_popup()."\<CR>" : "\<CR>"
 	endfunction
 "	inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
-	inoremap <expr> <silent> <CR> <SID>CrInInsertModeBetterWay()
+	inoremap <expr><silent><CR> CrInInsertModeBetterWay()
 
 	" <TAB>で補完候補の選択
 	inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
@@ -576,6 +580,10 @@ augroup SkeletonAu
 	autocmd BufNewFile *.html 0r $HOME/.vim/template/skel.html
 	autocmd BufNewFile *.rb 0r $HOME/.vim/template/skel.rb
 augroup END
+
+" quickfixを自動で開く
+" http://webtech-walker.com/archive/2009/09/29213156.html
+autocmd QuickfixCmdPost make,grep,grepadd,vimgrep if len(getqflist()) != 0 | copen | endif
 
 "
 " command
