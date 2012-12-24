@@ -107,7 +107,8 @@ NeoBundle 'vim-scripts/javacomplete'
 
 " test
 NeoBundle 'janx/vim-rubytest'
-NeoBundle 'thinca/vim-quickrun'
+"NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'osyo-manga/vim-quickrun'
 
 "
 " misc
@@ -126,7 +127,7 @@ NeoBundle 'othree/eregex.vim'
 NeoBundle 'sjl/gundo.vim'
 "NeoBundle 'anekos/char-counter-vim'
 NeoBundle 'thinca/vim-localrc'
-
+NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'kana/vim-fakeclip'
 
 NeoBundle 'syngan/vim-pukiwiki'
@@ -146,13 +147,15 @@ endif
 
 " quickrun {{{
 	nmap <Leader>r <Plug>(quickrun)
+	let g:quickrun_config = {}
+	let g:quickrun_config.javascript = {'command': 'node'}
 " }}}
 
 " syntastic {{{
 	" http://d.hatena.ne.jp/heavenshell/20120109/1326089510
 	let g:syntastic_mode_map = {
 		\ 'mode': 'active',
-		\ 'active_filetypes': [ 'ruby', 'javascript', 'python', 'php', 'perl', 'css', 'html' ],
+		\ 'active_filetypes': [ 'ruby', 'javascript', 'python', 'php', 'perl', 'css', 'html', 'json' ],
 		\ 'passive_filetypes': []
 		\ }
 	let g:syntastic_auto_loc_list = 1
@@ -355,14 +358,12 @@ endif
 	let g:NERDCreateDefaultMappings = 0
 	let NERDSpaceDelims = 1
 
-	map <C-/> <Plug>NERDCommenterToggle
-
 	nmap <Leader>/ <Plug>NERDCommenterToggle
 	vmap <Leader>/ <Plug>NERDCommenterToggle
 
 "	nmap <Leader>/a <Plug>NERDCommenterAppend
 "	nmap <leader>/9 <Plug>NERDCommenterToEOL
-	vmap <Leader>/s <Plug>NERDCommenterSexy
+"	vmap <Leader>/s <Plug>NERDCommenterSexy
 "	vmap <Leader>/b <Plug>NERDCommenterMinimal
 " }}}
 
@@ -392,6 +393,7 @@ filetype plugin indent on
 
 " ファイルタイプ追加
 autocmd BufNewFile,BufRead *.nb set filetype=ruby
+autocmd BufNewFile,BufRead *.json set filetype=json
 
 " Rubyのタブ幅を2にする。
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2
@@ -417,10 +419,9 @@ set backspace=indent,eol,start " バックスペースでなんでも消せる�
 "set autoread                   " 他で書き換えられたら自動で読み直す
 set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらないようにする
 set scrolloff=5                " スクロール時の余白確保
-"set clipboard & clipboard+=unnamed
-set clipboard+=unnamed
 set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
-
+set foldtext=FoldCCtext()      " 畳み
+set clipboard=unnamed,autoselect
 
 " https://github.com/amothic/dotfiles/blob/master/.vimrc
 " キーコードはすぐにタイムアウトし、マッピングはタイムアウトしない
