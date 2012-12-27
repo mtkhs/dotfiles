@@ -84,7 +84,6 @@ NeoBundle 'tpope/vim-rake'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'semmons99/vim-ruby-matchit'
 
-
 " javascript
 "NeoBundle 'taichouchou2/vim-javascript'
 NeoBundle 'JavaScript-syntax'
@@ -100,6 +99,7 @@ NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'Rykka/colorv.vim'
+NeoBundle 'jcf/vim-latex'
 
 " Syntax Check
 NeoBundle 'scrooloose/syntastic'
@@ -127,7 +127,7 @@ NeoBundle 'othree/eregex.vim'
 NeoBundle 'sjl/gundo.vim'
 "NeoBundle 'anekos/char-counter-vim'
 NeoBundle 'thinca/vim-localrc'
-NeoBundle 'LeafCage/foldCC'
+"NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'kana/vim-fakeclip'
 
 NeoBundle 'syngan/vim-pukiwiki'
@@ -420,7 +420,7 @@ set backspace=indent,eol,start " バックスペースでなんでも消せる�
 set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらないようにする
 set scrolloff=5                " スクロール時の余白確保
 set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
-set foldtext=FoldCCtext()      " 畳み
+"set foldtext=FoldCCtext()      " 畳み
 set clipboard=unnamed,autoselect
 
 " https://github.com/amothic/dotfiles/blob/master/.vimrc
