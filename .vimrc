@@ -129,15 +129,20 @@ NeoBundle 'sjl/gundo.vim'
 NeoBundle 'thinca/vim-localrc'
 "NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'kana/vim-fakeclip'
+NeoBundle 'vim-scripts/Highlight-UnMatched-Brackets'
 
 NeoBundle 'syngan/vim-pukiwiki'
 
 
 " colorschemes
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'jnurmine/Zenburn'
 NeoBundle 'jonathanfilip/vim-lucius'
 NeoBundle 'vim-scripts/mrkn256.vim'
 NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'croaker/mustang-vim'
+NeoBundle 'therubymug/vim-pyte'
 
 " recognize_charcode
 if !has('kaoriya')
@@ -148,7 +153,7 @@ endif
 " quickrun {{{
 	nmap <Leader>r <Plug>(quickrun)
 	let g:quickrun_config = {}
-	let g:quickrun_config.javascript = {'command': 'node'}
+	let g:quickrun_config.javascript = { 'command': 'node' }
 " }}}
 
 " syntastic {{{
@@ -377,18 +382,55 @@ endif
 "	inoremap <buffer> <expr> , smartchr#loop(', ', ',,')
 " }}}
 
+" vim-latex {{{
+	set shellslash
+	set grepprg=grep\ -nH\ $*
+	let g:tex_flavor='latex'
+	let g:Imap_UsePlaceHolders = 1
+	let g:Imap_DeleteEmptyPlaceHolders = 1
+	let g:Imap_StickyPlaceHolders = 0
+	let g:Tex_DefaultTargetFormat = 'pdf'
+	let g:Tex_FormatDependency_ps = 'dvi,ps'
+	let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+	let g:Tex_CompileRule_dvi = '/usr/texbin/platex -synctex=1 -interaction=nonstopmode $*'
+	let g:Tex_CompileRule_ps = '/usr/texbin/dvips -Ppdf -o $*.ps $*.dvi'
+	let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
+"	let g:Tex_CompileRule_pdf = '/usr/texbin/pdflatex $*.tex'
+"	let g:Tex_CompileRule_pdf = '/usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $*'
+	let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
+	let g:Tex_MakeIndexFlavor = '/usr/texbin/mendex $*.idx'
+	let g:Tex_UseEditorSettingInDVIViewer = 1
+	let g:Tex_ViewRule_dvi = '/usr/bin/open -a PictPrinter.app'
+"	let g:Tex_ViewRule_dvi = '/usr/bin/open -a Skim.app'
+	let g:Tex_ViewRule_ps = '/usr/local/bin/gv --watch'
+	let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview.app'
+"	let g:Tex_ViewRule_pdf = '/usr/bin/open -a Skim.app'
+	"let g:Tex_ViewRule_pdf = '/usr/bin/open -a TeXShop.app'
+	"let g:Tex_ViewRule_pdf = '/usr/bin/open -a TeXworks.app'
+	"let g:Tex_ViewRule_pdf = '/usr/bin/open -a "Adobe Reader.app"'
+" }}}
+
 "
 " macros
 "
 source $VIMRUNTIME/macros/matchit.vim
 let b:match_words = "if:endif,foreach:endforeach,\<begin\>:\<end\>"
 
+"
+" colorschemes
+"
+let g:jellybeans_overrides = {
+\    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
+\              'ctermfg': 'Black', 'ctermbg': 'Yellow',
+\              'attr': 'bold' },
+\}
+
 
 "
 " basic
 "
 syntax on
-colorscheme default
+colorscheme jellybeans
 filetype plugin indent on
 
 " ファイルタイプ追加
@@ -419,7 +461,7 @@ set backspace=indent,eol,start " バックスペースでなんでも消せる�
 "set autoread                   " 他で書き換えられたら自動で読み直す
 set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらないようにする
 set scrolloff=5                " スクロール時の余白確保
-set matchpairs=(:),{:},[:],<:> " %で移動できる対応括弧
+set matchpairs+=<:> " %で移動できる対応括弧
 "set foldtext=FoldCCtext()      " 畳み
 set clipboard=unnamed,autoselect
 
@@ -479,8 +521,8 @@ set fileformats=unix,dos,mac
 set textwidth=0       " 入力されているテキストの最大幅
 set nowrap            " 行をウィンドウ幅で折り返さない
 "set display+=lastline " 画面最後の行をできる限り表示する
-set showmatch         " 括弧の対応をハイライト
-set matchtime=1       " 括弧の始めを表示する時間
+"set showmatch         " 括弧の対応をハイライト
+set matchtime=0       " 括弧の始めを表示する時間
 set number            " 行番号表示
 set list              " 不可視文字表示
 "set listchars=tab:>-,trail:-,eol:<
