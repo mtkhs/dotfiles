@@ -78,7 +78,6 @@ NeoBundle 'ujihisa/unite-font'
 "
 " ruby
 NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-rvm'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
 NeoBundle 'tpope/vim-haml'
@@ -135,6 +134,9 @@ NeoBundle 'syngan/vim-pukiwiki'
 
 
 " colorschemes
+NeoBundle 'fugalh/desert.vim'
+NeoBundle 'rainux/vim-desert-warm-256'
+NeoBundle 'matthewtodd/vim-twilight'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'jnurmine/Zenburn'
 NeoBundle 'jonathanfilip/vim-lucius'

@@ -91,15 +91,18 @@ if [[ -f $HOME/.nvm/nvm.sh ]]; then
 	export NODE_PATH=${NVM_PATH}_modules${NODE_PATH:+:}${NODE_PATH}
 fi
 
-# rvm
-if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+if [[ -s "$HOME/.rbenv" ]]; then
+	# rbenv
+	eval "$(rbenv init - zsh)"
+elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+	# rvm
 	export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 	source $HOME/.rvm/scripts/rvm
 fi
 
 # pythonbrew
 if [[ -s "$HOME/.pythonbrew/etc/bashrc" ]]; then
-	source "$HOME/.pythonbrew/etc/bashrc"
+	source $HOME/.pythonbrew/etc/bashrc
 #	pybrew switch 2.7.3 > /dev/null
 fi
 
