@@ -6,7 +6,7 @@ autocmd!
 
 " 環境変数
 let s:is_mac = has('macunix') || ( executable('uname') && system('uname') =~? '^darwin' )
-let s:is_win = has('win32') || has('win64')
+let s:is_windows = has('win32') || has('win64')
 
 " =============================================================================
 " for plugin settings
@@ -26,7 +26,7 @@ if has('vim_starting')
 	call neobundle#rc( expand( $HOME . '/.vim/.neobundle' ) )
 endif
 
-NeoBundle 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \     'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
@@ -49,8 +49,6 @@ NeoBundle 'Shougo/vimfiler'
       \ }
 
 NeoBundle 'scrooloose/nerdtree'
-"NeoBundle 'project-1.4.1'
-"NeoBundle 'fholgado/minibufexpl.vim'
 NeoBundle 'Shougo/vinarise'
 
 "NeoBundle 'Shougo/vim-vcs'
@@ -72,11 +70,18 @@ NeoBundle 'hrsh7th/vim-unite-vcs'
 NeoBundle 'pasela/unite-webcolorname'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'ujihisa/unite-font'
+" NeoBundle 'sgur/unite-qf'
+"NeoBundle 'osyo-manga/unite-quickfix'
+if s:is_windows
+	NeoBundle 'sgur/unite-everything'
+endif
+
 
 "
 " Filetypes
 "
 " ruby
+NeoBundle 'basyura/unite-rails'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
@@ -90,9 +95,7 @@ NeoBundle 'kchmck/vim-coffee-script'
 
 " html/css
 NeoBundle 'othree/html5.vim'
-"NeoBundle 'rstacruz/sparkup'
 NeoBundle "mattn/zencoding-vim"
-"NeoBundle 'lilydjwg/colorizer'
 NeoBundle 'hail2u/vim-css3-syntax'
 "NeoBundle 'hokaccha/vim-css3-syntax'
 NeoBundle 'groenewege/vim-less'
@@ -145,6 +148,8 @@ NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'croaker/mustang-vim'
 NeoBundle 'therubymug/vim-pyte'
+
+NeoBundle 'Lokaltog/vim-powerline' " The ultimate vim statusline utility.
 
 " recognize_charcode
 if !has('kaoriya')
@@ -412,6 +417,11 @@ endif
 	"let g:Tex_ViewRule_pdf = '/usr/bin/open -a "Adobe Reader.app"'
 " }}}
 
+" vim-powerline {{{
+let g:Powerline_mode_n = 'NORMAL'
+" http://d.hatena.ne.jp/itchyny/20120609/1339249777
+" }}}
+
 "
 " macros
 "
@@ -450,9 +460,11 @@ autocmd FileType text setlocal textwidth=0
 "let mapleader = '\'
 
 if has('kaoriya')
-	" IMEを制御させない
-	set imdisable
+	set imdisable " IMEを制御させない
 endif
+
+set lazyredraw " スクリプト実行中に再描画しない
+set ttyfast    " 高速ターミナル接続
 
 set nobackup                   " バックアップ取らない
 set hidden                     " 編集中でも他のファイルを開けるようにする
@@ -465,6 +477,7 @@ set whichwrap=b,s,h,l,<,>,[,]  " カーソルを行頭、行末で止まらな�
 set scrolloff=5                " スクロール時の余白確保
 set matchpairs+=<:> " %で移動できる対応括弧
 "set foldtext=FoldCCtext()      " 畳み
+" set foldmethod=marker
 set clipboard=unnamed,autoselect
 
 " https://github.com/amothic/dotfiles/blob/master/.vimrc
@@ -502,8 +515,8 @@ function! g:Date()
 	return strftime("%x %H:%M")
 endfunction
 
+"set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %m%=%{g:Date()}
 "set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %{b:charCounterCount}%m%=%{g:Date()}
-set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l/%L\ (%P)\ %m%=%{g:Date()}
 " 確認用
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
@@ -511,8 +524,12 @@ set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %v,%l
 "
 " encoding
 "
-set encoding=utf-8
-set termencoding=utf-8
+if s:is_windows
+	set termencoding=sjis
+else
+	set encoding=utf-8
+	set termencoding=utf-8
+endif
 set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp
 set fileformats=unix,dos,mac
 
@@ -628,7 +645,8 @@ augroup END
 
 " quickfixを自動で開く
 " http://webtech-walker.com/archive/2009/09/29213156.html
-autocmd QuickfixCmdPost make,grep,grepadd,vimgrep if len(getqflist()) != 0 | copen | endif
+"autocmd QuickfixCmdPost make,grep,grepadd,vimgrep if len(getqflist()) != 0 | copen | endif
+"autocmd QuickFixCmdPost * Unite qf
 
 "
 " command
