@@ -29,30 +29,29 @@ endif
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
-      \     'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
+      \     'windows' : 'make -f make_mingw32.mak',
       \     'cygwin' : 'make -f make_cygwin.mak',
       \     'mac' : 'make -f make_mac.mak',
       \     'unix' : 'make -f make_unix.mak',
       \   },
       \ }
-NeoBundle 'Shougo/vimshell'
-      \ , {
-      \ 'depends' : [
-      \     'Shougo/vimproc'
-      \   ]
+NeoBundle 'Shougo/vimshell', {
+      \ 'depends' : 'Shougo/vimproc'
       \ }
-NeoBundle 'Shougo/vimfiler'
-      \ , {
-      \ 'depends' : [
-      \     'Shougo/unite.vim'
-      \   ]
+NeoBundle 'Shougo/vimfiler', {
+      \ 'depends' : 'Shougo/unite.vim'
       \ }
 
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/vinarise'
 
 "NeoBundle 'Shougo/vim-vcs'
-NeoBundle 'gtags.vim'
+NeoBundleLazy 'Shougo/vim-vcs', {
+      \ 'depends' : 'thinca/vim-openbuf',
+      \ 'autoload' : {'commands' : 'Vcs'},
+      \ }
+NeoBundleLazy 'choplin/unite-vim_hacks'
+
 
 " neocomplcache
 NeoBundle "Shougo/neocomplcache"
@@ -63,7 +62,6 @@ NeoBundle 'ujihisa/neco-ghc'
 " neosnippet
 NeoBundle 'Shougo/neosnippet'
 
-" unite
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-ssh'
 NeoBundle 'hrsh7th/vim-unite-vcs'
@@ -71,26 +69,47 @@ NeoBundle 'pasela/unite-webcolorname'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'ujihisa/unite-font'
 " NeoBundle 'sgur/unite-qf'
-"NeoBundle 'osyo-manga/unite-quickfix'
+NeoBundle 'osyo-manga/unite-quickfix'
+NeoBundle 'osyo-manga/unite-filetype'
 if s:is_windows
 	NeoBundle 'sgur/unite-everything'
 endif
-
 
 "
 " Filetypes
 "
 " ruby
-NeoBundle 'basyura/unite-rails'
-NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-rake'
-NeoBundle 'tpope/vim-haml'
+" NeoBundle 'tpope/vim-rake'
+NeoBundleLazy 'ujihisa/unite-rake', {
+      \ 'depends' : 'Shougo/unite.vim'
+	  \ }
+NeoBundleLazy 'basyura/unite-rails', {
+      \ 'depends' : 'Shougo/unite.vim'
+	  \ }
+NeoBundleLazy 'vim-ruby/vim-ruby', { 'autoload' : {
+      \ 'mappings' : '<Plug>(ref-keyword)',
+      \ 'filetypes' : [ 'ruby', 'eruby' ]
+      \ }}
+NeoBundleLazy 'tpope/vim-haml', { 'autoload' : {
+	  \ 'filetypes' : 'haml'
+	  \ }}
 NeoBundle 'semmons99/vim-ruby-matchit'
+NeoBundleLazy 'taichouchou2/unite-reek', {
+      \ 'build' : {
+      \    'mac': 'gem install reek',
+      \    'unix': 'gem install reek',
+      \ },
+      \ 'autoload': { 'filetypes': ['ruby', 'eruby', 'haml'] },
+      \ 'depends' : 'Shougo/unite.vim' }
 
 " javascript
-"NeoBundle 'taichouchou2/vim-javascript'
-NeoBundle 'JavaScript-syntax'
+NeoBundleLazy 'jiangmiao/simple-javascript-indenter', { 'autoload' : {
+      \ 'filetypes' : 'javascript',
+      \ }}
+NeoBundleLazy 'jelera/vim-javascript-syntax', { 'autoload' : {
+      \ 'filetypes' : 'javascript',
+      \ }}
 NeoBundle 'kchmck/vim-coffee-script'
 
 " html/css
@@ -109,13 +128,16 @@ NeoBundle 'vim-scripts/javacomplete'
 
 " test
 NeoBundle 'janx/vim-rubytest'
-"NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'osyo-manga/vim-quickrun'
+"NeoBundleLazy 'thinca/vim-quickrun'
+NeoBundleLazy 'osyo-manga/vim-quickrun'
 
 "
 " misc
 "
-NeoBundle "thinca/vim-ref"
+NeoBundle 'gtags.vim'
+NeoBundleLazy 'thinca/vim-ref', { 'autoload' : {
+      \ 'commands' : 'Ref'
+      \ }}
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
@@ -418,8 +440,13 @@ endif
 " }}}
 
 " vim-powerline {{{
-let g:Powerline_mode_n = 'NORMAL'
-" http://d.hatena.ne.jp/itchyny/20120609/1339249777
+	let g:Powerline_mode_n = 'NORMAL'
+	" http://d.hatena.ne.jp/itchyny/20120609/1339249777
+" }}}
+
+" simple-javascript-indenter {{{
+	let g:SimpleJsIndenter_BriefMode = 1
+	let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
 "
