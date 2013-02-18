@@ -26,7 +26,7 @@ if has('vim_starting')
 	call neobundle#rc( expand( $HOME . '/.vim/.neobundle' ) )
 endif
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
