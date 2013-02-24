@@ -1,15 +1,12 @@
 colorscheme jellybeans
 
-set guifont=Ricty Discord    " フォント
+set guifont=Ricty\ Discord    " フォント
 "set antialias                " アンチエイリアシング
 set transparency=15          " 半透明
 "set guioptions-=T            " ツールバー削除
 
 " カーソル点滅無効化
 set guicursor=a:blinkon0
-
-" 自動的にIM をオンにする機能の禁止
-set imdisableactivate
 
 " ウィンドウ
 set sessionoptions+=resize " 行・列を設定する
