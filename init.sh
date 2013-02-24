@@ -12,6 +12,7 @@ case ${OSTYPE} in
 		ln -s    $DOTFILES/.zprofile   $HOME/.zprofile
 		ln -s -h $DOTFILES/.vim        $HOME/.vim
 		ln -s    $DOTFILES/.vimrc      $HOME/.vimrc
+		ln -s    $DOTFILES/.gvimrc     $HOME/.gvimrc
 		ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
 		ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
 		ln -s -h $DOTFILES/.bundler    $HOME/.bundler
@@ -23,6 +24,7 @@ case ${OSTYPE} in
 		ln -s    $DOTFILES/.zprofile   $HOME/.zprofile
 		ln -s -T $DOTFILES/.vim        $HOME/.vim
 		ln -s    $DOTFILES/.vimrc      $HOME/.vimrc
+		ln -s    $DOTFILES/.gvimrc     $HOME/.gvimrc
 		ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
 		ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
 		ln -s -T $DOTFILES/.bundler    $HOME/.bundler
