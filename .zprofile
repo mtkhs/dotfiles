@@ -93,6 +93,7 @@ fi
 
 if [[ -s "$HOME/.rbenv" ]]; then
 	# rbenv
+	export PATH=$PATH:$HOME/.rbenv/bin
 	eval "$(rbenv init - zsh)"
 elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
 	# rvm
