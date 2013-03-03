@@ -45,12 +45,17 @@ NeoBundle 'Shougo/vimfiler', {
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/vinarise'
 
-"NeoBundle 'Shougo/vim-vcs'
 NeoBundleLazy 'Shougo/vim-vcs', {
       \ 'depends' : 'thinca/vim-openbuf',
       \ 'autoload' : {'commands' : 'Vcs'},
       \ }
-NeoBundleLazy 'choplin/unite-vim_hacks'
+NeoBundle 'choplin/unite-vim_hacks', {
+      \ 'depends' : 
+      \    [ 'mattn/webapi-vim',
+      \      'thinca/vim-openbuf',
+      \      'mattn/wwwrenderer-vim'
+      \    ]
+      \ }
 
 
 " neocomplcache
@@ -81,10 +86,10 @@ endif
 " ruby
 NeoBundle 'tpope/vim-rails'
 " NeoBundle 'tpope/vim-rake'
-NeoBundleLazy 'ujihisa/unite-rake', {
+NeoBundle 'ujihisa/unite-rake', {
       \ 'depends' : 'Shougo/unite.vim'
 	  \ }
-NeoBundleLazy 'basyura/unite-rails', {
+NeoBundle 'basyura/unite-rails', {
       \ 'depends' : 'Shougo/unite.vim'
 	  \ }
 NeoBundleLazy 'vim-ruby/vim-ruby', { 'autoload' : {
@@ -116,7 +121,6 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'othree/html5.vim'
 NeoBundle "mattn/zencoding-vim"
 NeoBundle 'hail2u/vim-css3-syntax'
-"NeoBundle 'hokaccha/vim-css3-syntax'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'Rykka/colorv.vim'
@@ -129,13 +133,13 @@ NeoBundle 'vim-scripts/javacomplete'
 " test
 NeoBundle 'janx/vim-rubytest'
 "NeoBundleLazy 'thinca/vim-quickrun'
-NeoBundleLazy 'osyo-manga/vim-quickrun'
+NeoBundle 'osyo-manga/vim-quickrun'
 
 "
 " misc
 "
 NeoBundle 'gtags.vim'
-NeoBundleLazy 'thinca/vim-ref', { 'autoload' : {
+NeoBundle 'thinca/vim-ref', { 'autoload' : {
       \ 'commands' : 'Ref'
       \ }}
 NeoBundle 'scrooloose/nerdcommenter'
@@ -145,12 +149,12 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
 "NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'sudo.vim'
-NeoBundle 'othree/eregex.vim'
+"NeoBundle 'othree/eregex.vim'
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
 NeoBundle 'sjl/gundo.vim'
 "NeoBundle 'anekos/char-counter-vim'
-NeoBundle 'thinca/vim-localrc'
+"NeoBundle 'thinca/vim-localrc'
 "NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'vim-scripts/Highlight-UnMatched-Brackets'
