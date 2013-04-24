@@ -190,7 +190,7 @@ sudo() {
           args[$(( 1+$#args ))]=$arg
         else
           args[$(( 1+$#args ))]="sudo:$arg"
-      fi
+        fi
       done
       command vim $args
       ;;

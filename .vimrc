@@ -35,15 +35,10 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \   },
       \ }
-NeoBundle 'Shougo/vimshell', {
-      \ 'depends' : 'Shougo/vimproc'
-      \ }
-NeoBundle 'Shougo/vimfiler', {
-      \ 'depends' : 'Shougo/unite.vim'
-      \ }
-
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Shougo/vinarise'
+NeoBundle 'Shougo/vimshell', '', 'default'
+NeoBundle 'Shougo/vimfiler', '', 'default'
+"NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Shougo/vinarise', '', 'default'
 
 NeoBundleLazy 'Shougo/vim-vcs', {
       \ 'depends' : 'thinca/vim-openbuf',
@@ -54,7 +49,8 @@ NeoBundle 'choplin/unite-vim_hacks', {
       \    [ 'mattn/webapi-vim',
       \      'thinca/vim-openbuf',
       \      'mattn/wwwrenderer-vim'
-      \    ]
+      \    ],
+      \ 'autoload' : { 'unite_source' : 'vim_hacks' }
       \ }
 
 
@@ -62,51 +58,76 @@ NeoBundle 'choplin/unite-vim_hacks', {
 NeoBundle "Shougo/neocomplcache"
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'ujihisa/neco-ruby'
-NeoBundle 'ujihisa/neco-ghc'
+NeoBundleLazy 'ujihisa/neco-ghc', { 'autoload' : {
+      \ 'filetypes' : 'haskell'
+      \ }}
 
 " neosnippet
 NeoBundle 'Shougo/neosnippet'
 
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-build'
 NeoBundle 'Shougo/unite-ssh'
+NeoBundleLazy 'ujihisa/vimshell-ssh', { 'autoload' : {
+      \ 'filetypes' : 'vimshell',
+      \ }}
+NeoBundle 'Shougo/unite-sudo', '', 'default'
 NeoBundle 'hrsh7th/vim-unite-vcs'
-NeoBundle 'pasela/unite-webcolorname'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'ujihisa/unite-font'
+NeoBundleLazy 'pasela/unite-webcolorname', { 'autoload' : {
+      \ 'unite_sources' : 'webcolorname',
+      \ }}
+NeoBundleLazy 'ujihisa/unite-colorscheme', { 'autoload' : {
+      \ 'unite_sources' : 'colorscheme',
+      \ }}
+NeoBundleLazy 'ujihisa/unite-locate', { 'autoload' : {
+      \ 'unite_sources' : 'locate',
+      \ }}
+NeoBundleLazy 'ujihisa/unite-font', {
+      \ 'gui' : 1,
+      \ 'autoload' : {
+      \ 'unite_sources' : 'font'
+      \ }}
 " NeoBundle 'sgur/unite-qf'
-NeoBundle 'osyo-manga/unite-quickfix'
-NeoBundle 'osyo-manga/unite-filetype'
+NeoBundleLazy 'osyo-manga/unite-quickfix', { 'autoload' : {
+      \ 'unite_sources' : 'quickfix',
+      \ }}
+NeoBundleLazy 'osyo-manga/unite-filetype', { 'autoload' : {
+      \ 'unite_sources' : 'filetype',
+      \ }}
 if s:is_windows
 	NeoBundle 'sgur/unite-everything'
 endif
+
+NeoBundleLazy 'thinca/vim-quickrun', { 'autoload' : {
+      \ 'mappings' : [
+      \ ['nxo', '<Plug>(quickrun)']],
+      \ }}
 
 "
 " Filetypes
 "
 " ruby
-NeoBundle 'tpope/vim-rails'
-" NeoBundle 'tpope/vim-rake'
-NeoBundle 'ujihisa/unite-rake', {
-      \ 'depends' : 'Shougo/unite.vim'
-	  \ }
-NeoBundle 'basyura/unite-rails', {
-      \ 'depends' : 'Shougo/unite.vim'
-	  \ }
+"NeoBundle 'tpope/vim-rake'
+"NeoBundle 'ujihisa/unite-rake'
+"NeoBundle 'tpope/vim-rails'
+"NeoBundle 'basyura/unite-rails'
 NeoBundleLazy 'vim-ruby/vim-ruby', { 'autoload' : {
       \ 'mappings' : '<Plug>(ref-keyword)',
       \ 'filetypes' : [ 'ruby', 'eruby' ]
       \ }}
 NeoBundleLazy 'tpope/vim-haml', { 'autoload' : {
-	  \ 'filetypes' : 'haml'
+	  \ 'filetypes' : [ 'haml' ]
 	  \ }}
-NeoBundle 'semmons99/vim-ruby-matchit'
+NeoBundleLazy 'semmons99/vim-ruby-matchit', { 'autoload' : {
+      \ 'filetypes' : [ 'ruby', 'eruby']
+      \ }}
 NeoBundleLazy 'taichouchou2/unite-reek', {
       \ 'build' : {
       \    'mac': 'gem install reek',
       \    'unix': 'gem install reek',
       \ },
-      \ 'autoload': { 'filetypes': ['ruby', 'eruby', 'haml'] },
-      \ 'depends' : 'Shougo/unite.vim' }
+      \ 'autoload': { 'filetypes': [ 'ruby', 'eruby', 'haml' ] }
+      \ }
 
 " javascript
 NeoBundleLazy 'jiangmiao/simple-javascript-indenter', { 'autoload' : {
@@ -115,25 +136,36 @@ NeoBundleLazy 'jiangmiao/simple-javascript-indenter', { 'autoload' : {
 NeoBundleLazy 'jelera/vim-javascript-syntax', { 'autoload' : {
       \ 'filetypes' : 'javascript',
       \ }}
-NeoBundle 'kchmck/vim-coffee-script'
+NeoBundleLazy 'kchmck/vim-coffee-script', { 'autoload' : {
+      \ 'filetype' : 'coffee'
+      \ }}
 
 " html/css
-NeoBundle 'othree/html5.vim'
-NeoBundle "mattn/zencoding-vim"
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'groenewege/vim-less'
-NeoBundle 'cakebaker/scss-syntax.vim'
-NeoBundle 'Rykka/colorv.vim'
+NeoBundleLazy 'othree/html5.vim', { 'autoload' : {
+      \ 'filetypes' : 'html'
+      \ }}
+NeoBundleLazy 'mattn/zencoding-vim', { 'autoload' : {
+      \ 'filetypes' : 'php'
+      \ }}
+NeoBundleLazy 'hail2u/vim-css3-syntax', { 'autoload' : {
+      \ 'filetypes' : 'css'
+      \ }}
+NeoBundleLazy 'groenewege/vim-less', { 'autoload' : {
+      \ 'filetypes' : 'less'
+      \ }}
+NeoBundleLazy 'cakebaker/scss-syntax.vim', { 'autoload' : {
+      \ 'filetypes' : 'scss'
+      \ }}
+NeoBundleLazy 'Rykka/colorv.vim', { 'autoload' : {
+      \ 'filetypes' : ['css', 'scss', 'sass', 'less', 'html', 'haml', 'javascript']
+      \ }}
 NeoBundle 'jcf/vim-latex'
 
 " Syntax Check
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-scripts/javacomplete'
 
-" test
 NeoBundle 'janx/vim-rubytest'
-"NeoBundleLazy 'thinca/vim-quickrun'
-NeoBundle 'osyo-manga/vim-quickrun'
 
 "
 " misc
@@ -152,7 +184,9 @@ NeoBundle 'sudo.vim'
 "NeoBundle 'othree/eregex.vim'
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
-NeoBundle 'sjl/gundo.vim'
+NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {
+      \ 'commands' : 'GundoToggle'
+      \ }}
 "NeoBundle 'anekos/char-counter-vim'
 "NeoBundle 'thinca/vim-localrc'
 "NeoBundle 'LeafCage/foldCC'
@@ -227,6 +261,7 @@ endif
 " vimshell {{{
 "	nnoremap <C-1> :VimShellPop<CR>
 	nnoremap <silent><Leader>] :VimShellPop<CR>
+	nnoremap <silent><Leader>s :VimShell<CR>
 " }}}
 
 " vimfiler {{{
@@ -250,9 +285,9 @@ endif
 "		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 	endfunction
 
-	nnoremap <silent><leader>f :VimFiler<CR>
+	nnoremap <silent><leader>f :VimFiler -split -simple<CR>
 
-	" 現在開いているバッファのディレクトリを開く
+	
 "	nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>
 "	nnoremap <silent> <Leader>fi :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
 	
@@ -479,6 +514,8 @@ filetype plugin indent on
 " ファイルタイプ追加
 autocmd BufNewFile,BufRead *.nb set filetype=ruby
 autocmd BufNewFile,BufRead *.json set filetype=json
+autocmd BufRead,BufNewFile *.haml set filetype=haml
+autocmd BufRead,BufNewFile *.tex set filetype=tex
 
 " Rubyのタブ幅を2にする。
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2
