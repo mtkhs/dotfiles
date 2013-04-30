@@ -4,3 +4,12 @@
 [submodule ".vim/neobundle.vim.git"]
 	path = .vim/neobundle.vim.git
 	url = https://github.com/Shougo/neobundle.vim.git
+[submodule ".userChrome/Griever"]
+	path = .userChrome/Griever
+	url = https://github.com/Griever/userChromeJS.git
+[submodule ".userChrome/alice0775"]
+	path = .userChrome/alice0775
+	url = https://github.com/alice0775/userChrome.js.git
+[submodule ".userChrome/nodaguti"]
+	path = .userChrome/nodaguti
+	url = https://github.com/nodaguti/userChrome.js.git
