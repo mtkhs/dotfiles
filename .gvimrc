@@ -1,9 +1,14 @@
 colorscheme jellybeans
 
-set guifont=Ricty\ Discord    " フォント
+set guifont=Ricty\ Discord:h17    " フォント
 "set antialias                " アンチエイリアシング
-set transparency=15          " 半透明
-"set guioptions-=T            " ツールバー削除
+
+if has('gui_macvim')
+	set transparency=15
+else
+	set transparency=224
+	set guioptions-=T            " ツールバー削除
+endif
 
 " カーソル点滅無効化
 set guicursor=a:blinkon0

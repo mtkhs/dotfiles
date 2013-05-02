@@ -1,9 +1,6 @@
 [submodule ".vim/neobundle.vim"]
 	path = .vim/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim.git
-[submodule ".vim/neobundle.vim.git"]
-	path = .vim/neobundle.vim.git
-	url = https://github.com/Shougo/neobundle.vim.git
 [submodule ".userChrome/Griever"]
 	path = .userChrome/Griever
 	url = https://github.com/Griever/userChromeJS.git
@@ -13,3 +10,6 @@
 [submodule ".userChrome/nodaguti"]
 	path = .userChrome/nodaguti
 	url = https://github.com/nodaguti/userChrome.js.git
+[submodule ".zsh/zsh-syntax-highlighting"]
+	path = .zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

@@ -14,6 +14,9 @@ autoload -Uz add-zsh-hook
 
 autoload -Uz vcs_info
 
+#source $HOME/.zsh/.antigenrc
+source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 
 #

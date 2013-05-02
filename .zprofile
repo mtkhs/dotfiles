@@ -86,7 +86,7 @@ case ${OSTYPE} in
 esac
 
 # nvm
-if [[ -f $HOME/.nvm/nvm.sh ]]; then
+if [[ -s $HOME/.nvm/nvm.sh ]]; then
 	source $HOME/.nvm/nvm.sh
 	export NODE_PATH=${NVM_PATH}_modules${NODE_PATH:+:}${NODE_PATH}
 fi
@@ -94,17 +94,27 @@ fi
 if [[ -s "$HOME/.rbenv" ]]; then
 	# rbenv
 	export PATH=$HOME/.rbenv/bin:$PATH
-	eval "$(rbenv init - zsh)"
+	eval "$(rbenv init - zsh --no-rehash)"
 elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
 	# rvm
 	export PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 	source $HOME/.rvm/scripts/rvm
 fi
 
-# pythonbrew
-if [[ -s "$HOME/.pythonbrew/etc/bashrc" ]]; then
+if [[ -s "$HOME/.pyenv" ]]; then
+	# pyenv
+	export PATH=$HOME/.pyenv/bin:$PATH
+	eval "$(pyenv init - zsh --no-rehash)"
+elif [[ -s "$HOME/.pythonbrew/etc/bashrc" ]]; then
+	# pythonbrew
 	source $HOME/.pythonbrew/etc/bashrc
 #	pybrew switch 2.7.3 > /dev/null
+fi
+
+if which plenv > /dev/null || [[ -s "$HOME/.plenv" ]]; then
+	# plenv
+	export PATH=$HOME/.plenv/bin:$PATH
+	eval "$(plenv init - zsh --no-rehash)"
 fi
 
 [ -f $HOME/.zprofile.local ] && source $HOME/.zprofile.local

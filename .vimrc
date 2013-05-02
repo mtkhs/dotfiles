@@ -21,7 +21,7 @@ if has('vim_starting')
 	if isdirectory( expand( $HOME . '/.vim/.neobundle/neobundle.vim' ) )
 		set runtimepath+=$HOME/.vim/.neobundle/neobundle.vim
 	else
-		set runtimepath+=$HOME/.vim/neobundle.vim.git
+		set runtimepath+=$HOME/.vim/neobundle.vim
 	endif
 	call neobundle#rc( expand( $HOME . '/.vim/.neobundle' ) )
 endif
