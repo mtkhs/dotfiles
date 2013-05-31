@@ -181,7 +181,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
 "NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'sudo.vim'
-"NeoBundle 'othree/eregex.vim'
+"NeoBundle 'othree/eregex.vim' " :1M/ ってなる
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
 NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {
@@ -404,26 +404,26 @@ endif
 " NERDTree {{{
 	"引数なしでvimを開いたらNERDTreeを起動、
 	"引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
-"	autocmd vimenter * if !argc() | NERDTree | endif
+""	autocmd vimenter * if !argc() | NERDTree | endif
 	"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
-	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-	nnoremap <silent> <C-e>      :NERDTreeToggle<CR>
-	vnoremap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-	onoremap <silent> <C-e>      :NERDTreeToggle<CR>
-	inoremap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-	cnoremap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
+"	nnoremap <silent> <C-e>      :NERDTreeToggle<CR>
+"	vnoremap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+"	onoremap <silent> <C-e>      :NERDTreeToggle<CR>
+"	inoremap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+"	cnoremap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
 
 	"NERDTreeIgnore 無視するファイルを設定する。
-	let g:NERDTreeIgnore = ['\.swp$', '\~$']
+"	let g:NERDTreeIgnore = ['\.swp$', '\~$']
 	"NERDTreeShowHidden 隠しファイルを表示するか？
-	let g:NERDTreeShowHidden = 1
+"	let g:NERDTreeShowHidden = 1
 	"ブックマークや、ヘルプのショートカットをメニューに表示する。
-	let g:NERDTreeMinimalUI = 1
+"	let g:NERDTreeMinimalUI = 1
 	"NERDTreeを+|`などを使ってツリー表示をする。
-	let g:NERDTreeDirArrows = 0
+"	let g:NERDTreeDirArrows = 0
 	
-	let g:NERDTreeHijackNetrw = 0
+"	let g:NERDTreeHijackNetrw = 0
 
 " }}}
 

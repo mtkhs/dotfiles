@@ -1,4 +1,5 @@
 bindkey -e
+bindkey "^[[3~" delete-char     # delete キーがチルダになるのを回避
 
 autoload -Uz colors
 colors
