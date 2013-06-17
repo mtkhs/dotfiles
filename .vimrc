@@ -180,8 +180,8 @@ NeoBundle 'Align'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
 "NeoBundle 'h1mesuke/vim-alignta'
-NeoBundle 'sudo.vim'
-"NeoBundle 'othree/eregex.vim' " :1M/ ってなる
+"NeoBundle 'sudo.vim'
+NeoBundle 'othree/eregex.vim' " :1M/ ってなる
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
 NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {
