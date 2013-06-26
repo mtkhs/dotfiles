@@ -656,6 +656,8 @@ set history=100        " コマンド・検索パターンの履歴数
 "
 " keymap
 "
+cmap w!! w !sudo tee > /dev/null %
+
 " 行単位で移動
 nnoremap j gj
 nnoremap k gk
