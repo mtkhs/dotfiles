@@ -35,7 +35,8 @@ case ${OSTYPE} in
 		export LSCOLORS=DxGxcxdxCxegedabagacad
 		
 		# Java
-		export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+#		export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+		export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home
 		export PATH=$JAVA_HOME/bin:$PATH
 		export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8 # javacの出力文字コードがなぜかShift_JISで化けるので
 		
