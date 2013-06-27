@@ -15,7 +15,7 @@ case ${OSTYPE} in
 		ln -s    $DOTFILES/.gvimrc     $HOME/.gvimrc
 		ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
 		ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
-		ln -s -h $DOTFILES/.bundler    $HOME/.bundler
+		ln -s -h $DOTFILES/.bundle     $HOME/.bundle
 		;;
 	linux*)
 		ln -s -T $DOTFILES/.zsh        $HOME/.zsh
@@ -27,7 +27,7 @@ case ${OSTYPE} in
 		ln -s    $DOTFILES/.gvimrc     $HOME/.gvimrc
 		ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
 		ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
-		ln -s -T $DOTFILES/.bundler    $HOME/.bundler
+		ln -s -T $DOTFILES/.bundle     $HOME/.bundle
 		;;
 esac
 
