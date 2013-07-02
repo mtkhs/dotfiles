@@ -1,6 +1,10 @@
 
+alias ....='../..'
+alias ......='../../..'
+
 alias sl='ls'
-alias la='ls -l -A -v -F'
+alias l='la'
+alias la='ls -lAvF'
 alias ll='ls -l'
 
 alias sha1='openssl sha1'

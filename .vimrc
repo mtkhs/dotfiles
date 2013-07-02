@@ -36,6 +36,9 @@ NeoBundle 'Shougo/vimproc', {
       \   },
       \ }
 NeoBundle 'Shougo/vimshell', '', 'default'
+NeoBundle 'supermomonga/vimshell-pure.vim', {
+			\'depends' : 'Shougo/vimshell.vim'
+			\}
 NeoBundle 'Shougo/vimfiler', '', 'default'
 "NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/vinarise', '', 'default'
@@ -71,7 +74,7 @@ NeoBundle 'Shougo/unite-ssh'
 NeoBundleLazy 'ujihisa/vimshell-ssh', { 'autoload' : {
       \ 'filetypes' : 'vimshell',
       \ }}
-NeoBundle 'Shougo/unite-sudo', '', 'default'
+NeoBundle 'Shougo/unite-sudo'
 NeoBundle 'hrsh7th/vim-unite-vcs'
 NeoBundleLazy 'pasela/unite-webcolorname', { 'autoload' : {
       \ 'unite_sources' : 'webcolorname',
@@ -180,7 +183,6 @@ NeoBundle 'Align'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
 "NeoBundle 'h1mesuke/vim-alignta'
-"NeoBundle 'sudo.vim'
 NeoBundle 'othree/eregex.vim' " :1M/ ってなる
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'

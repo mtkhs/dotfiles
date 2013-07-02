@@ -18,7 +18,12 @@ autoload -Uz vcs_info
 #source $HOME/.zsh/.antigenrc
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
+# 補完時に大文字小文字を無視する。
+#compctl -M 'm:{a-z}={A-Z}'
+
+# 補完時の大文字小文字無視しつつ、超補完以下略
+# zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 
 #
 # prompt
@@ -32,37 +37,43 @@ setopt transient_rprompt
 
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 # ※PROMPTへの代入文字列がシングルクォートで括らないとダメになるらしい
-setopt prompt_subst
+# setopt prompt_subst
 
-define_vcs_info() {
-	# http://liosk.blog103.fc2.com/blog-entry-209.html
-	psvar=()
-	LANG=en_US.UTF-8 vcs_info
-	psvar[1]=$vcs_info_msg_0_
-}
-add-zsh-hook precmd define_vcs_info
+# define_vcs_info() {
+	# # http://liosk.blog103.fc2.com/blog-entry-209.html
+	# psvar=()
+	# LANG=en_US.UTF-8 vcs_info
+	# psvar[1]=$vcs_info_msg_0_
+# }
+# add-zsh-hook precmd define_vcs_info
 
-function face {
-echo '%(?.%F{green}(^-^)%f.%F{red}(`-`%)%f)'
-}
+# function face {
+	# echo '%(?.%F{green}(^-^)%f.%F{red}(`-`%)%f)'
+# }
 
-case ${UID} in
-0)
-	PROMPT='`face` %n@%m:%~# '
-	PROMPT2='`face` %n@%m:%_# '
-	RPROMPT='%1v'
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		PROMPT="%{[37m%}${PROMPT}%{[m%}"
-	;;
-*)
-	PROMPT='`face` %n@%m:%~$ '
-	PROMPT2='`face` %n@%m:%_$ '
-	RPROMPT='%1v'
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		PROMPT="%{[37m%}${PROMPT}%{[m%}"
-	;;
-esac
+# case ${UID} in
+# 0)
+	# PROMPT='`face` %n@%m:%~# '
+	# PROMPT2='`face` %n@%m:%_# '
+	# RPROMPT='%1v'
+	# [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+		# PROMPT="%{[37m%}${PROMPT}%{[m%}"
+	# ;;
+# *)
+	# PROMPT='`face` %n@%m:%~$ '
+	# PROMPT2='`face` %n@%m:%_$ '
+	# RPROMPT='%1v'
+	# [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+		# PROMPT="%{[37m%}${PROMPT}%{[m%}"
+	# ;;
+# esac
 
+# pure
+source $HOME/.zsh/pure/prompt.zsh
+
+#
+# basic
+#
 # cd を入力しなくてもディレクトリに遷移
 setopt auto_cd
 # cd -[tab]で履歴表示
@@ -128,7 +139,7 @@ HISTSIZE=100000
 SAVEHIST=10000
 
 #
-# fnctions
+# functions
 #
 
 #function cd() {builtin cd $@ && ls -v -F --color=auto}
@@ -183,28 +194,28 @@ alias ex='extract'
 
 # http://blog.monoweb.info/article/2011120320.html
 # sudo vim
-sudo() {
-  local args
-  case $1 in
-    vi|vim)
-      args=()
-      for arg in $@[2,-1]
-      do
-        if [ $arg[1] = '-' ]; then
-          args[$(( 1+$#args ))]=$arg
-        else
-          args[$(( 1+$#args ))]="sudo:$arg"
-        fi
-      done
-      command vim $args
-      ;;
-    *)
-      command sudo $@
-      ;;
-  esac
-}
+# sudo() {
+	# local args
+	# case $1 in
+		# vi|vim)
+			# args=()
+			# for arg in $@[2,-1]
+			# do
+				# if [ $arg[1] = '-' ]; then
+					# args[$(( 1+$#args ))]=$arg
+				# else
+					# args[$(( 1+$#args ))]="sudo:$arg"
+				# fi
+			# done
+			# command vim $args
+			# ;;
+		# *)
+			# command sudo $@
+			# ;;
+	# esac
+# }
 
-# http://www.commandlinefu.com/commands/view/10889/hourglass
+# # http://www.commandlinefu.com/commands/view/10889/hourglass
 # hourglass 5
 hourglass() {
 	trap 'tput cnorm' EXIT INT;

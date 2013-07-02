@@ -1,3 +1,5 @@
+umask 002
+
 ### lv
 ## -c: ANSIエスケープシーケンスの色付けなどを有効にする。
 ## -l: 1行が長くと折り返されていても1行として扱う。
@@ -119,4 +121,3 @@ if which plenv > /dev/null || [[ -s "$HOME/.plenv" ]]; then
 fi
 
 [ -f $HOME/.zprofile.local ] && source $HOME/.zprofile.local
-
