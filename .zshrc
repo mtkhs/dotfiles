@@ -1,11 +1,11 @@
-bindkey -e
+bindkey -e # キーバインドだけEmacs
 bindkey "^[[3~" delete-char     # delete キーがチルダになるのを回避
 
 autoload -Uz colors
 colors
 
 autoload -Uz compinit
-compinit
+compinit -u # -u つけないとsuで怒られる。
 
 autoload -Uz bashcompinit
 bashcompinit
@@ -24,6 +24,15 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # 補完時の大文字小文字無視しつつ、超補完以下略
 # zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+
+# 詳細を表示
+zstyle ':completion:*' verbose yes
+
+# 補完候補をキャッシュしてみたり
+zstyle ':completion:*' use-cache yes
+
+# 補完に色付け
+zstyle ':completion:*:default' list-colors ""
 
 #
 # prompt
@@ -101,13 +110,6 @@ setopt magic_equal_subst
 # コマンド名に / が含まれているときPATHの中のサブディレクトリを探す
 setopt path_dirs
 
-# 直前のコマンドと同じ場合は履歴に追加しない
-#setopt hist_ignore_dups
-# 先頭にスペースがある行は履歴に追加しない
-#setopt hist_ignore_space
-# 余分な空白は詰める
-setopt hist_reduce_blanks
-
 # 補完候補をできるだけ詰めて表示
 setopt list_packed
 # 数字を数値として解釈してソート
@@ -116,6 +118,7 @@ setopt numeric_glob_sort
 setopt multios
 # ファイル名の展開でディレクトリにマッチした場合は末尾に / を自動付加
 setopt mark_dirs
+# jobsでプロセスIDも表示する。
 setopt long_list_jobs
 
 # 補完候補リストの日本語を適正表示
@@ -133,10 +136,20 @@ setopt equals
 # FOR, REPEAT, SELECT, IF, FUNCTIONなどで簡略文法が使えるようになる
 setopt short_loops
 
-# 履歴
+#
+# ヒストリ
+#
 HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=10000
+HISTSIZE=10000
+SAVEHIST=$HISTSIZE
+# ヒストリファイルにコマンドラインだけじゃなくて実行時間とかも記録する。
+setopt extended_history
+# 同じコマンドラインが続くときは記録しない。
+setopt hist_ignore_dups
+# スペースで始まるコマンドラインはヒストリに追加しない。
+setopt hist_ignore_space
+# 余分な空白は詰める
+setopt hist_reduce_blanks
 
 #
 # functions
