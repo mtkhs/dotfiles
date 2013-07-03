@@ -1,29 +1,54 @@
 umask 002
 
+#
+# https://github.com/clear-code/zsh.d/blob/master/zshenv
+#
+# ページャの設定
+if type lv > /dev/null 2>&1; then
+    ## lvを優先する。
+    export PAGER="lv"
+else
+    ## lvがなかったらlessを使う。
+    export PAGER="less"
+fi
+
 ### lv
 ## -c: ANSIエスケープシーケンスの色付けなどを有効にする。
 ## -l: 1行が長くと折り返されていても1行として扱う。
 ##     （コピーしたときに余計な改行を入れない。）
 export LV="-c -l"
 
-### grep
+# less
+## -R: ANSIエスケープシーケンスのみ素通しする。
+export LESS="-R"
+
+# grep
+## grepのバージョンを検出。
+grep_version="$(grep --version | head -n 1 | sed -e 's/^[^0-9.]*\([0-9.]*\)[^0-9.]*$/\1/')"
 ## デフォルトオプションの設定
 export GREP_OPTIONS
 ### バイナリファイルにはマッチさせない。
 GREP_OPTIONS="--binary-files=without-match"
-### grep対象としてディレクトリを指定したらディレクトリ内を再帰的にgrepする。
-#GREP_OPTIONS="--directories=recurse $GREP_OPTIONS"
+case "$grep_version" in
+	1.*|2.[0-4].*|2.5.[0-3])
+		;;
+	*)
+		### grep 2.5.4以降のみの設定
+		### grep対象としてディレクトリを指定したらディレクトリ内を再帰的にgrepする。
+		GREP_OPTIONS="--directories=recurse $GREP_OPTIONS"
+		;;
+esac
 ### 拡張子が.tmpのファイルは無視する。
 GREP_OPTIONS="--exclude=\*.tmp $GREP_OPTIONS"
 ## 管理用ディレクトリを無視する。
-if grep --help | grep -q -- --exclude-dir; then
+if grep --help 2>&1 | grep -q -- --exclude-dir; then
 	GREP_OPTIONS="--exclude-dir=.svn $GREP_OPTIONS"
 	GREP_OPTIONS="--exclude-dir=.git $GREP_OPTIONS"
 	GREP_OPTIONS="--exclude-dir=.deps $GREP_OPTIONS"
 	GREP_OPTIONS="--exclude-dir=.libs $GREP_OPTIONS"
 fi
 ### 可能なら色を付ける。
-if grep --help | grep -q -- --color; then
+if grep --help 2>&1 | grep -q -- --color; then
 	GREP_OPTIONS="--color=auto $GREP_OPTIONS"
 fi
 

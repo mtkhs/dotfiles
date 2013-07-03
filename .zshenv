@@ -14,15 +14,19 @@ alias df='df -h'
 alias duh='du -h -d 1 .'
 alias cl='clear'
 
-## GNU grepがあったら優先して使う。
+# GNU grepがあったら優先して使う。
 if type ggrep > /dev/null 2>&1; then
 	alias grep=ggrep
+fi
+# GNU sedがあったら優先して使う。
+if type gsed > /dev/null 2>&1; then
+	alias sed=gsed
 fi
 
 alias v='vim'
 alias vf='vimfiler'
-
 alias vimfiler='vim -c VimFiler'
+alias sudo='sudo -H' # sudo vim対策
 
 alias be='bundle exec'
 
