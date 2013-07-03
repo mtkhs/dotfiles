@@ -36,13 +36,43 @@ NeoBundle 'Shougo/vimproc', {
       \   },
       \ }
 NeoBundle 'Shougo/vimshell', '', 'default'
+call neobundle#config('vimshell', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \ 'commands' : [{ 'name' : 'VimShell',
+      \ 'complete' : 'customlist,vimshell#complete'},
+      \ 'VimShellExecute', 'VimShellInteractive',
+      \ 'VimShellTerminal', 'VimShellPop'],
+      \ 'mappings' : ['<Plug>(vimshell_switch)']
+      \ }})
 NeoBundle 'supermomonga/vimshell-pure.vim', {
 			\'depends' : 'Shougo/vimshell.vim'
 			\}
 NeoBundle 'Shougo/vimfiler', '', 'default'
-"NeoBundle 'scrooloose/nerdtree'
+call neobundle#config('vimfiler', {
+      \ 'lazy' : 1,
+      \ 'depends' : 'Shougo/unite.vim',
+      \ 'autoload' : {
+      \ 'commands' : [
+      \ { 'name' : 'VimFiler',
+      \ 'complete' : 'customlist,vimfiler#complete' },
+      \ { 'name' : 'VimFilerExplorer',
+      \ 'complete' : 'customlist,vimfiler#complete' },
+      \ { 'name' : 'Edit',
+      \ 'complete' : 'customlist,vimfiler#complete' },
+      \ { 'name' : 'Write',
+      \ 'complete' : 'customlist,vimfiler#complete' },
+      \ 'Read', 'Source'],
+      \ 'mappings' : ['<Plug>(vimfiler_switch)'],
+      \ 'explorer' : 1,
+      \ }
+      \ })
 NeoBundle 'Shougo/vinarise', '', 'default'
-
+call neobundle#config('vinarise', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \ 'commands' : 'Vinarise',
+      \ }})
 NeoBundleLazy 'Shougo/vim-vcs', {
       \ 'depends' : 'thinca/vim-openbuf',
       \ 'autoload' : {'commands' : 'Vcs'},
@@ -56,9 +86,14 @@ NeoBundle 'choplin/unite-vim_hacks', {
       \ 'autoload' : { 'unite_source' : 'vim_hacks' }
       \ }
 
+NeoBundleLazy "Shougo/neocomplcache", '', 'default'
+call neobundle#config('neocomplcache', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \ 'commands' : 'NeoComplCacheEnable',
+      \ }})
+"NeoBundle 'Shougo/neocomplete.vim', '', 'default'
 
-" neocomplcache
-NeoBundle "Shougo/neocomplcache"
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'ujihisa/neco-ruby'
 NeoBundleLazy 'ujihisa/neco-ghc', { 'autoload' : {
@@ -67,8 +102,21 @@ NeoBundleLazy 'ujihisa/neco-ghc', { 'autoload' : {
 
 " neosnippet
 NeoBundle 'Shougo/neosnippet'
-
-NeoBundle 'Shougo/unite.vim'
+call neobundle#config('neosnippet', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \ 'insert' : 1,
+      \ 'filetypes' : 'snippet',
+      \ 'unite_sources' : ['snippet', 'neosnippet/user', 'neosnippet/runtime'],
+      \ }})
+NeoBundle 'Shougo/unite.vim', '', 'default'
+call neobundle#config('unite.vim',{
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \ 'commands' : [{ 'name' : 'Unite',
+      \ 'complete' : 'customlist,unite#complete_source'},
+      \ 'UniteWithCursorWord', 'UniteWithInput']
+      \ }})
 NeoBundle 'Shougo/unite-build'
 NeoBundle 'Shougo/unite-ssh'
 NeoBundleLazy 'ujihisa/vimshell-ssh', { 'autoload' : {
@@ -162,12 +210,18 @@ NeoBundleLazy 'cakebaker/scss-syntax.vim', { 'autoload' : {
 NeoBundleLazy 'Rykka/colorv.vim', { 'autoload' : {
       \ 'filetypes' : ['css', 'scss', 'sass', 'less', 'html', 'haml', 'javascript']
       \ }}
+
 NeoBundle 'jcf/vim-latex'
+NeoBundleLazy 'vim-jp/cpp-vim', { 'autoload' : {
+      \ 'filetypes' : 'cpp'
+      \ }}
+NeoBundleLazy 'teramako/jscomplete-vim', { 'autoload' : {
+      \ 'filetypes' : 'javascript'
+      \ }}
 
 " Syntax Check
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-scripts/javacomplete'
-
 NeoBundle 'janx/vim-rubytest'
 
 "
@@ -180,7 +234,13 @@ NeoBundle 'thinca/vim-ref', { 'autoload' : {
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
-NeoBundle 'tpope/vim-surround'
+"NeoBundle 'tpope/vim-surround'
+NeoBundle 'anyakichi/vim-surround', {
+      \ 'autoload' : {
+      \ 'mappings' : [
+      \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround'],
+      \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround']
+      \ ]}}
 NeoBundle 'tpope/vim-endwise'
 "NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'othree/eregex.vim' " :1M/ ってなる
@@ -197,19 +257,20 @@ NeoBundle 'vim-scripts/Highlight-UnMatched-Brackets'
 
 NeoBundle 'syngan/vim-pukiwiki'
 
+NeoBundleLazy 'thinca/vim-guicolorscheme', { 'terminal' : 1 }
 
 " colorschemes
-NeoBundle 'fugalh/desert.vim'
-NeoBundle 'rainux/vim-desert-warm-256'
-NeoBundle 'matthewtodd/vim-twilight'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'jnurmine/Zenburn'
-NeoBundle 'jonathanfilip/vim-lucius'
-NeoBundle 'vim-scripts/mrkn256.vim'
-NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
+"NeoBundle 'fugalh/desert.vim'
+"NeoBundle 'rainux/vim-desert-warm-256'
+"NeoBundle 'matthewtodd/vim-twilight'
+"NeoBundle 'altercation/vim-colors-solarized'
+"NeoBundle 'jnurmine/Zenburn'
+"NeoBundle 'jonathanfilip/vim-lucius'
+"NeoBundle 'vim-scripts/mrkn256.vim'
+"NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
 NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'croaker/mustang-vim'
-NeoBundle 'therubymug/vim-pyte'
+"NeoBundle 'croaker/mustang-vim'
+"NeoBundle 'therubymug/vim-pyte'
 
 NeoBundle 'Lokaltog/vim-powerline' " The ultimate vim statusline utility.
 
