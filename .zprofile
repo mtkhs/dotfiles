@@ -82,7 +82,7 @@ case ${OSTYPE} in
 		export PATH=/usr/local/texlive/2011/bin/x86_64-darwin/:$PATH
 		
 		# cairo
-		export DYLD_LIBRARY_PATH=/usr/local/opt/cairo/lib
+#		export DYLD_LIBRARY_PATH=/usr/local/opt/cairo/lib
 		
 		# command
 		dict () { open dict://"$@"; }

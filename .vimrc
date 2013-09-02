@@ -27,7 +27,7 @@ if has('vim_starting')
 endif
 
 NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc', {
+NeoBundle 'Shougo/vimproc.vim', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
       \     'cygwin' : 'make -f make_cygwin.mak',
@@ -35,7 +35,7 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \   },
       \ }
-NeoBundle 'Shougo/vimshell', '', 'default'
+NeoBundle 'Shougo/vimshell.vim', '', 'default'
 call neobundle#config('vimshell', {
       \ 'lazy' : 1,
       \ 'autoload' : {
@@ -48,7 +48,7 @@ call neobundle#config('vimshell', {
 NeoBundle 'supermomonga/vimshell-pure.vim', {
 			\'depends' : 'Shougo/vimshell.vim'
 			\}
-NeoBundle 'Shougo/vimfiler', '', 'default'
+NeoBundle 'Shougo/vimfiler.vim', '', 'default'
 call neobundle#config('vimfiler', {
       \ 'lazy' : 1,
       \ 'depends' : 'Shougo/unite.vim',
@@ -67,17 +67,19 @@ call neobundle#config('vimfiler', {
       \ 'explorer' : 1,
       \ }
       \ })
-NeoBundle 'Shougo/vinarise', '', 'default'
+NeoBundle 'Shougo/vinarise.vim', '', 'default'
 call neobundle#config('vinarise', {
       \ 'lazy' : 1,
       \ 'autoload' : {
       \ 'commands' : 'Vinarise',
       \ }})
-NeoBundleLazy 'Shougo/vim-vcs', {
+NeoBundle 'Shougo/vim-vcs', {
+      \ 'lazy' : 1,
       \ 'depends' : 'thinca/vim-openbuf',
       \ 'autoload' : {'commands' : 'Vcs'},
       \ }
 NeoBundle 'choplin/unite-vim_hacks', {
+      \ 'lazy' : 1,
       \ 'depends' : 
       \    [ 'mattn/webapi-vim',
       \      'thinca/vim-openbuf',
@@ -86,22 +88,24 @@ NeoBundle 'choplin/unite-vim_hacks', {
       \ 'autoload' : { 'unite_source' : 'vim_hacks' }
       \ }
 
-NeoBundleLazy "Shougo/neocomplcache", '', 'default'
+NeoBundle "Shougo/neocomplcache.vim", '', 'default'
 call neobundle#config('neocomplcache', {
       \ 'lazy' : 1,
       \ 'autoload' : {
       \ 'commands' : 'NeoComplCacheEnable',
       \ }})
-"NeoBundle 'Shougo/neocomplete.vim', '', 'default'
+NeoBundle 'Shougo/neocomplete.vim', '', 'default'
 
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'ujihisa/neco-ruby'
-NeoBundleLazy 'ujihisa/neco-ghc', { 'autoload' : {
+NeoBundle 'ujihisa/neco-ghc', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'haskell'
       \ }}
 
 " neosnippet
-NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet.vim'
 call neobundle#config('neosnippet', {
       \ 'lazy' : 1,
       \ 'autoload' : {
@@ -119,37 +123,52 @@ call neobundle#config('unite.vim',{
       \ }})
 NeoBundle 'Shougo/unite-build'
 NeoBundle 'Shougo/unite-ssh'
-NeoBundleLazy 'ujihisa/vimshell-ssh', { 'autoload' : {
+NeoBundle 'ujihisa/vimshell-ssh', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'vimshell',
       \ }}
 NeoBundle 'Shougo/unite-sudo'
 NeoBundle 'hrsh7th/vim-unite-vcs'
-NeoBundleLazy 'pasela/unite-webcolorname', { 'autoload' : {
+NeoBundle 'pasela/unite-webcolorname', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'unite_sources' : 'webcolorname',
       \ }}
-NeoBundleLazy 'ujihisa/unite-colorscheme', { 'autoload' : {
+NeoBundle 'ujihisa/unite-colorscheme', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'unite_sources' : 'colorscheme',
       \ }}
-NeoBundleLazy 'ujihisa/unite-locate', { 'autoload' : {
+NeoBundle 'ujihisa/unite-locate', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'unite_sources' : 'locate',
       \ }}
-NeoBundleLazy 'ujihisa/unite-font', {
+NeoBundle 'ujihisa/unite-font', {
+      \ 'lazy' : 1,
       \ 'gui' : 1,
       \ 'autoload' : {
       \ 'unite_sources' : 'font'
       \ }}
 " NeoBundle 'sgur/unite-qf'
-NeoBundleLazy 'osyo-manga/unite-quickfix', { 'autoload' : {
+NeoBundle 'osyo-manga/unite-quickfix', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'unite_sources' : 'quickfix',
       \ }}
-NeoBundleLazy 'osyo-manga/unite-filetype', { 'autoload' : {
+NeoBundle 'osyo-manga/unite-filetype', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'unite_sources' : 'filetype',
       \ }}
 if s:is_windows
 	NeoBundle 'sgur/unite-everything'
 endif
 
-NeoBundleLazy 'thinca/vim-quickrun', { 'autoload' : {
+NeoBundle 'thinca/vim-quickrun', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'mappings' : [
       \ ['nxo', '<Plug>(quickrun)']],
       \ }}
@@ -162,17 +181,24 @@ NeoBundleLazy 'thinca/vim-quickrun', { 'autoload' : {
 "NeoBundle 'ujihisa/unite-rake'
 "NeoBundle 'tpope/vim-rails'
 "NeoBundle 'basyura/unite-rails'
-NeoBundleLazy 'vim-ruby/vim-ruby', { 'autoload' : {
+NeoBundle 'vim-ruby/vim-ruby', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'mappings' : '<Plug>(ref-keyword)',
       \ 'filetypes' : [ 'ruby', 'eruby' ]
       \ }}
-NeoBundleLazy 'tpope/vim-haml', { 'autoload' : {
-	  \ 'filetypes' : [ 'haml' ]
-	  \ }}
-NeoBundleLazy 'semmons99/vim-ruby-matchit', { 'autoload' : {
+NeoBundle 'tpope/vim-haml', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \ 'filetypes' : [ 'haml' ]
+      \ }}
+NeoBundle 'semmons99/vim-ruby-matchit', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : [ 'ruby', 'eruby']
       \ }}
-NeoBundleLazy 'taichouchou2/unite-reek', {
+NeoBundle 'taichouchou2/unite-reek', {
+      \ 'lazy' : 1,
       \ 'build' : {
       \    'mac': 'gem install reek',
       \    'unix': 'gem install reek',
@@ -181,41 +207,63 @@ NeoBundleLazy 'taichouchou2/unite-reek', {
       \ }
 
 " javascript
-NeoBundleLazy 'jiangmiao/simple-javascript-indenter', { 'autoload' : {
+NeoBundle 'jiangmiao/simple-javascript-indenter', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'javascript',
       \ }}
-NeoBundleLazy 'jelera/vim-javascript-syntax', { 'autoload' : {
+NeoBundle 'jelera/vim-javascript-syntax', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'javascript',
       \ }}
-NeoBundleLazy 'kchmck/vim-coffee-script', { 'autoload' : {
+NeoBundle 'kchmck/vim-coffee-script', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetype' : 'coffee'
       \ }}
 
 " html/css
-NeoBundleLazy 'othree/html5.vim', { 'autoload' : {
+NeoBundle 'othree/html5.vim', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'html'
       \ }}
-NeoBundleLazy 'mattn/zencoding-vim', { 'autoload' : {
+NeoBundle 'mattn/zencoding-vim', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'php'
       \ }}
-NeoBundleLazy 'hail2u/vim-css3-syntax', { 'autoload' : {
+NeoBundle 'hail2u/vim-css3-syntax', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'css'
       \ }}
-NeoBundleLazy 'groenewege/vim-less', { 'autoload' : {
+NeoBundle 'groenewege/vim-less', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'less'
       \ }}
-NeoBundleLazy 'cakebaker/scss-syntax.vim', { 'autoload' : {
+NeoBundle 'cakebaker/scss-syntax.vim', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'scss'
       \ }}
-NeoBundleLazy 'Rykka/colorv.vim', { 'autoload' : {
+NeoBundle 'Rykka/colorv.vim', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : ['css', 'scss', 'sass', 'less', 'html', 'haml', 'javascript']
       \ }}
 
 NeoBundle 'jcf/vim-latex'
-NeoBundleLazy 'vim-jp/cpp-vim', { 'autoload' : {
+NeoBundle 'vim-jp/cpp-vim', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'cpp'
       \ }}
-NeoBundleLazy 'teramako/jscomplete-vim', { 'autoload' : {
+NeoBundle 'teramako/jscomplete-vim', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'filetypes' : 'javascript'
       \ }}
 
@@ -228,7 +276,9 @@ NeoBundle 'janx/vim-rubytest'
 " misc
 "
 NeoBundle 'gtags.vim'
-NeoBundle 'thinca/vim-ref', { 'autoload' : {
+NeoBundle 'thinca/vim-ref', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'commands' : 'Ref'
       \ }}
 NeoBundle 'scrooloose/nerdcommenter'
@@ -236,6 +286,7 @@ NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
 "NeoBundle 'tpope/vim-surround'
 NeoBundle 'anyakichi/vim-surround', {
+      \ 'lazy' : 1,
       \ 'autoload' : {
       \ 'mappings' : [
       \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround'],
@@ -246,7 +297,9 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'othree/eregex.vim' " :1M/ ってなる
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
-NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {
+NeoBundle 'sjl/gundo.vim', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
       \ 'commands' : 'GundoToggle'
       \ }}
 "NeoBundle 'anekos/char-counter-vim'
@@ -255,9 +308,7 @@ NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {
 "NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'vim-scripts/Highlight-UnMatched-Brackets'
 
-NeoBundle 'syngan/vim-pukiwiki'
-
-NeoBundleLazy 'thinca/vim-guicolorscheme', { 'terminal' : 1 }
+"NeoBundle 'syngan/vim-pukiwiki'
 
 " colorschemes
 "NeoBundle 'fugalh/desert.vim'
@@ -272,7 +323,8 @@ NeoBundle 'nanotech/jellybeans.vim'
 "NeoBundle 'croaker/mustang-vim'
 "NeoBundle 'therubymug/vim-pyte'
 
-NeoBundle 'Lokaltog/vim-powerline' " The ultimate vim statusline utility.
+"NeoBundle 'Lokaltog/vim-powerline' " The ultimate vim statusline utility.
+NeoBundle 'bling/vim-airline'
 
 " recognize_charcode
 if !has('kaoriya')
@@ -281,230 +333,293 @@ endif
 " }}}
 
 " quickrun {{{
-	nmap <Leader>r <Plug>(quickrun)
-	let g:quickrun_config = {}
-	let g:quickrun_config.javascript = { 'command': 'node' }
+nmap <Leader>r <Plug>(quickrun)
+let g:quickrun_config = {}
+let g:quickrun_config.javascript = { 'command': 'node' }
 " }}}
 
 " syntastic {{{
-	" http://d.hatena.ne.jp/heavenshell/20120109/1326089510
-	let g:syntastic_mode_map = {
-		\ 'mode': 'active',
-		\ 'active_filetypes': [ 'ruby', 'javascript', 'python', 'php', 'perl', 'css', 'html', 'json' ],
-		\ 'passive_filetypes': []
-		\ }
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_echo_current_error = 1
-	let g:syntastic_auto_jump = 0
-	let g:syntastic_loc_list_height = 5
-	let g:syntastic_javascript_checker = 'jshint'
+" http://d.hatena.ne.jp/heavenshell/20120109/1326089510
+let g:syntastic_mode_map = {
+	\ 'mode': 'active',
+	\ 'active_filetypes': [ 'ruby', 'javascript', 'python', 'php', 'perl', 'css', 'html', 'json' ],
+	\ 'passive_filetypes': []
+	\ }
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_echo_current_error = 1
+let g:syntastic_auto_jump = 0
+let g:syntastic_loc_list_height = 5
+let g:syntastic_javascript_checker = 'jshint'
 " }}}
 
 " unite.vim {{{
-	" file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
-	let g:unite_source_file_mru_filename_format = ''
+" file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
+let g:unite_source_file_mru_filename_format = ''
 
-	" バッファ一覧
-	nnoremap <Leader>b :<C-u>Unite buffer<CR>
-	" ファイル一覧
-"	nnoremap <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-	" レジスタ一覧
-"	nnoremap <Leader>r :<C-u>Unite -buffer-name=register register<CR>
-	" 最近使用したファイル一覧
-"	nnoremap <Leader>m :<C-u>Unite file_mru<CR>
-	" 常用セット
-"	nnoremap <Leader>u :<C-u>Unite buffer file_mru<CR>
-	" 全部乗せ
-"	nnoremap <Leader>a :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+" バッファ一覧
+nnoremap <Leader>b :<C-u>Unite buffer<CR>
+" ファイル一覧
+"nnoremap <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+" レジスタ一覧
+"nnoremap <Leader>r :<C-u>Unite -buffer-name=register register<CR>
+" 最近使用したファイル一覧
+"nnoremap <Leader>m :<C-u>Unite file_mru<CR>
+" 常用セット
+"nnoremap <Leader>u :<C-u>Unite buffer file_mru<CR>
+" 全部乗せ
+"nnoremap <Leader>a :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
-	nnoremap <Leader>u :<C-u>Unite 
-
+nnoremap <Leader>u :<C-u>Unite 
 " }}}
 
 " vimshell {{{
-"	nnoremap <C-1> :VimShellPop<CR>
-	nnoremap <silent><Leader>] :VimShellPop<CR>
-	nnoremap <silent><Leader>s :VimShell<CR>
+"nnoremap <C-1> :VimShellPop<CR>
+nnoremap <silent><Leader>] :VimShellPop<CR>
+nnoremap <silent><Leader>s :VimShell<CR>
 " }}}
 
 " vimfiler {{{
-	"vimデフォルトのエクスプローラをvimfilerで置き換える
-	let g:vimfiler_as_default_explorer = 1
-	"セーフモードを無効にした状態で起動する
-	let g:vimfiler_safe_mode_by_default = 0
-	" カレントディレクトリを自動で同期
-	let g:vimfiler_enable_auto_cd = 1
+"vimデフォルトのエクスプローラをvimfilerで置き換える
+let g:vimfiler_as_default_explorer = 1
+"セーフモードを無効にした状態で起動する
+let g:vimfiler_safe_mode_by_default = 0
+" カレントディレクトリを自動で同期
+let g:vimfiler_enable_auto_cd = 1
 
-	autocmd! FileType vimfiler call g:my_vimfiler_settings()
-	function! g:my_vimfiler_settings()
-		nmap     <buffer>O             <Plug>(vimfiler_sync_with_current_vimfiler)
-		nmap     <buffer>o             <Plug>(vimfiler_sync_with_another_vimfiler)
-		nmap     <buffer><backspace>   <Plug>(vimfiler_switch_to_parent_directory)
-		nmap     <buffer><Nul>         <Plug>(vimfiler_toggle_mark_current_line_up)
-		nmap     <buffer><Left>        <Plug>(vimfiler_switch_to_other_window)
-		nmap     <buffer><Right>       <Plug>(vimfiler_switch_to_other_window)
-"		nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
-"		nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
-"		nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
-	endfunction
+autocmd! FileType vimfiler call g:my_vimfiler_settings()
+function! g:my_vimfiler_settings()
+	nmap     <buffer>O             <Plug>(vimfiler_sync_with_current_vimfiler)
+	nmap     <buffer>o             <Plug>(vimfiler_sync_with_another_vimfiler)
+	nmap     <buffer><backspace>   <Plug>(vimfiler_switch_to_parent_directory)
+	nmap     <buffer><Nul>         <Plug>(vimfiler_toggle_mark_current_line_up)
+	nmap     <buffer><Left>        <Plug>(vimfiler_switch_to_other_window)
+	nmap     <buffer><Right>       <Plug>(vimfiler_switch_to_other_window)
+"	nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+"	nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
+"	nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
+endfunction
 
-	nnoremap <silent><leader>f :VimFiler -split -simple<CR>
+nnoremap <silent><leader>f :VimFiler -split -simple<CR>
 
-	
-"	nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>
-"	nnoremap <silent> <Leader>fi :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
-	
-
+"nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir<CR>
+"nnoremap <silent> <Leader>fi :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
 " }}}
 
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+	\ 'default' : '',
+	\ 'vimshell' : $HOME.'/.vimshell_hist',
+	\ 'scheme' : $HOME.'/.gosh_completions',
+	\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
+	\ 'c' : $HOME . '/.vim/dict/c.dict',
+	\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
+	\ 'php' : $HOME . '/.vim/dict/php.dict',
+	\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+	\ 'perl' : $HOME . '/.vim/dict/perl.dict',
+	\ 'java' : $HOME . '/.vim/dict/java.dict',
+	\ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+" Or set this.
+"let g:neocomplete#enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplete#enable_insert_char_pre = 1
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+
 " neocomplcache {{{
-	" 補完ウィンドウの設定
-	set completeopt=menuone
-	" 起動時に有効化
-	let g:neocomplcache_enable_at_startup = 1
-	" 大文字が入力されるまで大文字小文字の区別を無視する
-	let g:neocomplcache_enable_smart_case = 1
-	" _(アンダースコア)区切りの補完を有効化
-	let g:neocomplcache_enable_underbar_completion = 1
-	let g:neocomplcache_enable_camel_case_completion = 1
-	" ポップアップメニューで表示される候補の数
-	let g:neocomplcache_max_list = 20
-	" シンタックスをキャッシュするときの最小文字長
-	let g:neocomplcache_min_syntax_length = 3
-	" 挿入モードのカーソル移動であんまり補完しないように
-	let g:NeoComplCache_EnableSkipCompletion = 1
-	let g:NeoComplCache_SkipInputTime = '0.5'
-	" ディクショナリ定義
-	let g:neocomplcache_dictionary_filetype_lists = {
-		\ 'default' : '',
-		\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
-		\ 'c' : $HOME . '/.vim/dict/c.dict',
-		\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
-		\ 'php' : $HOME . '/.vim/dict/php.dict',
-		\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
-		\ 'perl' : $HOME . '/.vim/dict/perl.dict',
-		\ 'java' : $HOME . '/.vim/dict/java.dict',
-		\ }
-	
-	if !exists('g:neocomplcache_keyword_patterns')
-		let g:neocomplcache_keyword_patterns = {}
-	endif
-	let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+" 補完ウィンドウの設定
+set completeopt=menuone
+" 起動時に有効化
+let g:neocomplcache_enable_at_startup = 0
+" 大文字が入力されるまで大文字小文字の区別を無視する
+let g:neocomplcache_enable_smart_case = 1
+" _(アンダースコア)区切りの補完を有効化
+let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_enable_camel_case_completion = 1
+" ポップアップメニューで表示される候補の数
+let g:neocomplcache_max_list = 20
+" シンタックスをキャッシュするときの最小文字長
+let g:neocomplcache_min_syntax_length = 3
+" 挿入モードのカーソル移動であんまり補完しないように
+let g:NeoComplCache_EnableSkipCompletion = 1
+let g:NeoComplCache_SkipInputTime = '0.5'
+" ディクショナリ定義
+let g:neocomplcache_dictionary_filetype_lists = {
+	\ 'default' : '',
+	\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
+	\ 'c' : $HOME . '/.vim/dict/c.dict',
+	\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
+	\ 'php' : $HOME . '/.vim/dict/php.dict',
+	\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+	\ 'perl' : $HOME . '/.vim/dict/perl.dict',
+	\ 'java' : $HOME . '/.vim/dict/java.dict',
+	\ }
+
+if !exists('g:neocomplcache_keyword_patterns')
+	let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 
-	" カーソル上下で補完選択
-	inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
-	inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
-	
-	" 前回行われた補完をキャンセルします
-	inoremap <expr><C-g> neocomplcache#undo_completion()
-	
-	" 補完候補のなかから、共通する部分を補完します
-	inoremap <expr><C-l> neocomplcache#complete_common_string()
-	
-	" 改行で確定して補完ウィンドウを閉じる
-"	inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-	" endwiseと干渉するので http://d.hatena.ne.jp/tacahiroy/20111006/1317851233
-	function! s:CrInInsertModeBetterWay()
-		return pumvisible() ? neocomplcache#close_popup()."\<CR>" : "\<CR>"
-	endfunction
-"	inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
-	inoremap <expr><silent><CR> CrInInsertModeBetterWay()
+" カーソル上下で補完選択
+inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
+inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
 
-	" <TAB>で補完候補の選択
-	inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
-	inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
-	
-	" <C-h>や<BS>を押したときに確実にポップアップを削除します
-	inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
-	
-	" 現在選択している候補をキャンセルし、ポップアップを閉じます
-"	inoremap <expr><C-e> neocomplcache#cancel_popup()
+" 前回行われた補完をキャンセルします
+inoremap <expr><C-g> neocomplcache#undo_completion()
+
+" 補完候補のなかから、共通する部分を補完します
+inoremap <expr><C-l> neocomplcache#complete_common_string()
+
+" 改行で確定して補完ウィンドウを閉じる
+"inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+" endwiseと干渉するので http://d.hatena.ne.jp/tacahiroy/20111006/1317851233
+function! s:CrInInsertModeBetterWay()
+	return pumvisible() ? neocomplcache#close_popup()."\<CR>" : "\<CR>"
+endfunction
+"inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
+inoremap <expr><silent><CR> CrInInsertModeBetterWay()
+
+" <TAB>で補完候補の選択
+inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
+
+" <C-h>や<BS>を押したときに確実にポップアップを削除します
+inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
+
+" 現在選択している候補をキャンセルし、ポップアップを閉じます
+"inoremap <expr><C-e> neocomplcache#cancel_popup()
 " }}}
 
 " neosnippet {{{
-	" 配置場所
-	let g:neosnippet#snippets_directory = '~/.vim/snippets'
-	" スニペットを展開する。スニペットが関係しないところでは行末まで削除
-	imap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
-	smap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
-"	imap <C-k> <Plug>(neosnippet_start_unite_snippet)
-"	smap <C-k> <Plug>(neosnippet_start_unite_snippet)
+" 配置場所
+let g:neosnippet#snippets_directory = '~/.vim/snippets'
+" スニペットを展開する。スニペットが関係しないところでは行末まで削除
+imap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
+smap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
+"imap <C-k> <Plug>(neosnippet_start_unite_snippet)
+"smap <C-k> <Plug>(neosnippet_start_unite_snippet)
 " }}}
 
 " ColorV {{{
-	let g:colorv_preview_ftype = 'css,scss,sass,less,html,javascript'
+let g:colorv_preview_ftype = 'css,scss,sass,less,html,javascript'
 " }}}
 
 " colorizer {{{
-	" pluginによるmap設定をしない
-"	let g:colorizer_nomap = 1
+" pluginによるmap設定をしない
+"let g:colorizer_nomap = 1
 " }}}
 
 " Gtags {{{
-	map <F3> :GtagsCursor<CR>
-"	map <C-n> :cn<CR>
-"	map <C-p> :cp<CR>
+map <F3> :GtagsCursor<CR>
+"map <C-n> :cn<CR>
+"map <C-p> :cp<CR>
 " }}}
 
 " Gundo {{{
-	nnoremap U :<C-u>GundoToggle<CR>
+nnoremap U :<C-u>GundoToggle<CR>
 " }}}
 
 " buftabs {{{
-	"バッファタブにパスを省略してファイル名のみ表示する
-	let g:buftabs_only_basename=1
-	" バッファタブをステータスライン内に表示する
-"	let g:buftabs_in_statusline=1
-	" 現在のバッファをハイライト
-	let g:buftabs_active_highlight_group="Visual"
-	" ステータスライン
-"	set statusline=%=\ [%{(&fenc!=''?&fenc:&enc)}/%{&ff}]\[%Y]\[%04l,%04v][%p%%]
-	" ステータスラインを常に表示
-"	set laststatus=2
-" }}}
-
-" NERDTree {{{
-	"引数なしでvimを開いたらNERDTreeを起動、
-	"引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
-""	autocmd vimenter * if !argc() | NERDTree | endif
-	"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
-"	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-"	nnoremap <silent> <C-e>      :NERDTreeToggle<CR>
-"	vnoremap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-"	onoremap <silent> <C-e>      :NERDTreeToggle<CR>
-"	inoremap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-"	cnoremap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
-
-	"NERDTreeIgnore 無視するファイルを設定する。
-"	let g:NERDTreeIgnore = ['\.swp$', '\~$']
-	"NERDTreeShowHidden 隠しファイルを表示するか？
-"	let g:NERDTreeShowHidden = 1
-	"ブックマークや、ヘルプのショートカットをメニューに表示する。
-"	let g:NERDTreeMinimalUI = 1
-	"NERDTreeを+|`などを使ってツリー表示をする。
-"	let g:NERDTreeDirArrows = 0
-	
-"	let g:NERDTreeHijackNetrw = 0
-
+"バッファタブにパスを省略してファイル名のみ表示する
+let g:buftabs_only_basename=1
+" バッファタブをステータスライン内に表示する
+"let g:buftabs_in_statusline=1
+" 現在のバッファをハイライト
+let g:buftabs_active_highlight_group="Visual"
+" ステータスライン
+"set statusline=%=\ [%{(&fenc!=''?&fenc:&enc)}/%{&ff}]\[%Y]\[%04l,%04v][%p%%]
+" ステータスラインを常に表示
+"set laststatus=2
 " }}}
 
 " NERDCommenter {{{
-	let g:NERDCreateDefaultMappings = 0
-	let NERDSpaceDelims = 1
+let g:NERDCreateDefaultMappings = 0
+let NERDSpaceDelims = 1
 
-	nmap <Leader>/ <Plug>NERDCommenterToggle
-	vmap <Leader>/ <Plug>NERDCommenterToggle
+nmap <Leader>/ <Plug>NERDCommenterToggle
+vmap <Leader>/ <Plug>NERDCommenterToggle
 
-"	nmap <Leader>/a <Plug>NERDCommenterAppend
-"	nmap <leader>/9 <Plug>NERDCommenterToEOL
-"	vmap <Leader>/s <Plug>NERDCommenterSexy
-"	vmap <Leader>/b <Plug>NERDCommenterMinimal
+"nmap <Leader>/a <Plug>NERDCommenterAppend
+"nmap <leader>/9 <Plug>NERDCommenterToEOL
+"vmap <Leader>/s <Plug>NERDCommenterSexy
+"vmap <Leader>/b <Plug>NERDCommenterMinimal
 " }}}
 
 " Ref.vim {{{
-	let g:ref_alc_cmd = 'w3m -dump %s'
+let g:ref_alc_cmd = 'w3m -dump %s'
 " }}}
 
 " smartchr {{{
@@ -514,41 +629,41 @@ endif
 " }}}
 
 " vim-latex {{{
-	set shellslash
-	set grepprg=grep\ -nH\ $*
-	let g:tex_flavor='latex'
-	let g:Imap_UsePlaceHolders = 1
-	let g:Imap_DeleteEmptyPlaceHolders = 1
-	let g:Imap_StickyPlaceHolders = 0
-	let g:Tex_DefaultTargetFormat = 'pdf'
-	let g:Tex_FormatDependency_ps = 'dvi,ps'
-	let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-	let g:Tex_CompileRule_dvi = '/usr/texbin/platex -synctex=1 -interaction=nonstopmode $*'
-	let g:Tex_CompileRule_ps = '/usr/texbin/dvips -Ppdf -o $*.ps $*.dvi'
-	let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
-"	let g:Tex_CompileRule_pdf = '/usr/texbin/pdflatex $*.tex'
-"	let g:Tex_CompileRule_pdf = '/usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $*'
-	let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
-	let g:Tex_MakeIndexFlavor = '/usr/texbin/mendex $*.idx'
-	let g:Tex_UseEditorSettingInDVIViewer = 1
-	let g:Tex_ViewRule_dvi = '/usr/bin/open -a PictPrinter.app'
-"	let g:Tex_ViewRule_dvi = '/usr/bin/open -a Skim.app'
-	let g:Tex_ViewRule_ps = '/usr/local/bin/gv --watch'
-	let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview.app'
-"	let g:Tex_ViewRule_pdf = '/usr/bin/open -a Skim.app'
-	"let g:Tex_ViewRule_pdf = '/usr/bin/open -a TeXShop.app'
-	"let g:Tex_ViewRule_pdf = '/usr/bin/open -a TeXworks.app'
-	"let g:Tex_ViewRule_pdf = '/usr/bin/open -a "Adobe Reader.app"'
+set shellslash
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+let g:Imap_UsePlaceHolders = 1
+let g:Imap_DeleteEmptyPlaceHolders = 1
+let g:Imap_StickyPlaceHolders = 0
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_FormatDependency_ps = 'dvi,ps'
+let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+let g:Tex_CompileRule_dvi = '/usr/texbin/platex -synctex=1 -interaction=nonstopmode $*'
+let g:Tex_CompileRule_ps = '/usr/texbin/dvips -Ppdf -o $*.ps $*.dvi'
+let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
+"let g:Tex_CompileRule_pdf = '/usr/texbin/pdflatex $*.tex'
+"let g:Tex_CompileRule_pdf = '/usr/texbin/pdflatex -synctex=1 -interaction=nonstopmode $*'
+let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
+let g:Tex_MakeIndexFlavor = '/usr/texbin/mendex $*.idx'
+let g:Tex_UseEditorSettingInDVIViewer = 1
+let g:Tex_ViewRule_dvi = '/usr/bin/open -a PictPrinter.app'
+"let g:Tex_ViewRule_dvi = '/usr/bin/open -a Skim.app'
+let g:Tex_ViewRule_ps = '/usr/local/bin/gv --watch'
+let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview.app'
+"let g:Tex_ViewRule_pdf = '/usr/bin/open -a Skim.app'
+"let g:Tex_ViewRule_pdf = '/usr/bin/open -a TeXShop.app'
+"let g:Tex_ViewRule_pdf = '/usr/bin/open -a TeXworks.app'
+"let g:Tex_ViewRule_pdf = '/usr/bin/open -a "Adobe Reader.app"'
 " }}}
 
 " vim-powerline {{{
-	let g:Powerline_mode_n = 'NORMAL'
-	" http://d.hatena.ne.jp/itchyny/20120609/1339249777
+let g:Powerline_mode_n = 'NORMAL'
+" http://d.hatena.ne.jp/itchyny/20120609/1339249777
 " }}}
 
 " simple-javascript-indenter {{{
-	let g:SimpleJsIndenter_BriefMode = 1
-	let g:SimpleJsIndenter_CaseIndentLevel = -1
+let g:SimpleJsIndenter_BriefMode = 1
+let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
 "
