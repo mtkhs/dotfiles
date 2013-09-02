@@ -294,7 +294,7 @@ NeoBundle 'anyakichi/vim-surround', {
       \ ]}}
 NeoBundle 'tpope/vim-endwise'
 "NeoBundle 'h1mesuke/vim-alignta'
-NeoBundle 'othree/eregex.vim' " :1M/ ってなる
+NeoBundle 'othree/eregex.vim'
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
 NeoBundle 'sjl/gundo.vim', {
