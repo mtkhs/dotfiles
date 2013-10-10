@@ -26,7 +26,7 @@ fi
 alias v='vim'
 alias vf='vimfiler'
 alias vimfiler='vim -c VimFiler'
-alias sudo='sudo -H' # sudo vim対策
+alias sudo='sudo -i -H'
 
 alias be='bundle exec'
 
