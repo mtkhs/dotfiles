@@ -16,6 +16,7 @@ case ${OSTYPE} in
 		ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
 		ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
 		ln -s -h $DOTFILES/.bundle     $HOME/.bundle
+		ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
 		;;
 	linux*)
 		ln -s -T $DOTFILES/.zsh        $HOME/.zsh
@@ -28,6 +29,7 @@ case ${OSTYPE} in
 		ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
 		ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
 		ln -s -T $DOTFILES/.bundle     $HOME/.bundle
+		ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
 		;;
 esac
 
