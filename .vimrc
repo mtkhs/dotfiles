@@ -350,6 +350,7 @@ let g:syntastic_echo_current_error = 1
 let g:syntastic_auto_jump = 0
 let g:syntastic_loc_list_height = 5
 let g:syntastic_javascript_checker = 'jshint'
+let g:syntastic_c_include_dirs = [ '../include', 'include' ]
 " }}}
 
 " unite.vim {{{
