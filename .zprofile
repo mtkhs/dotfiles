@@ -132,7 +132,8 @@ fi
 if [[ -s "$HOME/.pyenv" ]]; then
 	# pyenv
 	export PATH=$HOME/.pyenv/bin:$PATH
-	eval "$(pyenv init - zsh --no-rehash)"
+#	export PYENV_ROOT=/usr/local/opt/pyenv
+	if which pyenv > /dev/null; then eval "$(pyenv init - zsh --no-rehash)"; fi
 elif [[ -s "$HOME/.pythonbrew/etc/bashrc" ]]; then
 	# pythonbrew
 	source $HOME/.pythonbrew/etc/bashrc
