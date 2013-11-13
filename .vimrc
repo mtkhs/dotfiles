@@ -261,11 +261,17 @@ NeoBundle 'vim-jp/cpp-vim', {
       \ 'autoload' : {
       \ 'filetypes' : 'cpp'
       \ }}
-NeoBundle 'teramako/jscomplete-vim', {
+NeoBundle 'mattn/jscomplete-vim', {
       \ 'lazy' : 1,
       \ 'autoload' : {
       \ 'filetypes' : 'javascript'
       \ }}
+
+"NeoBundle 'teramako/jscomplete-vim', {
+"      \ 'lazy' : 1,
+"      \ 'autoload' : {
+"      \ 'filetypes' : 'javascript'
+"      \ }}
 
 " Syntax Check
 NeoBundle 'scrooloose/syntastic'
