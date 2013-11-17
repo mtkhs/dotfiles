@@ -197,14 +197,6 @@ NeoBundle 'semmons99/vim-ruby-matchit', {
       \ 'autoload' : {
       \ 'filetypes' : [ 'ruby', 'eruby']
       \ }}
-NeoBundle 'taichouchou2/unite-reek', {
-      \ 'lazy' : 1,
-      \ 'build' : {
-      \    'mac': 'gem install reek',
-      \    'unix': 'gem install reek',
-      \ },
-      \ 'autoload': { 'filetypes': [ 'ruby', 'eruby', 'haml' ] }
-      \ }
 
 " javascript
 NeoBundle 'jiangmiao/simple-javascript-indenter', {
@@ -266,12 +258,6 @@ NeoBundle 'mattn/jscomplete-vim', {
       \ 'autoload' : {
       \ 'filetypes' : 'javascript'
       \ }}
-
-"NeoBundle 'teramako/jscomplete-vim', {
-"      \ 'lazy' : 1,
-"      \ 'autoload' : {
-"      \ 'filetypes' : 'javascript'
-"      \ }}
 
 " Syntax Check
 NeoBundle 'scrooloose/syntastic'

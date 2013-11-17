@@ -2,7 +2,6 @@
 alias ....='../..'
 alias ......='../../..'
 
-alias sl='ls'
 alias l='la'
 alias la='ls -lAvF'
 alias ll='ls -l'
