@@ -151,6 +151,13 @@ setopt hist_ignore_dups
 setopt hist_ignore_space
 # 余分な空白は詰める
 setopt hist_reduce_blanks
+# シェルプロセスごとにヒストリを共有
+setopt share_history
+# ヒストリを呼び出してから実行するまでに一旦編集できるようにする。
+setopt hist_verify
+# ヒストリファイルを上書きせずに追加
+setopt append_history
+
 
 #
 # functions
