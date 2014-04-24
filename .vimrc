@@ -36,7 +36,7 @@ NeoBundle 'Shougo/vimproc.vim', {
       \   },
       \ }
 NeoBundle 'Shougo/vimshell.vim', '', 'default'
-call neobundle#config('vimshell', {
+call neobundle#config('vimshell.vim', {
       \ 'lazy' : 1,
       \ 'autoload' : {
       \ 'commands' : [{ 'name' : 'VimShell',
@@ -49,7 +49,7 @@ NeoBundle 'supermomonga/vimshell-pure.vim', {
 			\'depends' : 'Shougo/vimshell.vim'
 			\}
 NeoBundle 'Shougo/vimfiler.vim', '', 'default'
-call neobundle#config('vimfiler', {
+call neobundle#config('vimfiler.vim', {
       \ 'lazy' : 1,
       \ 'depends' : 'Shougo/unite.vim',
       \ 'autoload' : {
@@ -68,7 +68,7 @@ call neobundle#config('vimfiler', {
       \ }
       \ })
 NeoBundle 'Shougo/vinarise.vim', '', 'default'
-call neobundle#config('vinarise', {
+call neobundle#config('vinarise.vim', {
       \ 'lazy' : 1,
       \ 'autoload' : {
       \ 'commands' : 'Vinarise',
@@ -89,7 +89,7 @@ NeoBundle 'choplin/unite-vim_hacks', {
       \ }
 
 NeoBundle "Shougo/neocomplcache.vim", '', 'default'
-call neobundle#config('neocomplcache', {
+call neobundle#config('neocomplcache.vim', {
       \ 'lazy' : 1,
       \ 'autoload' : {
       \ 'commands' : 'NeoComplCacheEnable',
@@ -106,7 +106,7 @@ NeoBundle 'ujihisa/neco-ghc', {
 
 " neosnippet
 NeoBundle 'Shougo/neosnippet.vim'
-call neobundle#config('neosnippet', {
+call neobundle#config('neosnippet.vim', {
       \ 'lazy' : 1,
       \ 'autoload' : {
       \ 'insert' : 1,
