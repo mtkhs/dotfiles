@@ -79,7 +79,7 @@ case ${OSTYPE} in
 		export PATH=$HOME/review/bin:$PATH
 		
 		# tex
-		export PATH=/usr/local/texlive/2011/bin/x86_64-darwin/:$PATH
+		export PATH=/usr/local/texlive/2013/bin/x86_64-darwin:$PATH
 		
 		# cairo
 #		export DYLD_LIBRARY_PATH=/usr/local/opt/cairo/lib
@@ -122,7 +122,7 @@ fi
 if [[ -s "$HOME/.rbenv" ]]; then
 	# rbenv
 	export PATH=$HOME/.rbenv/bin:$PATH
-	eval "$(rbenv init - zsh --no-rehash)"
+	eval "$(rbenv init - --no-rehash zsh)"
 elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
 	# rvm
 	export PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting

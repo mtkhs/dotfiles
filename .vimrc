@@ -314,6 +314,7 @@ NeoBundle 'vim-scripts/Highlight-UnMatched-Brackets'
 NeoBundle 'nanotech/jellybeans.vim'
 "NeoBundle 'croaker/mustang-vim'
 "NeoBundle 'therubymug/vim-pyte'
+NeoBundle 'w0ng/vim-hybrid'
 
 "NeoBundle 'Lokaltog/vim-powerline' " The ultimate vim statusline utility.
 NeoBundle 'bling/vim-airline'
@@ -679,7 +680,8 @@ let g:jellybeans_overrides = {
 " basic
 "
 syntax on
-colorscheme jellybeans
+"colorscheme jellybeans
+colorscheme hybrid
 filetype plugin indent on
 
 " ファイルタイプ追加
