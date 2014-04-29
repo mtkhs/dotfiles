@@ -26,7 +26,7 @@ if has('vim_starting')
 	call neobundle#rc( expand( $HOME . '/.vim/.neobundle' ) )
 endif
 
-NeoBundle 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc.vim', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
@@ -88,13 +88,16 @@ NeoBundle 'choplin/unite-vim_hacks', {
       \ 'autoload' : { 'unite_source' : 'vim_hacks' }
       \ }
 
-NeoBundle "Shougo/neocomplcache.vim", '', 'default'
-call neobundle#config('neocomplcache.vim', {
-      \ 'lazy' : 1,
-      \ 'autoload' : {
-      \ 'commands' : 'NeoComplCacheEnable',
-      \ }})
-NeoBundle 'Shougo/neocomplete.vim', '', 'default'
+"NeoBundle "Shougo/neocomplcache.vim", '', 'default'
+"call neobundle#config('neocomplcache.vim', {
+"      \ 'lazy' : 1,
+"      \ 'autoload' : {
+"      \ 'commands' : 'NeoComplCacheEnable',
+"      \ }})
+NeoBundleLazy 'Shougo/neocomplete.vim', {
+      \ 'depends' : 'Shougo/context_filetype.vim',
+      \ 'insert' : 1
+      \ }
 
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'ujihisa/neco-ruby'
@@ -108,6 +111,7 @@ NeoBundle 'ujihisa/neco-ghc', {
 NeoBundle 'Shougo/neosnippet.vim'
 call neobundle#config('neosnippet.vim', {
       \ 'lazy' : 1,
+      \ 'depends' : 'Shougo/neosnippet-snippets',
       \ 'autoload' : {
       \ 'insert' : 1,
       \ 'filetypes' : 'snippet',
@@ -399,16 +403,27 @@ nnoremap <silent><leader>f :VimFiler -split -simple<CR>
 "nnoremap <silent> <Leader>fi :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
 " }}}
 
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" neocomplete {{{
+" Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_camel_case = 1
+" Use fuzzy completion.
+let g:neocomplete#enable_fuzzy_completion = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+" Set auto completion length.
+let g:neocomplete#auto_completion_start_length = 2
+" Set manual completion length.
+let g:neocomplete#manual_completion_start_length = 0
+" Set minimum keyword length.
+let g:neocomplete#min_keyword_length = 3
+
+let g:neocomplete#max_list = 100
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
@@ -490,71 +505,6 @@ let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-
-" neocomplcache {{{
-" 補完ウィンドウの設定
-set completeopt=menuone
-" 起動時に有効化
-let g:neocomplcache_enable_at_startup = 0
-" 大文字が入力されるまで大文字小文字の区別を無視する
-let g:neocomplcache_enable_smart_case = 1
-" _(アンダースコア)区切りの補完を有効化
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-" ポップアップメニューで表示される候補の数
-let g:neocomplcache_max_list = 20
-" シンタックスをキャッシュするときの最小文字長
-let g:neocomplcache_min_syntax_length = 3
-" 挿入モードのカーソル移動であんまり補完しないように
-let g:NeoComplCache_EnableSkipCompletion = 1
-let g:NeoComplCache_SkipInputTime = '0.5'
-" ディクショナリ定義
-let g:neocomplcache_dictionary_filetype_lists = {
-	\ 'default' : '',
-	\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
-	\ 'c' : $HOME . '/.vim/dict/c.dict',
-	\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
-	\ 'php' : $HOME . '/.vim/dict/php.dict',
-	\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
-	\ 'perl' : $HOME . '/.vim/dict/perl.dict',
-	\ 'java' : $HOME . '/.vim/dict/java.dict',
-	\ }
-
-if !exists('g:neocomplcache_keyword_patterns')
-	let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-
-" カーソル上下で補完選択
-inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
-inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
-
-" 前回行われた補完をキャンセルします
-inoremap <expr><C-g> neocomplcache#undo_completion()
-
-" 補完候補のなかから、共通する部分を補完します
-inoremap <expr><C-l> neocomplcache#complete_common_string()
-
-" 改行で確定して補完ウィンドウを閉じる
-"inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-" endwiseと干渉するので http://d.hatena.ne.jp/tacahiroy/20111006/1317851233
-function! s:CrInInsertModeBetterWay()
-	return pumvisible() ? neocomplcache#close_popup()."\<CR>" : "\<CR>"
-endfunction
-"inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
-inoremap <expr><silent><CR> CrInInsertModeBetterWay()
-
-" <TAB>で補完候補の選択
-inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
-
-" <C-h>や<BS>を押したときに確実にポップアップを削除します
-inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
-
-" 現在選択している候補をキャンセルし、ポップアップを閉じます
-"inoremap <expr><C-e> neocomplcache#cancel_popup()
 " }}}
 
 " neosnippet {{{
@@ -571,11 +521,6 @@ smap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" 
 let g:colorv_preview_ftype = 'css,scss,sass,less,html,javascript'
 " }}}
 
-" colorizer {{{
-" pluginによるmap設定をしない
-"let g:colorizer_nomap = 1
-" }}}
-
 " Gtags {{{
 map <F3> :GtagsCursor<CR>
 "map <C-n> :cn<CR>
@@ -584,19 +529,6 @@ map <F3> :GtagsCursor<CR>
 
 " Gundo {{{
 nnoremap U :<C-u>GundoToggle<CR>
-" }}}
-
-" buftabs {{{
-"バッファタブにパスを省略してファイル名のみ表示する
-let g:buftabs_only_basename=1
-" バッファタブをステータスライン内に表示する
-"let g:buftabs_in_statusline=1
-" 現在のバッファをハイライト
-let g:buftabs_active_highlight_group="Visual"
-" ステータスライン
-"set statusline=%=\ [%{(&fenc!=''?&fenc:&enc)}/%{&ff}]\[%Y]\[%04l,%04v][%p%%]
-" ステータスラインを常に表示
-"set laststatus=2
 " }}}
 
 " NERDCommenter {{{
