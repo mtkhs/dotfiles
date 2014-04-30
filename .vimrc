@@ -312,14 +312,16 @@ NeoBundle 'vim-scripts/Highlight-UnMatched-Brackets'
 "NeoBundle 'matthewtodd/vim-twilight'
 "NeoBundle 'altercation/vim-colors-solarized'
 "NeoBundle 'jnurmine/Zenburn'
-"NeoBundle 'jonathanfilip/vim-lucius'
+NeoBundle 'jonathanfilip/vim-lucius'
 "NeoBundle 'vim-scripts/mrkn256.vim'
 "NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
+NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'nanotech/jellybeans.vim'
 "NeoBundle 'croaker/mustang-vim'
 "NeoBundle 'therubymug/vim-pyte'
 NeoBundle 'w0ng/vim-hybrid'
 
+" statusline
 "NeoBundle 'Lokaltog/vim-powerline' " The ultimate vim statusline utility.
 NeoBundle 'bling/vim-airline'
 
