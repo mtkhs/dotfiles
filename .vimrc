@@ -27,6 +27,26 @@ if has('vim_starting')
 endif
 
 NeoBundleFetch 'Shougo/neobundle.vim'
+
+function! s:meet_neocomplete_requirements()
+	return has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
+endfunction
+
+if s:meet_neocomplete_requirements()
+	NeoBundleLazy 'Shougo/neocomplete.vim', {
+      \ 'depends' : 'Shougo/context_filetype.vim',
+      \ 'insert' : 1
+      \ }
+	NeoBundleFetch 'Shougo/neocomplcache'
+else
+	NeoBundleLazy 'Shougo/neocomplcache', {
+	  \   'autoload' : {
+	  \     'commands' : 'NeoComplCacheEnable'
+	  \   }
+	  \ }
+	NeoBundleFetch 'Shougo/neocomplete'
+endif
+
 NeoBundle 'Shougo/vimproc.vim', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
@@ -86,17 +106,6 @@ NeoBundle 'choplin/unite-vim_hacks', {
       \      'mattn/wwwrenderer-vim'
       \    ],
       \ 'autoload' : { 'unite_source' : 'vim_hacks' }
-      \ }
-
-"NeoBundle "Shougo/neocomplcache.vim", '', 'default'
-"call neobundle#config('neocomplcache.vim', {
-"      \ 'lazy' : 1,
-"      \ 'autoload' : {
-"      \ 'commands' : 'NeoComplCacheEnable',
-"      \ }})
-NeoBundleLazy 'Shougo/neocomplete.vim', {
-      \ 'depends' : 'Shougo/context_filetype.vim',
-      \ 'insert' : 1
       \ }
 
 NeoBundle 'ujihisa/neco-look'
@@ -225,10 +234,10 @@ NeoBundle 'othree/html5.vim', {
       \ 'autoload' : {
       \ 'filetypes' : 'html'
       \ }}
-NeoBundle 'mattn/zencoding-vim', {
+NeoBundle 'mattn/emmet-vim', {
       \ 'lazy' : 1,
       \ 'autoload' : {
-      \ 'filetypes' : 'php'
+      \ 'filetypes' : ['html', 'php']
       \ }}
 NeoBundle 'hail2u/vim-css3-syntax', {
       \ 'lazy' : 1,
@@ -290,7 +299,7 @@ NeoBundle 'anyakichi/vim-surround', {
       \ ]}}
 NeoBundle 'tpope/vim-endwise'
 "NeoBundle 'h1mesuke/vim-alignta'
-NeoBundle 'othree/eregex.vim'
+" NeoBundle 'othree/eregex.vim'
 "NeoBundle 'kana/vim-smartchr'
 "NeoBundle 'mileszs/ack.vim'
 NeoBundle 'sjl/gundo.vim', {
@@ -405,6 +414,7 @@ nnoremap <silent><leader>f :VimFiler -split -simple<CR>
 "nnoremap <silent> <Leader>fi :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
 " }}}
 
+if s:meet_neocomplete_requirements()
 " neocomplete {{{
 " Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
@@ -518,6 +528,77 @@ smap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" 
 "imap <C-k> <Plug>(neosnippet_start_unite_snippet)
 "smap <C-k> <Plug>(neosnippet_start_unite_snippet)
 " }}}
+else
+" neocomplcache {{{
+" 補完ウィンドウの設定
+set completeopt=menuone
+" 起動時に有効化
+let g:neocomplcache_enable_at_startup = 0
+" 大文字が入力されるまで大文字小文字の区別を無視する
+let g:neocomplcache_enable_smart_case = 1
+" _(アンダースコア)区切りの補完を有効化
+let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_enable_camel_case_completion = 1
+" ポップアップメニューで表示される候補の数
+let g:neocomplcache_max_list = 20
+" シンタックスをキャッシュするときの最小文字長
+let g:neocomplcache_min_syntax_length = 3
+" 挿入モードのカーソル移動であんまり補完しないように
+let g:NeoComplCache_EnableSkipCompletion = 1
+let g:NeoComplCache_SkipInputTime = '0.5'
+" ディクショナリ定義
+let g:neocomplcache_dictionary_filetype_lists = {
+	\ 'default' : '',
+	\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
+	\ 'c' : $HOME . '/.vim/dict/c.dict',
+	\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
+	\ 'php' : $HOME . '/.vim/dict/php.dict',
+	\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
+	\ 'perl' : $HOME . '/.vim/dict/perl.dict',
+	\ 'java' : $HOME . '/.vim/dict/java.dict',
+	\ }
+
+if !exists('g:neocomplcache_keyword_patterns')
+	let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" カーソル上下で補完選択
+inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
+inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
+
+" 前回行われた補完をキャンセルします
+inoremap <expr><C-g> neocomplcache#undo_completion()
+
+" 補完候補のなかから、共通する部分を補完します
+inoremap <expr><C-l> neocomplcache#complete_common_string()
+
+" 改行で確定して補完ウィンドウを閉じる
+"inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+" endwiseと干渉するので http://d.hatena.ne.jp/tacahiroy/20111006/1317851233
+function! s:CrInInsertModeBetterWay()
+	return pumvisible() ? neocomplcache#close_popup()."\<CR>" : "\<CR>"
+endfunction
+"inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
+inoremap <expr><silent><CR> CrInInsertModeBetterWay()
+
+" <TAB>で補完候補の選択
+inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
+
+" <C-h>や<BS>を押したときに確実にポップアップを削除します
+inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
+
+" 現在選択している候補をキャンセルし、ポップアップを閉じます
+"inoremap <expr><C-e> neocomplcache#cancel_popup()
+" }}}
+endif
+
+" Emmet {{{
+let g:user_emmet_settings = {
+	\   'lang' : 'ja'
+	\ }
+" }}}
 
 " ColorV {{{
 let g:colorv_preview_ftype = 'css,scss,sass,less,html,javascript'
@@ -617,6 +698,8 @@ syntax on
 "colorscheme jellybeans
 colorscheme hybrid
 filetype plugin indent on
+
+NeoBundleCheck
 
 " ファイルタイプ追加
 autocmd BufNewFile,BufRead *.nb set filetype=ruby
