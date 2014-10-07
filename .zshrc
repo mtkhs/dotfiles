@@ -46,7 +46,7 @@ setopt transient_rprompt
 
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 # ※PROMPTへの代入文字列がシングルクォートで括らないとダメになるらしい
-# setopt prompt_subst
+setopt prompt_subst
 
 # define_vcs_info() {
 	# # http://liosk.blog103.fc2.com/blog-entry-209.html
@@ -56,29 +56,29 @@ setopt transient_rprompt
 # }
 # add-zsh-hook precmd define_vcs_info
 
-# function face {
-	# echo '%(?.%F{green}(^-^)%f.%F{red}(`-`%)%f)'
-# }
+function face() {
+	echo '%(?.%F{green}(^-^)%f.%F{red}(`-`%)%f)'
+}
 
-# case ${UID} in
-# 0)
-	# PROMPT='`face` %n@%m:%~# '
-	# PROMPT2='`face` %n@%m:%_# '
-	# RPROMPT='%1v'
-	# [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		# PROMPT="%{[37m%}${PROMPT}%{[m%}"
-	# ;;
-# *)
-	# PROMPT='`face` %n@%m:%~$ '
-	# PROMPT2='`face` %n@%m:%_$ '
-	# RPROMPT='%1v'
-	# [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		# PROMPT="%{[37m%}${PROMPT}%{[m%}"
-	# ;;
-# esac
+case ${UID} in
+0)
+	PROMPT='`face` %n@%m:%~# '
+	PROMPT2='`face` %n@%m:%_# '
+	RPROMPT='%1v'
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+		PROMPT="%{[37m%}${PROMPT}%{[m%}"
+	;;
+*)
+	 PROMPT='`face` %n@%m:%~$ '
+	 PROMPT2='`face` %n@%m:%_$ '
+	 RPROMPT='%1v'
+	 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+		 PROMPT="%{[37m%}${PROMPT}%{[m%}"
+	 ;;
+ esac
 
 # pure
-source $HOME/.zsh/pure/pure.zsh
+#source $HOME/.zsh/pure/pure.zsh
 
 #
 # basic
