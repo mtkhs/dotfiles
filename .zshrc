@@ -16,7 +16,6 @@ autoload -Uz add-zsh-hook
 
 autoload -Uz vcs_info
 
-#source $HOME/.zsh/.antigenrc
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # 補完時に大文字小文字を無視する。
@@ -79,7 +78,7 @@ setopt transient_rprompt
 # esac
 
 # pure
-source $HOME/.zsh/pure/prompt.zsh
+source $HOME/.zsh/pure/pure.zsh
 
 #
 # basic
