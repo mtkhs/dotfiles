@@ -23,7 +23,7 @@ if has('vim_starting')
 	else
 		set runtimepath+=$HOME/.vim/neobundle.vim
 	endif
-	call neobundle#rc( expand( $HOME . '/.vim/.neobundle' ) )
+	call neobundle#begin( expand( $HOME . '/.vim/.neobundle' ) )
 endif
 
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -329,6 +329,7 @@ NeoBundle 'nanotech/jellybeans.vim'
 "NeoBundle 'croaker/mustang-vim'
 "NeoBundle 'therubymug/vim-pyte'
 NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'chriskempson/vim-tomorrow-theme'
 
 " statusline
 "NeoBundle 'Lokaltog/vim-powerline' " The ultimate vim statusline utility.
@@ -690,13 +691,19 @@ let g:jellybeans_overrides = {
 \              'attr': 'bold' },
 \}
 
+call neobundle#end()
 
 "
 " basic
 "
 syntax on
 "colorscheme jellybeans
-colorscheme hybrid
+if ($ft=='ruby')
+	colorscheme Tomorrow-Night
+else
+	colorscheme hybrid
+endif
+
 filetype plugin indent on
 
 NeoBundleCheck
