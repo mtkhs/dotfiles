@@ -21,6 +21,9 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # 補完時に大文字小文字を無視する。
 #compctl -M 'm:{a-z}={A-Z}'
 
+# killコマンドのPID補完
+zstyle ':completion:*:processes' command "ps a -u $USER -o user,pid,stat,%cpu,%mem,cputime,command"
+
 # 補完時の大文字小文字無視しつつ、超補完以下略
 # zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
@@ -188,25 +191,57 @@ bindkey     " "         my-expand-abbrev
 # Enter で ls と git status を表示すると便利
 # http://qiita.com/yuyuchu3333/items/e9af05670c95e2cc5b4d
 #
-function do_enter() {
-    if [ -n "$BUFFER" ]; then
-        zle accept-line
+#function do_enter() {
+#    if [ -n "$BUFFER" ]; then
+#        zle accept-line
+#        return 0
+#    fi
+#    echo
+#    #ls
+#    # ↓おすすめ
+#    ls_abbrev
+#    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
+#        echo
+#        echo -e "\e[0;33m--- git status ---\e[0m"
+#        git status -sb
+#    fi
+#    zle reset-prompt
+#    return 0
+#}
+#zle -N do_enter
+#bindkey '^m' do_enter
+
+#
+# zshでEnterを連打したときにいろいろ実行する
+# http://blog.n-z.jp/blog/2014-12-06-zsh-enter.html
+#
+function my_enter {
+    if [[ -n "$BUFFER" ]]; then
+        builtin zle .accept-line
         return 0
     fi
-    echo
-    #ls
-    # ↓おすすめ
-    ls_abbrev
-    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
-        echo
-        echo -e "\e[0;33m--- git status ---\e[0m"
-        git status -sb
+    if [ "$WIDGET" != "$LASTWIDGET" ]; then
+        MY_ENTER_COUNT=0
     fi
-    zle reset-prompt
-    return 0
+    case $[MY_ENTER_COUNT++] in
+        0)
+            BUFFER=" ls"
+            ;;
+        1)
+            if [[ -d .svn ]]; then
+                BUFFER=" svn status"
+            elif git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+                BUFFER=" git status -sb"
+            fi
+            ;;
+        *)
+            unset MY_ENTER_COUNT
+            ;;
+    esac
+    builtin zle .accept-line
 }
-zle -N do_enter
-bindkey '^m' do_enter
+zle -N my_enter
+bindkey '^m' my_enter
 
 #
 # chpwd内のlsでファイル数が多い場合に省略表示する
