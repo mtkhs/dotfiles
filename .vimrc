@@ -14,17 +14,18 @@ let s:is_windows = has('win32') || has('win64')
 " NeoBundle {{{
 filetype off
 
+if has('vim_starting')
+	if !isdirectory(expand( $HOME . "/.vim/.neobundle/neobundle.vim/"))
+		echo "install neobundle..."
+		:call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/.neobundle/neobundle.vim")
+	endif
+	set runtimepath+=$HOME/.vim/.neobundle/neobundle.vim/
+endif
+
+call neobundle#begin( expand( $HOME . "/.vim/.neobundle/") )
+
 " githubで使用するプロトコルをhttpsに
 let g:neobundle_default_git_protocol='https'
-
-if has('vim_starting')
-	if isdirectory( expand( $HOME . '/.vim/.neobundle/neobundle.vim' ) )
-		set runtimepath+=$HOME/.vim/.neobundle/neobundle.vim
-	else
-		set runtimepath+=$HOME/.vim/neobundle.vim
-	endif
-	call neobundle#begin( expand( $HOME . '/.vim/.neobundle' ) )
-endif
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
@@ -396,8 +397,8 @@ let g:vimfiler_safe_mode_by_default = 0
 " カレントディレクトリを自動で同期
 let g:vimfiler_enable_auto_cd = 1
 
-autocmd! FileType vimfiler call g:my_vimfiler_settings()
-function! g:my_vimfiler_settings()
+autocmd! FileType vimfiler call g:My_vimfiler_settings()
+function! g:My_vimfiler_settings()
 	nmap     <buffer>O             <Plug>(vimfiler_sync_with_current_vimfiler)
 	nmap     <buffer>o             <Plug>(vimfiler_sync_with_another_vimfiler)
 	nmap     <buffer><backspace>   <Plug>(vimfiler_switch_to_parent_directory)
