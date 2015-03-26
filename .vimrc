@@ -47,6 +47,7 @@ else
 	  \ }
 	NeoBundleFetch 'Shougo/neocomplete'
 endif
+NeoBundle 'ujihisa/neco-look'
 
 NeoBundle 'Shougo/vimproc.vim', {
       \ 'build' : {
@@ -55,49 +56,6 @@ NeoBundle 'Shougo/vimproc.vim', {
       \     'mac' : 'make -f make_mac.mak',
       \     'unix' : 'make -f make_unix.mak',
       \   },
-      \ }
-NeoBundle 'Shougo/vimshell.vim', '', 'default'
-call neobundle#config('vimshell.vim', {
-      \ 'lazy' : 1,
-      \ 'autoload' : {
-      \ 'commands' : [{ 'name' : 'VimShell',
-      \ 'complete' : 'customlist,vimshell#complete'},
-      \ 'VimShellExecute', 'VimShellInteractive',
-      \ 'VimShellTerminal', 'VimShellPop'],
-      \ 'mappings' : ['<Plug>(vimshell_switch)']
-      \ }})
-NeoBundle 'supermomonga/vimshell-pure.vim', {
-			\'depends' : 'Shougo/vimshell.vim'
-			\}
-NeoBundle 'Shougo/vimfiler.vim', '', 'default'
-call neobundle#config('vimfiler.vim', {
-      \ 'lazy' : 1,
-      \ 'depends' : 'Shougo/unite.vim',
-      \ 'autoload' : {
-      \ 'commands' : [
-      \ { 'name' : 'VimFiler',
-      \ 'complete' : 'customlist,vimfiler#complete' },
-      \ { 'name' : 'VimFilerExplorer',
-      \ 'complete' : 'customlist,vimfiler#complete' },
-      \ { 'name' : 'Edit',
-      \ 'complete' : 'customlist,vimfiler#complete' },
-      \ { 'name' : 'Write',
-      \ 'complete' : 'customlist,vimfiler#complete' },
-      \ 'Read', 'Source'],
-      \ 'mappings' : ['<Plug>(vimfiler_switch)'],
-      \ 'explorer' : 1,
-      \ }
-      \ })
-NeoBundle 'Shougo/vinarise.vim', '', 'default'
-call neobundle#config('vinarise.vim', {
-      \ 'lazy' : 1,
-      \ 'autoload' : {
-      \ 'commands' : 'Vinarise',
-      \ }})
-NeoBundle 'Shougo/vim-vcs', {
-      \ 'lazy' : 1,
-      \ 'depends' : 'thinca/vim-openbuf',
-      \ 'autoload' : {'commands' : 'Vcs'},
       \ }
 NeoBundle 'choplin/unite-vim_hacks', {
       \ 'lazy' : 1,
@@ -109,41 +67,55 @@ NeoBundle 'choplin/unite-vim_hacks', {
       \ 'autoload' : { 'unite_source' : 'vim_hacks' }
       \ }
 
-NeoBundle 'ujihisa/neco-look'
-NeoBundle 'ujihisa/neco-ruby'
-NeoBundle 'ujihisa/neco-ghc', {
-      \ 'lazy' : 1,
-      \ 'autoload' : {
-      \ 'filetypes' : 'haskell'
-      \ }}
 
 " neosnippet
-NeoBundle 'Shougo/neosnippet.vim'
-call neobundle#config('neosnippet.vim', {
-      \ 'lazy' : 1,
-      \ 'depends' : 'Shougo/neosnippet-snippets',
-      \ 'autoload' : {
+NeoBundleLazy 'Shougo/neosnippet.vim', {
+      \ 'depends' : ['Shougo/neosnippet-snippets', 'Shougo/context_filetype.vim'],
       \ 'insert' : 1,
       \ 'filetypes' : 'snippet',
-      \ 'unite_sources' : ['snippet', 'neosnippet/user', 'neosnippet/runtime'],
-      \ }})
-NeoBundle 'Shougo/unite.vim', '', 'default'
-call neobundle#config('unite.vim',{
-      \ 'lazy' : 1,
-      \ 'autoload' : {
+      \ 'unite_sources' : [
+      \ 'neosnippet', 'neosnippet/user', 'neosnippet/runtime'],
+      \ }
+NeoBundleLazy 'Shougo/unite.vim', {
       \ 'commands' : [{ 'name' : 'Unite',
-      \ 'complete' : 'customlist,unite#complete_source'},
-      \ 'UniteWithCursorWord', 'UniteWithInput']
-      \ }})
-NeoBundle 'Shougo/unite-build'
-NeoBundle 'Shougo/unite-ssh'
-NeoBundle 'ujihisa/vimshell-ssh', {
-      \ 'lazy' : 1,
-      \ 'autoload' : {
+      \ 'complete' : 'customlist,unite#complete_source'}],
+      \ 'depends' : 'Shougo/neomru.vim',
+      \ }
+NeoBundleLazy 'Shougo/unite-build'
+NeoBundleLazy 'Shougo/neossh.vim', {
+      \ 'filetypes' : 'vimfiler',
+      \ 'sources' : 'ssh',
+      \ }
+NeoBundleLazy 'ujihisa/vimshell-ssh', {
       \ 'filetypes' : 'vimshell',
-      \ }}
+      \ }
+NeoBundleLazy 'Shougo/vim-vcs', {
+      \ 'depends' : 'thinca/vim-openbuf',
+      \ }
+NeoBundleLazy 'Shougo/vimfiler.vim', {
+      \ 'depends' : 'Shougo/unite.vim',
+      \ 'commands' : [
+      \ { 'name' : ['VimFiler', 'Edit', 'Write'],
+      \ 'complete' : 'customlist,vimfiler#complete' },
+      \ 'Read', 'Source'],
+      \ 'mappings' : '<Plug>',
+      \ 'explorer' : 1,
+      \ }
+NeoBundleLazy 'Shougo/vimshell.vim', {
+      \ 'commands' : [{ 'name' : 'VimShell',
+      \ 'complete' : 'customlist,vimshell#complete'},
+      \ ],
+      \ 'mappings' : '<Plug>'
+      \ }
+NeoBundleLazy 'yomi322/vim-gitcomplete', {
+      \ 'filetype' : 'vimshell'
+      \ }
+NeoBundleLazy 'Shougo/vinarise.vim', {
+      \ 'commands' : [{
+      \ 'name' : 'Vinarise', 'complete' : 'file'
+      \ }]
+      \ }
 NeoBundle 'Shougo/unite-sudo'
-NeoBundle 'hrsh7th/vim-unite-vcs'
 NeoBundle 'pasela/unite-webcolorname', {
       \ 'lazy' : 1,
       \ 'autoload' : {
@@ -298,7 +270,10 @@ NeoBundle 'anyakichi/vim-surround', {
       \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround'],
       \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround']
       \ ]}}
-NeoBundle 'tpope/vim-endwise'
+NeoBundleLazy 'tpope/vim-endwise', {
+      \ 'autoload' : { 'insert' : 1 }
+      \ }
+NeoBundle 'Townk/vim-autoclose'
 "NeoBundle 'h1mesuke/vim-alignta'
 " NeoBundle 'othree/eregex.vim'
 "NeoBundle 'kana/vim-smartchr'
@@ -707,7 +682,10 @@ endif
 
 filetype plugin indent on
 
-NeoBundleCheck
+if !has('vim_starting')
+	" Installation check.
+	NeoBundleCheck
+endif
 
 " ファイルタイプ追加
 autocmd BufNewFile,BufRead *.nb set filetype=ruby
@@ -825,8 +803,11 @@ set cmdheight=2       " コマンドラインの表示行数
 "set smartindent
 set shiftwidth=4  " 自動インデントの幅
 set tabstop=4     " タブ幅
+
+"
 " コメントのオートインデントを止める
 " http://d.hatena.ne.jp/dayflower/20081208/1228725403
+"
 if has("autocmd")
   autocmd FileType *
     \ let &l:comments
@@ -853,6 +834,11 @@ set history=100        " コマンド・検索パターンの履歴数
 
 "
 " keymap
+"
+
+"
+" sudo.vimを使わないでvimでsudoを使ってのファイル保存
+" http://secondlife.hatenablog.jp/entry/20050428/1114685380
 "
 cmap w!! w !sudo tee > /dev/null %
 
@@ -911,8 +897,10 @@ augroup SkeletonAu
 	autocmd BufNewFile *.rb 0r $HOME/.vim/template/skel.rb
 augroup END
 
+"
 " quickfixを自動で開く
 " http://webtech-walker.com/archive/2009/09/29213156.html
+"
 "autocmd QuickfixCmdPost make,grep,grepadd,vimgrep if len(getqflist()) != 0 | copen | endif
 "autocmd QuickFixCmdPost * Unite qf
 
