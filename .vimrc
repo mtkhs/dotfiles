@@ -1,5 +1,5 @@
-" vi互換モードを切る
-set nocompatible
+ " Note: Skip initialization for vim-tiny or vim-small.
+if !1 | finish | endif
 
 " autocmdを初期化
 autocmd!
@@ -15,6 +15,9 @@ let s:is_windows = has('win32') || has('win64')
 filetype off
 
 if has('vim_starting')
+	if &compatible
+		set nocompatible               " Be iMproved
+	endif
 	if !isdirectory(expand( $HOME . "/.vim/.neobundle/neobundle.vim/"))
 		echo "install neobundle..."
 		:call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/.neobundle/neobundle.vim")
@@ -669,6 +672,8 @@ let g:jellybeans_overrides = {
 
 call neobundle#end()
 
+NeoBundleCheck
+
 "
 " basic
 "
@@ -681,11 +686,6 @@ else
 endif
 
 filetype plugin indent on
-
-if !has('vim_starting')
-	" Installation check.
-	NeoBundleCheck
-endif
 
 " ファイルタイプ追加
 autocmd BufNewFile,BufRead *.nb set filetype=ruby

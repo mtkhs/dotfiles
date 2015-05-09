@@ -34,7 +34,7 @@ case ${OSTYPE} in
 esac
 
 # vim
-git submodule update --init --recursive
+#git submodule update --init --recursive
 vim -c ':NeoBundleInstall' -c q
 
 # chsh
