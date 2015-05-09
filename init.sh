@@ -33,8 +33,10 @@ case ${OSTYPE} in
 		;;
 esac
 
+# submodules
+git submodule update --init --recursive
+
 # vim
-#git submodule update --init --recursive
 vim -c ':NeoBundleInstall' -c q
 
 # chsh
