@@ -1,4 +1,4 @@
- " Note: Skip initialization for vim-tiny or vim-small.
+" Note: Skip initialization for vim-tiny or vim-small.
 if !1 | finish | endif
 
 " autocmdを初期化
@@ -60,31 +60,26 @@ NeoBundle 'Shougo/vimproc.vim', {
       \     'unix' : 'make -f make_unix.mak',
       \   },
       \ }
-NeoBundle 'choplin/unite-vim_hacks', {
-      \ 'lazy' : 1,
-      \ 'depends' : 
-      \    [ 'mattn/webapi-vim',
-      \      'thinca/vim-openbuf',
-      \      'mattn/wwwrenderer-vim'
-      \    ],
-      \ 'autoload' : { 'unite_source' : 'vim_hacks' }
-      \ }
 
 
 " neosnippet
-NeoBundleLazy 'Shougo/neosnippet.vim', {
+NeoBundle 'Shougo/neosnippet.vim', {
+      \ 'lazy' : 1,
       \ 'depends' : ['Shougo/neosnippet-snippets', 'Shougo/context_filetype.vim'],
       \ 'insert' : 1,
       \ 'filetypes' : 'snippet',
       \ 'unite_sources' : [
       \ 'neosnippet', 'neosnippet/user', 'neosnippet/runtime'],
       \ }
-NeoBundleLazy 'Shougo/unite.vim', {
+NeoBundle 'Shougo/unite.vim', {
+      \ 'lazy' : 1,
       \ 'commands' : [{ 'name' : 'Unite',
       \ 'complete' : 'customlist,unite#complete_source'}],
       \ 'depends' : 'Shougo/neomru.vim',
       \ }
-NeoBundleLazy 'Shougo/unite-build'
+NeoBundle 'Shougo/unite-build', {
+      \ 'lazy' : 1
+      \ }
 NeoBundleLazy 'Shougo/neossh.vim', {
       \ 'filetypes' : 'vimfiler',
       \ 'sources' : 'ssh',
@@ -238,7 +233,12 @@ NeoBundle 'Rykka/colorv.vim', {
       \ 'filetypes' : ['css', 'scss', 'sass', 'less', 'html', 'haml', 'javascript']
       \ }}
 
-NeoBundle 'jcf/vim-latex'
+NeoBundle 'jcf/vim-latex', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \ 'filetypes' : 'tex'
+      \ }}
+
 NeoBundle 'vim-jp/cpp-vim', {
       \ 'lazy' : 1,
       \ 'autoload' : {
@@ -297,7 +297,7 @@ NeoBundle 'sjl/gundo.vim', {
 "NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'vim-scripts/Highlight-UnMatched-Brackets'
-
+NeoBundle 'mattn/benchvimrc-vim'
 "NeoBundle 'syngan/vim-pukiwiki'
 
 " colorschemes
@@ -306,14 +306,14 @@ NeoBundle 'vim-scripts/Highlight-UnMatched-Brackets'
 "NeoBundle 'matthewtodd/vim-twilight'
 "NeoBundle 'altercation/vim-colors-solarized'
 "NeoBundle 'jnurmine/Zenburn'
-NeoBundle 'jonathanfilip/vim-lucius'
+"NeoBundle 'jonathanfilip/vim-lucius'
 "NeoBundle 'vim-scripts/mrkn256.vim'
 "NeoBundle 'vim-scripts/Railscasts-Theme-GUIand256color'
-NeoBundle 'jpo/vim-railscasts-theme'
-NeoBundle 'nanotech/jellybeans.vim'
+"NeoBundle 'jpo/vim-railscasts-theme'
+"NeoBundle 'nanotech/jellybeans.vim'
 "NeoBundle 'croaker/mustang-vim'
 "NeoBundle 'therubymug/vim-pyte'
-NeoBundle 'w0ng/vim-hybrid'
+"NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'chriskempson/vim-tomorrow-theme'
 
 " statusline
@@ -361,7 +361,7 @@ endfunction
 function! MyFugitive()
   if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
     let _ = fugitive#head()
-    return strlen(_) ? 'r '._ : ''
+    return strlen(_) ? ''._ : ''
   endif
   return ''
 endfunction
@@ -471,40 +471,24 @@ nnoremap <silent><leader>f :VimFiler -split -simple<CR>
 
 if s:meet_neocomplete_requirements()
 " neocomplete {{{
-" Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_camel_case = 1
-" Use fuzzy completion.
-let g:neocomplete#enable_fuzzy_completion = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
-" Set auto completion length.
-let g:neocomplete#auto_completion_start_length = 2
-" Set manual completion length.
-let g:neocomplete#manual_completion_start_length = 0
-" Set minimum keyword length.
-let g:neocomplete#min_keyword_length = 3
-
-let g:neocomplete#max_list = 100
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-	\ 'default' : '',
-	\ 'vimshell' : $HOME.'/.vimshell_hist',
-	\ 'scheme' : $HOME.'/.gosh_completions',
-	\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
-	\ 'c' : $HOME . '/.vim/dict/c.dict',
-	\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
-	\ 'php' : $HOME . '/.vim/dict/php.dict',
-	\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
-	\ 'perl' : $HOME . '/.vim/dict/perl.dict',
-	\ 'java' : $HOME . '/.vim/dict/java.dict',
-	\ }
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
@@ -520,11 +504,10 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  return neocomplete#smart_close_popup() . "\<CR>"
+  return neocomplete#close_popup() . "\<CR>"
   " For no inserting <CR> key.
   "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
-
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
@@ -565,13 +548,14 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
 " }}}
 
 " neosnippet {{{
@@ -585,67 +569,97 @@ smap <expr><C-k> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" 
 " }}}
 else
 " neocomplcache {{{
-" 補完ウィンドウの設定
-set completeopt=menuone
-" 起動時に有効化
-let g:neocomplcache_enable_at_startup = 0
-" 大文字が入力されるまで大文字小文字の区別を無視する
-let g:neocomplcache_enable_smart_case = 1
-" _(アンダースコア)区切りの補完を有効化
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-" ポップアップメニューで表示される候補の数
-let g:neocomplcache_max_list = 20
-" シンタックスをキャッシュするときの最小文字長
-let g:neocomplcache_min_syntax_length = 3
-" 挿入モードのカーソル移動であんまり補完しないように
-let g:NeoComplCache_EnableSkipCompletion = 1
-let g:NeoComplCache_SkipInputTime = '0.5'
-" ディクショナリ定義
-let g:neocomplcache_dictionary_filetype_lists = {
-	\ 'default' : '',
-	\ 'ruby' : $HOME . '/.vim/dict/ruby.dict',
-	\ 'c' : $HOME . '/.vim/dict/c.dict',
-	\ 'cpp' : $HOME . '/.vim/dict/cpp.dict',
-	\ 'php' : $HOME . '/.vim/dict/php.dict',
-	\ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
-	\ 'perl' : $HOME . '/.vim/dict/perl.dict',
-	\ 'java' : $HOME . '/.vim/dict/java.dict',
-	\ }
 
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+" Enable heavy features.
+" Use camel case completion.
+"let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+"let g:neocomplcache_enable_underbar_completion = 1
+
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
-	let g:neocomplcache_keyword_patterns = {}
+    let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
-" カーソル上下で補完選択
-inoremap <expr><Up> pumvisible() ? neocomplcache#close_popup()."\<Up>" : "\<Up>"
-inoremap <expr><Down> pumvisible() ? neocomplcache#close_popup()."\<Down>" : "\<Down>"
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
-" 前回行われた補完をキャンセルします
-inoremap <expr><C-g> neocomplcache#undo_completion()
-
-" 補完候補のなかから、共通する部分を補完します
-inoremap <expr><C-l> neocomplcache#complete_common_string()
-
-" 改行で確定して補完ウィンドウを閉じる
-"inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-" endwiseと干渉するので http://d.hatena.ne.jp/tacahiroy/20111006/1317851233
-function! s:CrInInsertModeBetterWay()
-	return pumvisible() ? neocomplcache#close_popup()."\<CR>" : "\<CR>"
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplcache#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 endfunction
-"inoremap <silent> <Cr> <C-R>=<SID>CrInInsertModeBetterWay()<Cr>
-inoremap <expr><silent><CR> CrInInsertModeBetterWay()
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
 
-" <TAB>で補完候補の選択
-inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
+"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
+"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
+" Or set this.
+"let g:neocomplcache_enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplcache_enable_insert_char_pre = 1
 
-" <C-h>や<BS>を押したときに確実にポップアップを削除します
-inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
+" AutoComplPop like behavior.
+"let g:neocomplcache_enable_auto_select = 1
 
-" 現在選択している候補をキャンセルし、ポップアップを閉じます
-"inoremap <expr><C-e> neocomplcache#cancel_popup()
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_force_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
 " }}}
 endif
 
@@ -747,13 +761,10 @@ NeoBundleCheck
 "
 " basic
 "
-syntax on
-"colorscheme jellybeans
-if ($ft=='ruby')
-	colorscheme Tomorrow-Night
-else
-	colorscheme hybrid
+if has("syntax")
+	syntax on
 endif
+colorscheme Tomorrow-Night
 
 filetype plugin indent on
 
@@ -777,6 +788,7 @@ if has('kaoriya')
 	set imdisable " IMEを制御させない
 endif
 
+set t_Co=256
 set lazyredraw " スクリプト実行中に再描画しない
 set ttyfast    " 高速ターミナル接続
 
