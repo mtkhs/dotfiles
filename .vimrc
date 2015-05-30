@@ -92,6 +92,7 @@ NeoBundleLazy 'ujihisa/vimshell-ssh', {
 NeoBundleLazy 'Shougo/vim-vcs', {
       \ 'depends' : 'thinca/vim-openbuf',
       \ }
+NeoBundle 'tpope/vim-fugitive'
 NeoBundleLazy 'Shougo/vimfiler.vim', {
       \ 'depends' : 'Shougo/unite.vim',
       \ 'commands' : [
@@ -183,6 +184,7 @@ NeoBundle 'semmons99/vim-ruby-matchit', {
       \ 'autoload' : {
       \ 'filetypes' : [ 'ruby', 'eruby']
       \ }}
+NeoBundle 'evidens/vim-twig'
 
 " javascript
 NeoBundle 'jiangmiao/simple-javascript-indenter', {
@@ -210,7 +212,7 @@ NeoBundle 'othree/html5.vim', {
 NeoBundle 'mattn/emmet-vim', {
       \ 'lazy' : 1,
       \ 'autoload' : {
-      \ 'filetypes' : ['html', 'php']
+      \ 'filetypes' : ['html', 'php', 'twig']
       \ }}
 NeoBundle 'hail2u/vim-css3-syntax', {
       \ 'lazy' : 1,
@@ -253,7 +255,11 @@ NeoBundle 'janx/vim-rubytest'
 "
 " misc
 "
-NeoBundle 'gtags.vim'
+if has("unix") || has("mac")
+	NeoBundle 'vim-scripts/gtags.vim', 
+		\ { "autoload" : { "filetypes" : [ "c", "cpp" ] } }
+	NeoBundle 'vim-scripts/sudo.vim'
+endif
 NeoBundle 'thinca/vim-ref', {
       \ 'lazy' : 1,
       \ 'autoload' : {
@@ -309,9 +315,72 @@ NeoBundle 'chriskempson/vim-tomorrow-theme'
 
 " statusline
 "NeoBundle 'Lokaltog/vim-powerline' " The ultimate vim statusline utility.
-NeoBundle 'bling/vim-airline'
+"NeoBundle 'bling/vim-airline'
+NeoBundle 'itchyny/lightline.vim'
 
-" recognize_charcode
+
+" lightline {{{
+let g:lightline = {
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'MyModified',
+      \   'readonly': 'MyReadonly',
+      \   'fugitive': 'MyFugitive',
+      \   'filename': 'MyFilename',
+      \   'fileformat': 'MyFileformat',
+      \   'filetype': 'MyFiletype',
+      \   'fileencoding': 'MyFileencoding',
+      \   'mode': 'MyMode',
+      \ },
+      \ 'subseparator': { 'left': '|', 'right': '|' }
+      \ }
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'RO' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
+        \  &ft == 'unite' ? unite#get_status_string() : 
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+    let _ = fugitive#head()
+    return strlen(_) ? 'r '._ : ''
+  endif
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+" }}}
+
+" recognize_charcode {{{
 if !has('kaoriya')
 	NeoBundle 'banyan/recognize_charcode.vim'
 endif
@@ -330,12 +399,18 @@ let g:syntastic_mode_map = {
 	\ 'active_filetypes': [ 'ruby', 'javascript', 'python', 'php', 'perl', 'css', 'html', 'json' ],
 	\ 'passive_filetypes': []
 	\ }
+let g:syntastic_php_checkers = ['phpcs']
+let g:syntastic_check_on_open = 1
+let g:syntastic_enable_highlighting = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_echo_current_error = 1
 let g:syntastic_auto_jump = 0
 let g:syntastic_loc_list_height = 5
 let g:syntastic_javascript_checker = 'jshint'
 let g:syntastic_c_include_dirs = [ '../include', 'include' ]
+let g:syntastic_php_php_args = '-l'
+let g:syntastic_php_phpcs_args='--standard=psr2'
+let g:syntastic_php_checkers = ['phpcs']
 " }}}
 
 " unite.vim {{{
@@ -642,11 +717,6 @@ let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview.app'
 "let g:Tex_ViewRule_pdf = '/usr/bin/open -a "Adobe Reader.app"'
 " }}}
 
-" vim-powerline {{{
-let g:Powerline_mode_n = 'NORMAL'
-" http://d.hatena.ne.jp/itchyny/20120609/1339249777
-" }}}
-
 " simple-javascript-indenter {{{
 let g:SimpleJsIndenter_BriefMode = 1
 let g:SimpleJsIndenter_CaseIndentLevel = -1
@@ -690,8 +760,8 @@ endif
 " ファイルタイプ追加
 autocmd BufNewFile,BufRead *.nb set filetype=ruby
 autocmd BufNewFile,BufRead *.json set filetype=json
-autocmd BufRead,BufNewFile *.haml set filetype=haml
-autocmd BufRead,BufNewFile *.tex set filetype=tex
+autocmd BufNewFile,BufRead *.haml set filetype=haml
+autocmd BufNewFile,BufRead *.tex set filetype=tex
 
 " Rubyのタブ幅を2にする。
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2

@@ -113,8 +113,11 @@ case ${OSTYPE} in
 	;;
 esac
 
+if [[ -s $HOME/.nodebrew ]]; then
+	# nodebrew
+	export PATH=$HOME/.nodebrew/current/bin:$PATH
+elif [[ -s $HOME/.nvm/nvm.sh ]]; then
 # nvm
-if [[ -s $HOME/.nvm/nvm.sh ]]; then
 	source $HOME/.nvm/nvm.sh
 	export NODE_PATH=${NVM_PATH}_modules${NODE_PATH:+:}${NODE_PATH}
 fi
@@ -129,11 +132,16 @@ elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
 	source $HOME/.rvm/scripts/rvm
 fi
 
+if [[ -s "$HOME/.phpenv" ]]; then
+	# pyenv
+	export PATH=$PATH:$HOME/.phpenv/bin
+	eval "$(phpenv init - --no-rehash zsh)"
+fi
+
 if [[ -s "$HOME/.pyenv" ]]; then
 	# pyenv
 	export PATH=$HOME/.pyenv/bin:$PATH
-#	export PYENV_ROOT=/usr/local/opt/pyenv
-	if which pyenv > /dev/null; then eval "$(pyenv init - zsh --no-rehash)"; fi
+	if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash zsh)"; fi
 elif [[ -s "$HOME/.pythonbrew/etc/bashrc" ]]; then
 	# pythonbrew
 	source $HOME/.pythonbrew/etc/bashrc
@@ -143,7 +151,7 @@ fi
 if which plenv > /dev/null || [[ -s "$HOME/.plenv" ]]; then
 	# plenv
 	export PATH=$HOME/.plenv/bin:$PATH
-	eval "$(plenv init - zsh --no-rehash)"
+	eval "$(plenv init - --no-rehash zsh)"
 fi
 
 [ -f $HOME/.zprofile.local ] && source $HOME/.zprofile.local
