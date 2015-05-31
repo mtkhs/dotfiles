@@ -26,7 +26,8 @@ export LESS="-R"
 ## grepのバージョンを検出。
 grep_version="$(grep --version | head -n 1 | sed -e 's/^[^0-9.]*\([0-9.]*\)[^0-9.]*$/\1/')"
 ## デフォルトオプションの設定
-export GREP_OPTIONS
+# disable warning
+#export GREP_OPTIONS
 ### バイナリファイルにはマッチさせない。
 GREP_OPTIONS="--binary-files=without-match"
 case "$grep_version" in
@@ -44,6 +45,7 @@ GREP_OPTIONS="--exclude=\*.tmp $GREP_OPTIONS"
 if grep --help 2>&1 | grep -q -- --exclude-dir; then
 	GREP_OPTIONS="--exclude-dir=.svn $GREP_OPTIONS"
 	GREP_OPTIONS="--exclude-dir=.git $GREP_OPTIONS"
+	GREP_OPTIONS="--exclude-dir=.hg $GREP_OPTIONS"
 	GREP_OPTIONS="--exclude-dir=.deps $GREP_OPTIONS"
 	GREP_OPTIONS="--exclude-dir=.libs $GREP_OPTIONS"
 fi
@@ -51,6 +53,9 @@ fi
 if grep --help 2>&1 | grep -q -- --color; then
 	GREP_OPTIONS="--color=auto $GREP_OPTIONS"
 fi
+
+# disable warning
+alias grep="grep $GREP_OPTIONS"
 
 case ${OSTYPE} in
 	darwin*)
@@ -87,7 +92,7 @@ case ${OSTYPE} in
 		# command
 		dict () { open dict://"$@"; }
 	;;
-	linux*)
+	linux*|cygwin*)
 		export PATH=/sbin:/usr/sbin:$PATH
 		export EDITOR='vim'
 		
@@ -113,7 +118,7 @@ case ${OSTYPE} in
 	;;
 esac
 
-if [[ -s $HOME/.nodebrew ]]; then
+if [[ -d $HOME/.nodebrew ]]; then
 	# nodebrew
 	export PATH=$HOME/.nodebrew/current/bin:$PATH
 elif [[ -s $HOME/.nvm/nvm.sh ]]; then
@@ -122,7 +127,7 @@ elif [[ -s $HOME/.nvm/nvm.sh ]]; then
 	export NODE_PATH=${NVM_PATH}_modules${NODE_PATH:+:}${NODE_PATH}
 fi
 
-if [[ -s "$HOME/.rbenv" ]]; then
+if [[ -d "$HOME/.rbenv" ]]; then
 	# rbenv
 	export PATH=$HOME/.rbenv/bin:$PATH
 	eval "$(rbenv init - --no-rehash zsh)"
@@ -132,13 +137,13 @@ elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
 	source $HOME/.rvm/scripts/rvm
 fi
 
-if [[ -s "$HOME/.phpenv" ]]; then
+if [[ -d "$HOME/.phpenv" ]]; then
 	# pyenv
 	export PATH=$PATH:$HOME/.phpenv/bin
 	eval "$(phpenv init - --no-rehash zsh)"
 fi
 
-if [[ -s "$HOME/.pyenv" ]]; then
+if [[ -d "$HOME/.pyenv" ]]; then
 	# pyenv
 	export PATH=$HOME/.pyenv/bin:$PATH
 	if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash zsh)"; fi
@@ -148,7 +153,7 @@ elif [[ -s "$HOME/.pythonbrew/etc/bashrc" ]]; then
 #	pybrew switch 2.7.3 > /dev/null
 fi
 
-if which plenv > /dev/null || [[ -s "$HOME/.plenv" ]]; then
+if which plenv > /dev/null || [[ -d "$HOME/.plenv" ]]; then
 	# plenv
 	export PATH=$HOME/.plenv/bin:$PATH
 	eval "$(plenv init - --no-rehash zsh)"

@@ -1,4 +1,5 @@
 .vim/.neobundle/
+.vim/neobundle.vim
 
 # Compiled Python files
 *.pyc
