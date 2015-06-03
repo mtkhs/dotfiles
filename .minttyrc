@@ -1,7 +1,7 @@
-BoldAsFont=yes
-Transparency=32
+BoldAsFont=no
+Transparency=Medium
 Font=Ricty Discord for Powerline
-FontIsBold=yes
+FontIsBold=no
 FontHeight=12
 FontSmoothing=full
 Term=xterm-256color
