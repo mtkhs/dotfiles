@@ -1,9 +1,9 @@
 BoldAsFont=no
-Transparency=Medium
+Transparency=Low
 Font=Ricty Discord for Powerline
 FontIsBold=no
 FontHeight=12
-FontSmoothing=full
+FontSmoothing=Partial
 Term=xterm-256color
 Locale=ja_JP
 Charset=UTF-8
