@@ -22,7 +22,9 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #compctl -M 'm:{a-z}={A-Z}'
 
 # killコマンドのPID補完
-zstyle ':completion:*:processes' command "ps a -u $USER -o user,pid,stat,%cpu,%mem,cputime,command"
+#zstyle ':completion:*:processes' command "ps a -u $USER -o user,pid,stat,%cpu,%mem,cputime,command"
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*'   force-list always
 
 # 補完時の大文字小文字無視しつつ、超補完以下略
 # zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
@@ -76,7 +78,7 @@ case ${UID} in
 	 PROMPT2='`face` %n@%m:%_$ '
 	 RPROMPT='%1v'
 	 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		 PROMPT="%{[37m%}${PROMPT}%{[m%}"
+		PROMPT="%{[37m%}${PROMPT}%{[m%}"
 	 ;;
  esac
 

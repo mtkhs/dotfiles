@@ -1,6 +1,7 @@
 
-alias ....='../..'
-alias ......='../../..'
+alias ...='../..'
+alias ....='../../..'
+alias .....='../../../..'
 
 alias l='la'
 alias la='ls -lAvF'
@@ -25,7 +26,6 @@ fi
 alias v='vim'
 alias vf='vimfiler'
 alias vimfiler='vim -c VimFiler'
-alias sudo='sudo -i -H'
 
 alias be='bundle exec'
 

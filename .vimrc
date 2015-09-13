@@ -271,6 +271,10 @@ NeoBundle 'thinca/vim-ref', {
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
+NeoBundle 'ntpeters/vim-better-whitespace'
+NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'vim-scripts/DoxygenToolkit'
+"NeoBundle 'Yggdroot/indentLine'
 "NeoBundle 'tpope/vim-surround'
 NeoBundle 'anyakichi/vim-surround', {
       \ 'lazy' : 1,
@@ -321,6 +325,11 @@ NeoBundle 'chriskempson/vim-tomorrow-theme'
 "NeoBundle 'bling/vim-airline'
 NeoBundle 'itchyny/lightline.vim'
 
+
+" indentLine {{{
+	let g:indentLine_faster = 1
+	nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
+" }}}
 
 " lightline {{{
 let g:lightline = {
@@ -404,7 +413,7 @@ let g:syntastic_mode_map = {
 	\ 'passive_filetypes': []
 	\ }
 let g:syntastic_php_checkers = ['phpcs']
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_echo_current_error = 1
