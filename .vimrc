@@ -798,7 +798,6 @@ if has('kaoriya')
 	set imdisable " IMEを制御させない
 endif
 
-set t_Co=256
 set lazyredraw " スクリプト実行中に再描画しない
 set ttyfast    " 高速ターミナル接続
 
