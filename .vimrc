@@ -273,7 +273,7 @@ NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
 NeoBundle 'ntpeters/vim-better-whitespace'
 NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'vim-scripts/DoxygenToolkit'
+"NeoBundle 'vim-scripts/DoxygenToolkit'
 "NeoBundle 'Yggdroot/indentLine'
 "NeoBundle 'tpope/vim-surround'
 NeoBundle 'anyakichi/vim-surround', {
