@@ -273,7 +273,7 @@ NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Align'
 NeoBundle 'ntpeters/vim-better-whitespace'
 NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'vim-scripts/DoxygenToolkit'
+"NeoBundle 'vim-scripts/DoxygenToolkit'
 "NeoBundle 'Yggdroot/indentLine'
 "NeoBundle 'tpope/vim-surround'
 NeoBundle 'anyakichi/vim-surround', {
@@ -798,7 +798,6 @@ if has('kaoriya')
 	set imdisable " IMEを制御させない
 endif
 
-set t_Co=256
 set lazyredraw " スクリプト実行中に再描画しない
 set ttyfast    " 高速ターミナル接続
 
