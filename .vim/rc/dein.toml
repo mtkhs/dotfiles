@@ -1,0 +1,152 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'tools\\update-dll-mingw'
+  elseif dein#util#_is_cygwin()
+    let cmd = 'make -f make_cygwin.mak'
+  elseif executable('gmake')
+    let cmd = 'gmake'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+
+#[[plugins]]
+#repo = 'thinca/vim-unite-history'
+#on_source = 'unite.vim'
+
+[[plugins]]
+repo = 'osyo-manga/unite-filetype'
+
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+
+[[plugins]]
+repo = 'kana/vim-filetype-haskell'
+on_ft = 'haskell'
+
+[[plugins]]
+repo = 'Shougo/unite-sudo'
+
+[[plugins]]
+repo = 'chriskempson/vim-tomorrow-theme'
+
+[[plugins]]
+repo = 'mxw/vim-jsx'
+on_ft = 'javascript'
+
+[[plugins]]
+repo = 'itchyny/vim-haskell-indent'
+on_ft = 'haskell'
+
+[[plugins]]
+repo = 'shawncplus/phpcomplete.vim'
+on_ft = 'php'
+
+[[plugins]]
+repo = 'jiangmiao/simple-javascript-indenter'
+on_ft = 'javascript'
+
+[[plugins]]
+repo = 'thinca/vim-ft-diff_fold'
+on_ft = 'diff'
+
+[[plugins]]
+repo = 'thinca/vim-ft-vim_fold'
+on_ft = 'vim'
+
+[[plugins]]
+repo = 'thinca/vim-ft-help_fold'
+on_ft = 'help'
+
+[[plugins]]
+repo = 'yomi322/vim-gitcomplete'
+on_ft = 'vimshell'
+
+[[plugins]]
+repo = 'vim-jp/cpp-vim'
+on_ft = 'cpp'
+
+#[[plugins]]
+#repo = 'cespare/vim-toml'
+#on_ft = 'toml'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = 'json'
+
+#[[plugins]]
+#repo = 'vim-jp/autofmt'
+
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+on_ft = ['markdown', 'mkd']
+
+[[plugins]]
+repo = 'marijnh/tern_for_vim'
+on_ft = 'javascript'
+build = 'npm install'
+
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+on_map = '<Plug>'
+on_ft = 'ruby'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'sorah/unite-ghq'
+on_source = 'unite.vim'
+
+#[[plugins]]
+#repo = 'osyo-manga/unite-vimpatches'
+
+#[[plugins]]
+#repo = 'Shougo/unite-build'
+
+[[plugins]]
+repo = 'ujihisa/vimshell-ssh'
+on_ft = 'vimshell'
+
+#[[plugins]]
+#repo = 'Shougo/unite-help'
+#on_source = 'unite.vim'
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
+
+[[plugins]]
+repo = 'jelera/vim-javascript-syntax'
+on_ft = 'javascript'
+
+[[plugins]]
+repo = 'nsf/gocode'
+rtp = 'vim'
+on_ft = 'go'
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+on_ft = 'help'
+
+[[plugins]]
+repo = 'Kocha/vim-unite-tig'
+
+#[[plugins]]
+#repo = 'vim-jp/syntax-vim-ex'
+
+#[[plugins]]
+#repo = 'thinca/vim-splash'
+
+[[plugins]]
+repo = 'aereal/vim-colors-japanesque'
+

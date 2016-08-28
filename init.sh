@@ -47,19 +47,22 @@ case ${OSTYPE} in
 		;;
 esac
 
+# anyenv
+git clone https://github.com/riywo/anyenv ~/.anyenv
+mkdir -p ~/.anyenv/plugins
+git clone https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyegnv-update
+git clone https://github.com/znz/anyenv-git.git ~/.anyenv/plugins/anyenv-git
+#anyenv install rbenv
+#anyenv install ndenv
+#anyenv install pyenv
+
 # submodules
-git submodule update --init --recursive
+#git submodule update --init --recursive
 
 # vim
-vim -c ':NeoBundleInstall' -c q
+#vim -c ':NeoBundleInstall' -c q
 
 # chsh
 ZSH=`which zsh`
 chsh -s $ZSH
-
-# rvm
-#curl -L https://get.rvm.io | bash
-
-# pybrew
-#curl -kL http://xrl.us/pythonbrewinstall | bash
 

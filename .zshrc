@@ -174,7 +174,6 @@ typeset -A myabbrev
 myabbrev=(
     "ll"    "| less"
     "lg"    "| grep"
-    "tx"    "tar -xvzf"
 )
 
 my-expand-abbrev() {
@@ -286,64 +285,6 @@ ls_abbrev() {
 }
 
 #
-# zshrcにWeb検索用のコマンドを定義しておくとドキュメントを引くときに便利
-# http://qiita.com/y_uuki/items/55651f44f91123f1881c
-#
-# url: $1, delimiter: $2, prefix: $3, words: $4..
-function web_search {
-  local url=$1       && shift
-  local delimiter=$1 && shift
-  local prefix=$1    && shift
-  local query
-
-  while [ -n "$1" ]; do
-    if [ -n "$query" ]; then
-      query="${query}${delimiter}${prefix}$1"
-    else
-      query="${prefix}$1"
-    fi
-    shift
-  done
-
-  open "${url}${query}"
-}
-
-function qiita () {
-  web_search "http://qiita.com/search?utf8=✓&q=" "+" "" $*
-}
-
-function google () {
-  web_search "https://www.google.co.jp/search?&q=" "+" "" $*
-}
-
-# search in metacpan
-function perldoc() {
-  command perldoc $1 2>/dev/null
-  [ $? -ne 0 ] && web_search "https://metacpan.org/search?q=" "+" "" $*
-  return 0
-}
-
-# search in rurima
-function rurima () {
-  web_search "http://rurema.clear-code.com" "/" "query:" $*
-}
-
-# search in rubygems
-function gems () {
-  web_search "http://rubygems.org/search?utf8=✓&query=" "+" "" $*
-}
-
-# search in github
-function github () {
-  web_search "https://github.com/search?type=Code&q=" "+" "" $*
-}
-
-# search in php.net
-function phpdoc () {
-  web_search "https://php.net/" "+" "" $*
-}
-
-#
 # extract http://d.hatena.ne.jp/jeneshicc/20110215/1297778049
 #
 extract () {
@@ -370,29 +311,6 @@ extract () {
 	fi
 }
 alias ex='extract'
-
-# http://blog.monoweb.info/article/2011120320.html
-# sudo vim
-# sudo() {
-	# local args
-	# case $1 in
-		# vi|vim)
-			# args=()
-			# for arg in $@[2,-1]
-			# do
-				# if [ $arg[1] = '-' ]; then
-					# args[$(( 1+$#args ))]=$arg
-				# else
-					# args[$(( 1+$#args ))]="sudo:$arg"
-				# fi
-			# done
-			# command vim $args
-			# ;;
-		# *)
-			# command sudo $@
-			# ;;
-	# esac
-# }
 
 # # http://www.commandlinefu.com/commands/view/10889/hourglass
 # hourglass 5
