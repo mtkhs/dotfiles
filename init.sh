@@ -62,6 +62,9 @@ git clone https://github.com/znz/anyenv-git.git ~/.anyenv/plugins/anyenv-git
 # vim
 #vim -c ':NeoBundleInstall' -c q
 
+# zsh
+curl -fLo ~/.zplug/zplug --create-dirs git.io/zplug
+
 # chsh
 ZSH=`which zsh`
 chsh -s $ZSH

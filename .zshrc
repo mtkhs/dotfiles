@@ -16,7 +16,10 @@ autoload -Uz add-zsh-hook
 
 autoload -Uz vcs_info
 
-source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# zplug
+source ~/.zsh/.zplug/init.zsh
+
+zplug "zsh-users/zsh-syntax-highlighting", nice:10
 
 # 補完時に大文字小文字を無視する。
 #compctl -M 'm:{a-z}={A-Z}'
