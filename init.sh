@@ -48,22 +48,55 @@ case ${OSTYPE} in
 esac
 
 # anyenv
-git clone https://github.com/riywo/anyenv ~/.anyenv
-mkdir -p ~/.anyenv/plugins
-git clone https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyegnv-update
-git clone https://github.com/znz/anyenv-git.git ~/.anyenv/plugins/anyenv-git
-#anyenv install rbenv
-#anyenv install ndenv
-#anyenv install pyenv
+if [ -d ${HOME}/.anyenv ]; then
+	echo "anyenv is already installed."
+else
+	echo "Install anyenv..."
+	git clone https://github.com/riywo/anyenv ~/.anyenv
+	mkdir -p ~/.anyenv/plugins
+	git clone https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyegnv-update
+	git clone https://github.com/znz/anyenv-git.git ~/.anyenv/plugins/anyenv-git
+fi
+
+if ! type anyenv >/dev/null 2>&1; then
+	export PATH="$HOME/.anyenv/bin:$PATH"
+	eval "$(anyenv init - zsh)"
+fi
+
+# rbenv
+if [ -d ${HOME}/.rbenv ]; then
+	echo "rbenv is already installed."
+else
+	echo "Install rbenv"
+	anyenv install rbenv
+fi
+
+# ndenv
+if [ -d ${HOME}/.ndenv ]; then
+	echo "ndenv is already installed."
+else
+	echo "Install ndenv"
+	anyenv install ndenv
+fi
+
+# pyenv
+if [ -d ${HOME}/.pyenv ]; then
+	echo "pyenv is already installed."
+else
+	echo "Install pyenv"
+	anyenv install pyenv
+fi
 
 # submodules
 #git submodule update --init --recursive
 
-# vim
-#vim -c ':NeoBundleInstall' -c q
-
 # zsh
-git clone https://github.com/zplug/zplug ~/.zsh/.zplug
+if [ -d ${HOME}/.zsh/.zplug ]; then
+	echo "zplug is already installed."
+else
+	echo "Install zplug"
+	git clone https://github.com/zplug/zplug ~/.zsh/.zplug
+fi
 
 # chsh
 ZSH=`which zsh`

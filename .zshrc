@@ -20,6 +20,18 @@ autoload -Uz vcs_info
 source ~/.zsh/.zplug/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zsh-users/zsh-completions"
+
+# 未インストール項目をインストールする
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# コマンドをリンクして、PATH に追加し、プラグインは読み込む
+zplug load --verbose
 
 # 補完時に大文字小文字を無視する。
 #compctl -M 'm:{a-z}={A-Z}'
