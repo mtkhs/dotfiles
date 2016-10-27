@@ -91,11 +91,11 @@ fi
 #git submodule update --init --recursive
 
 # zsh
-if [ -d ${HOME}/.zsh/.zplug ]; then
+if [ -d ${HOME}/.zplug ]; then
 	echo "zplug is already installed."
 else
 	echo "Install zplug"
-	git clone https://github.com/zplug/zplug ~/.zsh/.zplug
+	git clone https://github.com/zplug/zplug ~/.zplug
 fi
 
 # chsh

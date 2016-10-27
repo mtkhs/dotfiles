@@ -86,11 +86,11 @@ set updatetime=1000
 " Set swap directory.
 set directory-=.
 
-if v:version >= 703
-  " Set undofile.
-   set undofile
-  let &g:undodir=&directory
-endif
+"if v:version >= 703
+"  " Set undofile.
+"   set undofile
+"  let &g:undodir=&directory
+"endif
 
 if v:version < 703 || (v:version == 7.3 && !has('patch336'))
   " Vim's bug.

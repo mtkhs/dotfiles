@@ -17,7 +17,7 @@ autoload -Uz add-zsh-hook
 autoload -Uz vcs_info
 
 # zplug
-source ~/.zsh/.zplug/init.zsh
+source ~/.zplug/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 zplug "zsh-users/zsh-completions"

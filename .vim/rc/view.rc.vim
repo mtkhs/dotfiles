@@ -160,9 +160,9 @@ endfunction"}}}
 
 if v:version >= 703
   " For conceal.
-   set conceallevel=2 concealcursor=niv
+"   set conceallevel=2 concealcursor=niv
 
-   set colorcolumn=79
+"   set colorcolumn=79
 
   " Use builtin function.
   function! s:wcswidth(str) abort
