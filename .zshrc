@@ -19,10 +19,14 @@ autoload -Uz vcs_info
 # zplug
 source ~/.zplug/init.zsh
 
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "mollifier/anyframe"
+zplug "mollifier/cd-gitroot"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-completions"
+zplug "b4b4r07/enhancd", use:init.sh
 
-# 未インストール項目をインストールする
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
     if read -q; then
@@ -30,8 +34,8 @@ if ! zplug check --verbose; then
     fi
 fi
 
-# コマンドをリンクして、PATH に追加し、プラグインは読み込む
-zplug load --verbose
+#zplug load --verbose
+zplug load
 
 # 補完時に大文字小文字を無視する。
 #compctl -M 'm:{a-z}={A-Z}'
@@ -106,9 +110,9 @@ case ${UID} in
 # cd を入力しなくてもディレクトリに遷移
 setopt auto_cd
 # cd -[tab]で履歴表示
-setopt auto_pushd
+#setopt auto_pushd
 # auto_pushdで重複ディレクトリを追加しないように
-setopt pushd_ignore_dups
+#setopt pushd_ignore_dups
 
 # コマンドのスペルチェック
 #setopt correct

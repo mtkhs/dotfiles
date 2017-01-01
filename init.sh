@@ -67,7 +67,7 @@ fi
 if [ -d ${HOME}/.rbenv ]; then
 	echo "rbenv is already installed."
 else
-	echo "Install rbenv"
+	echo "Install rbenv..."
 	anyenv install rbenv
 fi
 
@@ -75,7 +75,7 @@ fi
 if [ -d ${HOME}/.ndenv ]; then
 	echo "ndenv is already installed."
 else
-	echo "Install ndenv"
+	echo "Install ndenv..."
 	anyenv install ndenv
 fi
 
@@ -83,18 +83,15 @@ fi
 if [ -d ${HOME}/.pyenv ]; then
 	echo "pyenv is already installed."
 else
-	echo "Install pyenv"
+	echo "Install pyenv..."
 	anyenv install pyenv
 fi
-
-# submodules
-#git submodule update --init --recursive
 
 # zsh
 if [ -d ${HOME}/.zplug ]; then
 	echo "zplug is already installed."
 else
-	echo "Install zplug"
+	echo "Install zplug..."
 	git clone https://github.com/zplug/zplug ~/.zplug
 fi
 
