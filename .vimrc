@@ -149,9 +149,9 @@ command! -nargs=0 Undiff setlocal nodiff noscrollbind wrap
 " Platform:
 "
 
-if has('nvim')
-  call s:source_rc('neovim.rc.vim')
-endif
+"if has('nvim')
+"  call s:source_rc('neovim.rc.vim')
+"endif
 
 if IsWindows()
   call s:source_rc('windows.rc.vim')

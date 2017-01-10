@@ -10,7 +10,6 @@ compinit -u # -u つけないとsuで怒られる。
 
 autoload -Uz bashcompinit
 bashcompinit
-source $HOME/.zsh/git-completion.bash
 
 autoload -Uz add-zsh-hook
 
@@ -26,6 +25,7 @@ zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-completions"
 zplug "b4b4r07/enhancd", use:init.sh
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "

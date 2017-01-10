@@ -15,9 +15,9 @@ call dein#begin(s:path, [expand('<sfile>')]
 
 call dein#load_toml('~/.vim/rc/dein.toml', {'lazy': 0})
 call dein#load_toml('~/.vim/rc/dein_lazy.toml', {'lazy' : 1})
-if has('nvim')
-  call dein#load_toml('~/.vim/rc/deineo.toml', {})
-endif
+"if has('nvim')
+"  call dein#load_toml('~/.vim/rc/deineo.toml', {})
+"endif
 call dein#load_toml('~/.vim/rc/deinft.toml')
 
 let s:vimrc_local = findfile('vimrc_local.vim', '.;')
@@ -26,16 +26,16 @@ if s:vimrc_local !=# ''
   call dein#local(fnamemodify(s:vimrc_local, ':h'),
         \ {'frozen': 1, 'merged': 0},
         \ ['vim*', 'unite-*', 'neco-*', '*.vim'])
-  if has('nvim')
-    call dein#local(fnamemodify(s:vimrc_local, ':h'),
-          \ {'frozen': 1, 'merged': 0},
-          \ ['deoplete-*', '*.nvim'])
-  endif
+"  if has('nvim')
+"    call dein#local(fnamemodify(s:vimrc_local, ':h'),
+"          \ {'frozen': 1, 'merged': 0},
+"          \ ['deoplete-*', '*.nvim'])
+"  endif
 endif
 
-if dein#tap('deoplete.nvim') && has('nvim')
-  call dein#disable('neocomplete.vim')
-endif
+"if dein#tap('deoplete.nvim') && has('nvim')
+"  call dein#disable('neocomplete.vim')
+"endif
 call dein#disable('neobundle.vim')
 call dein#disable('neopairs.vim')
 
