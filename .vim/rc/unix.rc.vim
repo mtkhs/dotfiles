@@ -45,11 +45,12 @@ if &term =~# 'xterm' && !has('nvim')
   let &t_SI = "\<Esc>]12;lightgreen\x7"
   let &t_EI = "\<Esc>]12;white\x7"
 
-  " Enable true color
-  if exists('+termguicolors')
-    set termguicolors
-  endif
 endif
+
+" Enable true color
+"if exists('+termguicolors')
+"  set termguicolors
+"endif
 
 " Disable the mouse.
 set mouse=
