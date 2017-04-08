@@ -1,31 +1,39 @@
 bindkey -e # キーバインドだけEmacs
-bindkey "^[[3~" delete-char     # delete キーがチルダになるのを回避
+bindkey "^[[3~" delete-char # delete キーがチルダになるのを回避
 disable r # rで最後に実行したコマンドを実行するのをやめる。
 
-autoload -Uz colors
-colors
-
-autoload -Uz compinit
-compinit -u # -u つけないとsuで怒られる。
-
-autoload -Uz bashcompinit
-bashcompinit
-
+autoload -Uz colors && colors
+autoload -Uz compinit && compinit -u
 autoload -Uz add-zsh-hook
-
 autoload -Uz vcs_info
 
 # zplug
 source ~/.zplug/init.zsh
 
-zplug "mollifier/anyframe"
-zplug "mollifier/cd-gitroot"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-history-substring-search"
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
+
+zplug "b4b4r07/emoji-cli", on:"junegunn/fzf-bin", if:'(( $+commands[jq] ))'
+zplug "b4b4r07/enhancd", use:init.sh
+zplug "b4b4r07/zsh-vimode-visual", use:"*.zsh", defer:3
+zplug 'b4b4r07/copy', as:command, use:'(*).sh', rename-to:'$1'
+
+# zplug "zsh-users/zsh-autosuggestions"
+# zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-completions"
-zplug "b4b4r07/enhancd", use:init.sh
-zplug "zplug/zplug", hook-build:"zplug --self-manage"
+
+zplug "glidenote/hub-zsh-completion"
+zplug "Valodim/zsh-curl-completion"
+
+zplug "reorx/httpstat", \
+    as:command, \
+    use:'(httpstat).py', \
+    rename-to:'$1', \
+    if:'(( $+commands[python] ))'
+
+zplug "jhawthorn/fzy", \
+    as:command, \
+    hook-build:"make && sudo make install"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
