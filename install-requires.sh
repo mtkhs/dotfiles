@@ -16,7 +16,7 @@ else
   case ${OSTYPE} in
     linux*)
       case $OS in
-        Debian | Ubuntu )
+        Debian | Ubuntu | Raspbian )
           wget -P /tmp https://github.com/jhawthorn/fzy/releases/download/0.7/fzy_0.7-1_amd64.deb
           sudo dpkg -i /tmp/fzy_0.7-1_amd64.deb
           ;;
