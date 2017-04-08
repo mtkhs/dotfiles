@@ -12,10 +12,13 @@ source ~/.zplug/init.zsh
 
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
-zplug "b4b4r07/emoji-cli", on:"junegunn/fzf-bin", if:'(( $+commands[jq] ))'
+zplug "jhawthorn/fzy", \
+    as:command, \
+    hook-build:"make && sudo make install"
+
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "b4b4r07/zsh-vimode-visual", use:"*.zsh", defer:3
-zplug 'b4b4r07/copy', as:command, use:'(*).sh', rename-to:'$1'
+#zplug 'b4b4r07/copy', as:command, use:'(*).sh', rename-to:'$1'
 
 # zplug "zsh-users/zsh-autosuggestions"
 # zplug "zsh-users/zsh-history-substring-search"
@@ -30,10 +33,6 @@ zplug "reorx/httpstat", \
     use:'(httpstat).py', \
     rename-to:'$1', \
     if:'(( $+commands[python] ))'
-
-zplug "jhawthorn/fzy", \
-    as:command, \
-    hook-build:"make && sudo make install"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
