@@ -91,6 +91,7 @@ set directory-=.
 "   set undofile
 "  let &g:undodir=&directory
 "endif
+set noundofile
 
 if v:version < 703 || (v:version == 7.3 && !has('patch336'))
   " Vim's bug.
