@@ -2,99 +2,166 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-hook_post_update = '''
-  if dein#util#_is_windows()
-    let cmd = 'tools\\update-dll-mingw'
-  elseif dein#util#_is_cygwin()
-    let cmd = 'make -f make_cygwin.mak'
-  elseif executable('gmake')
-    let cmd = 'gmake'
-  else
-    let cmd = 'make'
-  endif
-  let g:dein#plugin.build = cmd
+repo = 'aereal/vim-colors-japanesque'
+hook_add = '''
+au MyAutoCmd VimEnter * nested colorscheme japanesque
 '''
 
-#[[plugins]]
-#repo = 'thinca/vim-unite-history'
-#on_source = 'unite.vim'
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+hook_add = '''
+" vim-devicons
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+
+" dir-icons
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:DevIconsDefaultFolderOpenSymbol = ''
+" file-icons
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['html'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['txt'] = ''
+'''
 
 [[plugins]]
-repo = 'osyo-manga/unite-filetype'
+repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
-repo = 'hail2u/vim-css3-syntax'
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim', 'vim-textobj-user']
+hook_add = '''
+let g:context_filetype#filetypes = {
+      \ 'sh': [
+      \   {
+      \    'start': '[^<]<<\([\\''"]\?\)\([a-zA-Z0-9]\+\)\1$',
+      \    'end': '^\2$', 'filetype': '\2',
+      \   },
+      \ ],
+      \}"}}}
+'''
+
+[[plugins]] # for <Plug>(textobj-precious-i) in vim-precious
+repo = 'kana/vim-textobj-user'
 
 [[plugins]]
-repo = 'kana/vim-filetype-haskell'
-on_ft = 'haskell'
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+let g:NERDTreeDirArrows = 1
+let NERDTreeWinSize=22
+"let g:NERDTreeDirArrowExpandable = '+'
+"let g:NERDTreeDirArrowCollapsible = '~'
+'''
 
 [[plugins]]
-repo = 'Shougo/unite-sudo'
+repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
+hook_add = '''
+let s:rspec_red = 'FE405F'
+let s:git_orange = 'F54D27'
+let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
+let g:NERDTreePatternMatchHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red " sets the color for files ending with _spec.rb
+'''
 
 [[plugins]]
-repo = 'chriskempson/vim-tomorrow-theme'
+repo = 'delphinus/lightline-delphinus'
+hook_add = '''
+let g:lightline_delphinus_colorscheme='solarized_improved'
+let g:ale_echo_msg_error_str = nr2char(0xf421) . ' '
+let g:ale_echo_msg_warning_str = nr2char(0xf420) . ' '
+let g:ale_echo_msg_info_str = nr2char(0xf05a) . ' '
+let g:ale_echo_msg_format = '%severity%  %linter% - %s'
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = g:ale_echo_msg_error_str
+let g:ale_sign_warning = g:ale_echo_msg_warning_str
+let g:ale_statusline_format = [
+    \ g:ale_echo_msg_error_str . ' %d',
+    \ g:ale_echo_msg_warning_str . ' %d',
+    \ nr2char(0xf4a1) . '  '
+\ ]
+'''
 
 [[plugins]]
-repo = 'mxw/vim-jsx'
-on_ft = 'javascript'
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+let g:lightline = {
+    \ 'active': {
+        \ 'left': [ ['mode', 'paste'], ['readonly', 'filepath', 'modified'] ]
+    \ }
+\ }
+'''
 
 [[plugins]]
-repo = 'itchyny/vim-haskell-indent'
-on_ft = 'haskell'
+repo = 'w0rp/ale'
 
 [[plugins]]
-repo = 'shawncplus/phpcomplete.vim'
-on_ft = 'php'
+repo = 'majutsushi/tagbar'
+hook_add = '''
+let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+let g:tagbar_width = 26
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:Heading_L1',
+        \ 'i:Heading_L2',
+        \ 'k:Heading_L3'
+    \ ]
+\ }
+'''
 
 [[plugins]]
-repo = 'jiangmiao/simple-javascript-indenter'
-on_ft = 'javascript'
+repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+on_i = 1
+#on_event = 'InsertCharPre'
+hook_add = '''
+" select first item automatically
+set completeopt+=noinsert
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 0
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#enable_camel_case = 0
+let g:deoplete#enable_ignore_case = 0
+let g:deoplete#enable_refresh_always = 0
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#file#enable_buffer_path = 1
+
+inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+    \ neosnippet#expandable_or_jumpable() ?
+    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+'''
 
 [[plugins]]
-repo = 'thinca/vim-ft-diff_fold'
-on_ft = 'diff'
+repo = 'fishbullet/deoplete-ruby'
+on_ft = 'ruby'
 
 [[plugins]]
-repo = 'thinca/vim-ft-vim_fold'
-on_ft = 'vim'
+repo = 'zchee/deoplete-jedi'
+on_i = 1
+on_ft = 'python'
 
 [[plugins]]
-repo = 'thinca/vim-ft-help_fold'
-on_ft = 'help'
+repo = 'roxma/nvim-yarp'
 
 [[plugins]]
-repo = 'yomi322/vim-gitcomplete'
-on_ft = 'vimshell'
+repo = 'roxma/vim-hug-neovim-rpc'
 
 [[plugins]]
-repo = 'vim-jp/cpp-vim'
-on_ft = 'cpp'
-
-#[[plugins]]
-#repo = 'cespare/vim-toml'
-#on_ft = 'toml'
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
 
 [[plugins]]
 repo = 'elzr/vim-json'
 on_ft = 'json'
 
-#[[plugins]]
-#repo = 'vim-jp/autofmt'
-
-[[plugins]]
-repo = 'hynek/vim-python-pep8-indent'
-on_ft = 'python'
-
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'
 on_ft = ['markdown', 'mkd']
-
-[[plugins]]
-repo = 'marijnh/tern_for_vim'
-on_ft = 'javascript'
-build = 'npm install'
 
 [[plugins]]
 repo = 'vim-ruby/vim-ruby'
@@ -102,51 +169,6 @@ on_map = '<Plug>'
 on_ft = 'ruby'
 
 [[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'sorah/unite-ghq'
-on_source = 'unite.vim'
-
-#[[plugins]]
-#repo = 'osyo-manga/unite-vimpatches'
-
-#[[plugins]]
-#repo = 'Shougo/unite-build'
-
-[[plugins]]
-repo = 'ujihisa/vimshell-ssh'
-on_ft = 'vimshell'
-
-#[[plugins]]
-#repo = 'Shougo/unite-help'
-#on_source = 'unite.vim'
-
-[[plugins]]
-repo = 'mattn/webapi-vim'
-
-[[plugins]]
 repo = 'jelera/vim-javascript-syntax'
 on_ft = 'javascript'
-
-[[plugins]]
-repo = 'nsf/gocode'
-rtp = 'vim'
-on_ft = 'go'
-
-[[plugins]]
-repo = 'vim-jp/vimdoc-ja'
-on_ft = 'help'
-
-[[plugins]]
-repo = 'Kocha/vim-unite-tig'
-
-#[[plugins]]
-#repo = 'vim-jp/syntax-vim-ex'
-
-#[[plugins]]
-#repo = 'thinca/vim-splash'
-
-[[plugins]]
-repo = 'aereal/vim-colors-japanesque'
 

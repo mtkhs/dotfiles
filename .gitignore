@@ -1,6 +1,13 @@
 .vim/.neobundle/
 .vim/neobundle.vim
 
+# ~/.vim/ -> ~/.config/nvim/
+# ~/.vimrc -> ~/.config/nvim/init.vim
+.vim/init.vim
+
+.zsh/.zcompdump
+.zsh/.ZPLUG_SUDO_PASSWORD
+
 .bundle/cache/
 
 # Compiled Python files

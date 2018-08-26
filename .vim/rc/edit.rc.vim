@@ -5,13 +5,13 @@
 " Smart insert tab setting.
 set smarttab
 " Exchange tab to spaces.
-"set expandtab
+set expandtab
 " Substitute <Tab> with blanks.
-set tabstop=2
+set tabstop=4
 " Spaces instead <Tab>.
-set softtabstop=2
+set softtabstop=4
 " Autoindent width.
-set shiftwidth=2
+set shiftwidth=4
 " Round indent by shiftwidth.
 set shiftround
 
@@ -45,75 +45,19 @@ set matchpairs+=<:>
 " Display another buffer when current buffer isn't saved.
 set hidden
 
-" Auto reload if file is changed.
-" set autoread
-
 " Ignore case on insert completion.
 set infercase
 
-" Search home directory path on cd.
-" But can't complete.
-"  set cdpath+=~
-
-" Enable folding.
-set foldenable
-" set foldmethod=expr
-set foldmethod=marker
-" Show folding level.
-set foldcolumn=1
-set fillchars=vert:\|
-set commentstring=%s
-
-if exists('*FoldCCtext')
-  " Use FoldCCtext().
-   set foldtext=FoldCCtext()
-endif
-
-" Use vimgrep.
-" set grepprg=internal
-" Use grep.
-set grepprg=grep\ -inH
-
-" Exclude = from isfilename.
-set isfname-==
-
-" Keymapping timeout.
-set timeout timeoutlen=3000 ttimeoutlen=100
-
-" CursorHold time.
-set updatetime=1000
-
-" Set swap directory.
-set directory-=.
-
-"if v:version >= 703
-"  " Set undofile.
-"   set undofile
-"  let &g:undodir=&directory
-"endif
+" Set undofile.
+"set undofile
 set noundofile
-
-if v:version < 703 || (v:version == 7.3 && !has('patch336'))
-  " Vim's bug.
-   set notagbsearch
-endif
+let &g:undodir = &directory
 
 " Enable virtualedit in visual block mode.
 set virtualedit=block
 
 " Set keyword help.
 set keywordprg=:help
-
-" Check timestamp more for 'autoread'.
-autocmd MyAutoCmd WinEnter * checktime
-
-" Disable paste.
-autocmd MyAutoCmd InsertLeave *
-      \ if &paste | setlocal nopaste | echo 'nopaste' | endif |
-      \ if &l:diff | diffupdate | endif
-
-" Update diff.
-autocmd MyAutoCmd InsertLeave * if &l:diff | diffupdate | endif
 
 " Make directory automatically.
 " --------------------------------------
@@ -128,14 +72,3 @@ function! s:mkdir_as_necessary(dir, force) abort
     call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
   endif
 endfunction
-
-" Use autofmt.
-set formatexpr=autofmt#japanese#formatexpr()
-
-" Use blowfish2
-" https://dgl.cx/2014/10/vim-blowfish
-if has('cryptv')
-  " It seems 15ms overhead.
-  "  set cryptmethod=blowfish2
-endif
-

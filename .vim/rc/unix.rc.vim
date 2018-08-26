@@ -48,13 +48,13 @@ if &term =~# 'xterm' && !has('nvim')
 endif
 
 " Enable true color
-"if exists('+termguicolors')
-"  set termguicolors
-"endif
+if exists('+termguicolors')
+  set termguicolors
+endif
 
 " Disable the mouse.
 set mouse=
 
 " Colorscheme
-colorscheme japanesque
+"colorscheme japanesque
 

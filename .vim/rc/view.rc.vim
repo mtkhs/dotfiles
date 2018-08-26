@@ -30,7 +30,7 @@ set titlelen=95
 " Title string.
 let &g:titlestring="
       \ %{expand('%:p:~:.')}%(%m%r%w%)
-      \ %<\(%{".s:SID_PREFIX()."strwidthpart(
+      \ %<\(%{WidthPart(
       \ fnamemodify(&filetype ==# 'vimfiler' ?
       \ substitute(b:vimfiler.current_dir, '.\\zs/$', '', '') : getcwd(), ':~'),
       \ &columns-len(expand('%:p:.:~')))}\) - VIM"
@@ -59,24 +59,6 @@ else
    set nowrap
 endif
 
-" Do not display the greetings message at the time of Vim start.
-set shortmess=aTI
-
-" Do not display the completion messages
-set noshowmode
-if has('patch-7.4.314')
-  set shortmess+=c
-else
-  autocmd MyAutoCmd VimEnter *
-        \ highlight ModeMsg guifg=bg guibg=bg |
-        \ highlight Question guifg=bg guibg=bg
-endif
-
-" Do not display the edit messages
-if has('patch-7.4.1570')
-  set shortmess+=F
-endif
-
 " Don't create backup.
 set nowritebackup
 set nobackup
@@ -97,23 +79,6 @@ set history=1000
 set showfulltag
 " Can supplement a tag in a command-line.
 set wildoptions=tagfile
-
-" Disable menu
-let g:did_install_default_menus = 1
-
-" Completion setting.
-set completeopt=menuone
-if has('patch-7.4.775')
-  set completeopt+=noinsert
-endif
-" Don't complete from other buffer.
-set complete=.
-"set complete=.,w,b,i,t
-" Set popup menu max height.
-set pumheight=20
-
-" Report changes.
-set report=0
 
 " Maintain a current line at the time of movement as much as possible.
 set nostartofline
@@ -143,34 +108,18 @@ set display=lastline
 " Display an invisible letter with hex format.
 "set display+=uhex
 
-function! s:strwidthpart(str, width) abort "{{{
+function! WidthPart(str, width) abort
   if a:width <= 0
     return ''
   endif
   let ret = a:str
-  let width = s:wcswidth(a:str)
+  let width = strwidth(a:str)
   while width > a:width
     let char = matchstr(ret, '.$')
     let ret = ret[: -1 - len(char)]
-    let width -= s:wcswidth(char)
+    let width -= strwidth(char)
   endwhile
 
   return ret
-endfunction"}}}
-
-if v:version >= 703
-  " For conceal.
-"   set conceallevel=2 concealcursor=niv
-
-"   set colorcolumn=79
-
-  " Use builtin function.
-  function! s:wcswidth(str) abort
-    return strwidth(a:str)
-  endfunction
-else
-  function! s:wcswidth(str) abort
-    return len(a:str)
-  endfunction
-endif
+endfunction
 
