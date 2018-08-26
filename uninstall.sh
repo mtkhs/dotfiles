@@ -21,6 +21,7 @@ rm -rf ~/.enhancd
 rm -rf ~/.tmux
 rm -f ~/.tmux.conf
 
+rm -f ~/.gitconfig
 rm -f ~/.gemrc
 rm -f ~/.hgrc
 rm -f ~/.bundle
