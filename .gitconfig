@@ -1,0 +1,33 @@
+[user]
+name = Motoi TAKAHASHI
+email = openmoyo@gmail.com
+
+[core]
+excludesfile = ~/.gitignore
+attributesfile = ~/.gitattributes
+autocrlf = false
+editor = vim
+
+[color]
+ui = auto
+status = auto
+diff = auto
+branch = auto
+interactive = auto
+grep = auto
+
+[push]
+default = current
+
+[merge]
+ff = false
+
+[alias]
+l = log --date=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn %Creset%s'
+ll = log --stat --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cr %Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
+lg = log --graph --date=short --decorate=short --pretty=format:'%C(yellow)%h %Cgreen%cd %Cblue%cn%Cred%d %Creset%s'
+lm = log --merges --pretty=format:'%C(yellow)%h %Cgreen%ci %Cblue%cn%Cred%d %Creset%s %C(cyan)%b'
+
+[include]
+path = ~/.gitconfig_local
+
