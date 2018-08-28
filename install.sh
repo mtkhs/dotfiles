@@ -14,6 +14,7 @@ case ${OSTYPE} in
         ln -s -h $HOME/.vim            $HOME/.config/nvim
         ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
+        ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
         ln -s -h $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
@@ -27,6 +28,7 @@ case ${OSTYPE} in
         ln -s -T $HOME/.vim            $HOME/.config/nvim
         ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
+        ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
         ln -s -T $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
@@ -40,6 +42,7 @@ case ${OSTYPE} in
         ln -s -T $HOME/.vim            $HOME/.config/nvim
         ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
+        ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
         ln -s -T $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
@@ -58,6 +61,7 @@ else
     mkdir -p $(anyenv root)/plugins
     git clone https://github.com/znz/anyenv-update $(anyenv root)/plugins/anyenv-update
     git clone https://github.com/znz/anyenv-git $(anyenv root)/plugins/anyenv-git
+
     anyenv install rbenv
     RBENV_ROOT="$(anyenv root)/envs/rbenv" # $(rbenv root)
     git clone https://github.com/sstephenson/rbenv-gem-rehash.git $RBENV_ROOT/plugins/rbenv-gem-rehash

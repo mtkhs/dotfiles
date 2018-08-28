@@ -29,7 +29,7 @@ case ${OSTYPE} in
 		dict () { open dict://"$@"; }
 	;;
 	linux*|cygwin*|msys*)
-		export PATH=/sbin:/usr/sbin:$PATH
+		export PATH=/usr/sbin:/sbin:$PATH
 		export EDITOR='vim'
 		
 		#

@@ -71,7 +71,7 @@ zplug "jhawthorn/fzy", \
     as:command, \
     hook-build:"make && sudo make install"
 
-zplug "rupa/z", use:z.sh
+#zplug "rupa/z", use:z.sh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "b4b4r07/zsh-vimode-visual", use:"*.zsh", defer:3
 
