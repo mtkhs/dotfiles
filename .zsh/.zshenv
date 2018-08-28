@@ -17,5 +17,5 @@ case ${OSTYPE} in
 		;;
 esac
 
-[ -f $HOME/.zshenv.local ] && source $HOME/.zshenv.local
+[ -f $HOME/.zshenv_local ] && source $HOME/.zshenv_local
 

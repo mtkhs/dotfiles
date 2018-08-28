@@ -46,9 +46,9 @@ case ${OSTYPE} in
 					echo "Session has been already attached."
 					tmux list-sessions
 				fi
-			else
-				echo "Create new tmux session."
-				tmux -2
+#			else
+#				echo "Create new tmux session."
+#				tmux -2
 			fi
 		fi
 	;;
@@ -56,7 +56,8 @@ esac
 
 if [[ -d "$HOME/.anyenv" ]]; then
 	export PATH="$HOME/.anyenv/bin:$PATH"
-	eval "$(anyenv init - zsh)"
+	eval "$(anyenv init - --no-rehash zsh)"
 fi
 
-[ -f $HOME/.zprofile.local ] && source $HOME/.zprofile.local
+[ -f $HOME/.zprofile_local ] && source $HOME/.zprofile_local
+

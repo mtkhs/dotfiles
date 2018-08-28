@@ -114,13 +114,19 @@ let g:tagbar_type_markdown = {
 '''
 
 [[plugins]]
+repo = 'Shougo/denite.nvim'
+
+[[plugins]]
+repo = 'Shougo/deoppet.nvim'
+
+[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 if = 'has("nvim")'
 on_i = 1
 #on_event = 'InsertCharPre'
 hook_add = '''
 " select first item automatically
-set completeopt+=noinsert
+"set completeopt+=noinsert
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0

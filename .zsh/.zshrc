@@ -2,7 +2,6 @@
 # init:
 #
 
-#bindkey -e
 #disable r
 
 autoload -Uz colors && colors
@@ -13,6 +12,8 @@ autoload -Uz add-zsh-hook
 #---------------------------------------------------------------------------
 # keybind:
 #
+
+bindkey -e
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
@@ -41,6 +42,9 @@ key[PageDown]=${terminfo[knp]}
 [[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" end-of-buffer-or-history
 
+bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
+
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 #
@@ -67,6 +71,7 @@ zplug "jhawthorn/fzy", \
     as:command, \
     hook-build:"make && sudo make install"
 
+zplug "rupa/z", use:z.sh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "b4b4r07/zsh-vimode-visual", use:"*.zsh", defer:3
 
@@ -154,6 +159,9 @@ case ${UID} in
 # basic:
 #
 
+# フロー制御無効 (Ctrl+s/Ctrl+qを解放)
+setopt noflowcontrol
+
 # cd を入力しなくてもディレクトリに遷移
 setopt auto_cd
 # cd -[tab]で履歴表示
@@ -212,9 +220,9 @@ setopt short_loops
 #
 
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
+HISTSIZE=1000
 SAVEHIST=$HISTSIZE
-# ヒストリファイルにコマンドラインだけじゃなくて実行時間とかも記録する
+# ヒストリファイルに実行時間とかも記録
 setopt extended_history
 # 同じコマンドラインが続くときは記録しない
 setopt hist_ignore_dups
@@ -222,12 +230,23 @@ setopt hist_ignore_dups
 setopt hist_ignore_space
 # 余分な空白は詰める
 setopt hist_reduce_blanks
-# シェルプロセスごとにヒストリを共有
+# zsh の開始/ 終了時刻をヒストリファイルに記録
+setopt extended_history
+# シェルを横断して.zsh_historyに記録
+setopt inc_append_history
+# ヒストリを共有
 setopt share_history
 # ヒストリを呼び出してから実行するまでに一旦編集できるようにする
 setopt hist_verify
 # ヒストリファイルを上書きせずに追加
 setopt append_history
+# 補完時にヒストリを展開
+setopt hist_expand
+
+#---------------------------------------------------------------------------
+# command:
+#
+
 
 #---------------------------------------------------------------------------
 # zcompile:
@@ -237,5 +256,5 @@ if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
    zcompile ~/.zshrc
 fi
 
-[ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
+[ -f $HOME/.zshrc_local ] && source $HOME/.zshrc_local
 
