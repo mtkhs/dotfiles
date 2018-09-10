@@ -7,6 +7,8 @@ alias l='la'
 alias la='ls -lAvF'
 alias ll='ls -l'
 
+alias tl='tmux list-sessions'
+
 case ${OSTYPE} in
 	darwin*)
 		alias ls='LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx ls -G'

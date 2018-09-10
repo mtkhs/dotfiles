@@ -1,6 +1,20 @@
+#---------------------------------------------------------------------------
+# .zprofile
+#---------------------------------------------------------------------------
+
+# Helper to see if a command exists
+command_exists () {
+  type "$1" &> /dev/null ;
+}
+
+# Use neovim if it's installed
+if command_exists nvim ; then
+  alias vim='nvim'
+fi
+
 umask 002
 
-[[ $TMUX = "" ]] && export TERM="xterm-256color"
+# [[ $TMUX = "" ]] && export TERM="xterm-256color"
 
 export LV="-c -l"
 export LESS="-R"
@@ -46,9 +60,9 @@ case ${OSTYPE} in
 					echo "Session has been already attached."
 					tmux list-sessions
 				fi
-#			else
-#				echo "Create new tmux session."
-#				tmux -2
+			else
+				echo "Create new tmux session."
+				tmux new-session -s "0"
 			fi
 		fi
 	;;
@@ -58,6 +72,10 @@ if [[ -d "$HOME/.anyenv" ]]; then
 	export PATH="$HOME/.anyenv/bin:$PATH"
 	eval "$(anyenv init - --no-rehash zsh)"
 fi
+
+# zsh config
+export ENHANCD_DISABLE_DOT=1
+export ENHANCD_DISABLE_HOME=1
 
 [ -f $HOME/.zprofile_local ] && source $HOME/.zprofile_local
 
