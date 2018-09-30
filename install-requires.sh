@@ -9,6 +9,19 @@ VER=$(lsb_release -sr)
 #echo $ARCH
 #echo $VER
 
+echo "Install dependencies"
+case ${OSTYPE} in
+  linux*)
+    case $OS in
+      Debian | Ubuntu | Raspbian )
+        # Ubuntu 18.04
+        sudo apt install -y zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev
+        ;;
+      CentOS )
+    esac
+    ;;
+esac
+
 if builtin command -v fzy > /dev/null ; then
   echo "fzy is already installed."
 else
@@ -17,11 +30,13 @@ else
     linux*)
       case $OS in
         Debian | Ubuntu | Raspbian )
-          wget -P /tmp https://github.com/jhawthorn/fzy/releases/download/0.7/fzy_0.7-1_amd64.deb
-          sudo dpkg -i /tmp/fzy_0.7-1_amd64.deb
+            wget -P /tmp https://github.com/jhawthorn/fzy/releases/download/1.0/fzy-1.0.tar.gz
+            tar xzvf /tmp/fzy-1.0.tar.gz -C /tmp
+            cd /tmp/fzy-1.0
+            make
+            sudo make install
           ;;
         CentOS )
-          sudo yum install https://github.com/jhawthorn/fzy/releases/download/0.7/fzy-0.7-1.x86_64.rpm
       esac
       ;;
   esac

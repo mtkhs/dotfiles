@@ -59,6 +59,9 @@ else
    set nowrap
 endif
 
+" Disable folding
+set nofoldenable
+
 " Don't create backup.
 set nowritebackup
 set nobackup

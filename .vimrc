@@ -110,6 +110,12 @@ if !has('nvim') && has('gui_running')
   call s:source_rc('gui.rc.vim')
 endif
 
+"---------------------------------------------------------------------------
+" Syntax On:
+"
+
+syntax enable
+filetype plugin indent on
 
 "---------------------------------------------------------------------------
 " Others:

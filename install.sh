@@ -70,6 +70,10 @@ else
 bundler
 pry
 EOF
+
+    anyenv install pyenv
+    PYENV_ROOT="$(anyenv root)/envs/pyenv" # $(pyenv root)
+    git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
 fi
 
 # zsh zplug
