@@ -43,7 +43,9 @@ case ${OSTYPE} in
 		dict () { open dict://"$@"; }
 	;;
 	linux*|cygwin*|msys*)
-		export PATH=/usr/sbin:/sbin:$PATH
+		export GOPATH=$HOME/go
+		export GOBIN=$GOPATH/bin
+		export PATH=/usr/sbin:/sbin:$GOBIN:$PATH
 		export EDITOR='vim'
 		
 		#

@@ -74,6 +74,8 @@ EOF
     anyenv install pyenv
     PYENV_ROOT="$(anyenv root)/envs/pyenv" # $(pyenv root)
     git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
+
+    anyenv install nodenv
 fi
 
 # zsh zplug
@@ -95,6 +97,11 @@ else
     mkdir -p ~/.tmux
     mkdir -p ~/.tmux/plugins
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    echo "Install tpm plugins..."
+    tmux start-server
+    tmux new-session -d
+    ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+    tmux kill-server
 fi
 
 # vim dein

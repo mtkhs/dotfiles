@@ -77,3 +77,13 @@ function! s:add_numbers(num) abort
     call setline('.', new_line)
   endif
 endfunction
+
+" Tabline
+nnoremap [Tag] <Nop>
+nmap t [Tag]
+
+map <silent> [Tag]t :tablast <bar> tabnew<CR>
+map <silent> [Tag]w :tabclose<CR>
+map <silent> [Tag]n :tabnext<CR>
+map <silent> [Tag]p :tabprevious<CR>
+

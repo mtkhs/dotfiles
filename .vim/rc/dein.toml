@@ -51,7 +51,8 @@ repo = 'kana/vim-textobj-user'
 repo = 'scrooloose/nerdtree'
 hook_add = '''
 let g:NERDTreeDirArrows = 1
-let NERDTreeWinSize=22
+let NERDTreeShowHidden = 1
+let NERDTreeWinSize = 22
 "let g:NERDTreeDirArrowExpandable = '+'
 "let g:NERDTreeDirArrowCollapsible = '~'
 '''
@@ -163,12 +164,24 @@ repo = 'roxma/nvim-yarp'
 repo = 'roxma/vim-hug-neovim-rpc'
 
 [[plugins]]
+repo = 'stephpy/vim-yaml'
+on_ft = 'yaml'
+
+[[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
 [[plugins]]
 repo = 'elzr/vim-json'
 on_ft = 'json'
+hook_add = '''
+" Disable fancy concealing of attribute quotes
+let g:vim_json_syntax_conceal = 0
+'''
+
+[[plugins]]
+repo = 'ericpruitt/tmux.vim'
+on_ft = 'tmux'
 
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'

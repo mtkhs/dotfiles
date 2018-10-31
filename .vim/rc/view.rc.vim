@@ -34,8 +34,8 @@ let &g:titlestring="
       \ fnamemodify(&filetype ==# 'vimfiler' ?
       \ substitute(b:vimfiler.current_dir, '.\\zs/$', '', '') : getcwd(), ':~'),
       \ &columns-len(expand('%:p:.:~')))}\) - VIM"
-" Disable tabline.
-set showtabline=0
+" Tabline.
+set showtabline=2
 
 " Set statusline.
 let &g:statusline="%{winnr('$')>1?'['.winnr().'/'.winnr('$')"

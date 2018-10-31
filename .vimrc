@@ -35,9 +35,15 @@ function! s:source_rc(path, ...) abort
   endtry
 endfunction
 
+filetype off
+filetype plugin indent off
+
 " Set augroup.
 augroup MyAutoCmd
   autocmd!
+  autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?
+        \ call vimrc#on_filetype()
+  autocmd CursorHold *.toml syntax sync minlines=300
 augroup END
 
 if has('vim_starting')
@@ -45,6 +51,10 @@ if has('vim_starting')
 endif
 
 call s:source_rc('dein.rc.vim')
+
+if has('vim_starting') && !empty(argv())
+  call vimrc#on_filetype()
+endif
 
 if !has('vim_starting')
   call dein#call_hook('source')
@@ -114,8 +124,8 @@ endif
 " Syntax On:
 "
 
-syntax enable
-filetype plugin indent on
+"syntax enable
+"filetype plugin indent on
 
 "---------------------------------------------------------------------------
 " Others:

@@ -9,6 +9,8 @@ alias ll='ls -l'
 
 alias tl='tmux list-sessions'
 
+alias sudo='sudo -E '
+
 case ${OSTYPE} in
 	darwin*)
 		alias ls='LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx ls -G'

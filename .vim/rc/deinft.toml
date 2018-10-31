@@ -78,3 +78,11 @@ setlocal omnifunc=
 setlocal shiftwidth=2 softtabstop=2 tabstop=2
 '''
 
+yaml = '''
+setlocal expandtab
+setlocal tabstop=8
+setlocal shiftwidth=2
+setlocal softtabstop=0
+setlocal smarttab
+'''
+
