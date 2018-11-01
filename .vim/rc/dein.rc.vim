@@ -52,7 +52,7 @@ endif
 call dein#end()
 call dein#save_state()
 
-if dein#check_install()
+if !has('vim_starting') && dein#check_install()
   call dein#install()
 endif
 

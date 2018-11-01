@@ -35,13 +35,13 @@ repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim', 'vim-textobj-user']
 hook_add = '''
 let g:context_filetype#filetypes = {
-      \ 'sh': [
-      \   {
-      \    'start': '[^<]<<\([\\''"]\?\)\([a-zA-Z0-9]\+\)\1$',
-      \    'end': '^\2$', 'filetype': '\2',
-      \   },
-      \ ],
-      \}"}}}
+    \ 'sh': [
+    \   {
+    \    'start': '[^<]<<\([\\''"]\?\)\([a-zA-Z0-9]\+\)\1$',
+    \    'end': '^\2$', 'filetype': '\2',
+    \   },
+    \ ],
+    \}
 '''
 
 [[plugins]] # for <Plug>(textobj-precious-i) in vim-precious
@@ -71,7 +71,7 @@ let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red " sets th
 [[plugins]]
 repo = 'delphinus/lightline-delphinus'
 hook_add = '''
-let g:lightline_delphinus_colorscheme='solarized_improved'
+let g:lightline_delphinus_colorscheme='nord_improved'
 let g:ale_echo_msg_error_str = nr2char(0xf421) . ' '
 let g:ale_echo_msg_warning_str = nr2char(0xf420) . ' '
 let g:ale_echo_msg_info_str = nr2char(0xf05a) . ' '
@@ -91,28 +91,63 @@ repo = 'itchyny/lightline.vim'
 hook_add = '''
 let g:lightline = {
     \ 'active': {
-        \ 'left': [ ['mode', 'paste'], ['readonly', 'filepath', 'modified'] ]
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'readonly', 'filename', 'modified' ],
+    \             [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]
+    \   ],
     \ }
 \ }
 '''
 
 [[plugins]]
-repo = 'w0rp/ale'
-
-[[plugins]]
-repo = 'majutsushi/tagbar'
+repo = 'maximbaz/lightline-ale'
+depends = ['lightline.vim', 'ale']
 hook_add = '''
-let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
-let g:tagbar_width = 26
-let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:Heading_L1',
-        \ 'i:Heading_L2',
-        \ 'k:Heading_L3'
-    \ ]
+let g:lightline.component_expand = {
+    \  'linter_checking': 'lightline#ale#checking',
+    \  'linter_warnings': 'lightline#ale#warnings',
+    \  'linter_errors': 'lightline#ale#errors',
+    \  'linter_ok': 'lightline#ale#ok',
+\ }
+let g:lightline.component_type = {
+    \     'linter_checking': 'left',
+    \     'linter_warnings': 'warning',
+    \     'linter_errors': 'error',
+    \     'linter_ok': 'left',
 \ }
 '''
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+let b:ale_linters = {
+    \ 'javascript': [ 'eslint', 'eslint-plugin-vue' ],
+    \ 'python': [ 'pyflakes', 'pep8' ],
+    \ 'ruby': [ 'rubocop' ],
+    \ 'tex': [ 'textlint' ],
+    \ 'markdown': [ 'textlint' ],
+    \ 'css': [ 'stylelint' ],
+\ }
+let g:ale_statusline_format = [ 'E%d', 'W%d', 'ok' ]
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
+'''
+
+#[[plugins]]
+#repo = 'majutsushi/tagbar'
+#hook_add = '''
+#let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+#let g:tagbar_width = 26
+#let g:tagbar_type_markdown = {
+#    \ 'ctagstype' : 'markdown',
+#    \ 'kinds' : [
+#        \ 'h:Heading_L1',
+#        \ 'i:Heading_L2',
+#        \ 'k:Heading_L3'
+#    \ ]
+#\ }
+#'''
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
@@ -125,13 +160,12 @@ depends = ['neomru.vim']
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+depends = ['context_filetype.vim']
 if = 'has("nvim")'
 on_i = 1
-hook_add = '''
-    let g:deoplete#enable_at_startup = 1
-'''
 hook_source = '''
-    source ~/.vim/rc/plugins/deoplete.rc.vim
+source ~/.vim/rc/plugins/deoplete.rc.vim
+call deoplete#enable()
 '''
 
 [[plugins]]
@@ -195,4 +229,8 @@ on_ft = 'ruby'
 [[plugins]]
 repo = 'jelera/vim-javascript-syntax'
 on_ft = 'javascript'
+
+[[plugins]]
+repo = 'ekalinin/Dockerfile.vim'
+on_ft = 'dockerfile'
 

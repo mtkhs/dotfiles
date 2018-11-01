@@ -35,8 +35,8 @@ function! s:source_rc(path, ...) abort
   endtry
 endfunction
 
-filetype off
-filetype plugin indent off
+"filetype off
+"filetype plugin indent off
 
 " Set augroup.
 augroup MyAutoCmd
