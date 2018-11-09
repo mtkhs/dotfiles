@@ -10,13 +10,7 @@ endfunction
 " Show line number.
 set number
 " Show <TAB> and <CR>
-set list
-if IsWindows()
-   set listchars=tab:>-,trail:-,extends:>,precedes:<
-else
-"   set listchars=tab:>-,trail:-,extends:»,precedes:«,nbsp:%
-   set listchars=tab:>-,trail:-
-endif
+set listchars=tab:>-,trail:-
 " Always display statusline.
 set laststatus=2
 " Height of command line.
@@ -125,4 +119,41 @@ function! WidthPart(str, width) abort
 
   return ret
 endfunction
+
+"
+" auto cursorline
+" https://thinca.hatenablog.com/entry/20090530/1243615055
+"
+let s:cl_disabled = 0
+let s:cl_cursor = 1
+let s:cl_win = 2
+let s:cl_status = s:cl_disabled
+function! s:auto_cursorline(e)
+  if a:e ==# 'WinEnter'
+    setlocal cursorline
+    let s:cl_status = s:cl_win
+  elseif a:e ==# 'WinLeave'
+    setlocal nocursorline
+  elseif a:e ==# 'CursorMoved'
+    if s:cl_status == s:cl_disabled
+      return
+    elseif s:cl_status == s:cl_win
+      let s:cl_status = s:cl_cursor
+    else
+      setlocal nocursorline
+      let s:cl_status = s:cl_disabled
+    endif
+  elseif a:e ==# 'CursorHold'
+    setlocal cursorline
+    let s:cl_status = s:cl_cursor
+  endif
+endfunction
+
+augroup auto-cursorline
+  autocmd!
+  autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
+  autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
+  autocmd WinEnter * call s:auto_cursorline('WinEnter')
+  autocmd WinLeave * call s:auto_cursorline('WinLeave')
+augroup END
 

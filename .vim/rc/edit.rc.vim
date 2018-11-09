@@ -59,6 +59,12 @@ set virtualedit=block
 " Set keyword help.
 set keywordprg=:help
 
+set mouse=a                  " マウスを全ての場面で使う
+if !has('nvim')
+  set ttymouse=sgr           " マウスホイールを有効化
+  set clipboard=autoselectml " モードレスセレクション時に OS 標準のクリップボードを使う
+endif
+
 " Make directory automatically.
 " --------------------------------------
 " http://vim-users.jp/2011/02/hack202/

@@ -34,20 +34,9 @@ endif
 
 call dein#begin(s:path, expand('<sfile>'))
 
-call dein#load_toml('~/.vim/rc/dein.toml', {'lazy': 0})
-call dein#load_toml('~/.vim/rc/deinlazy.toml', {'lazy' : 1})
-call dein#load_toml('~/.vim/rc/deinft.toml')
-
-let s:vimrc_local = findfile('vimrc_local.vim', '.;')
-if s:vimrc_local !=# ''
-  " Load develop version plugins.
-  call dein#local(fnamemodify(s:vimrc_local, ':h'),
-        \ {'frozen': 1, 'merged': 0},
-        \ ['vim*', 'nvim-*', 'unite-*', 'neco-*', '*.vim', 'denite.nvim'])
-  call dein#local(fnamemodify(s:vimrc_local, ':h'),
-        \ {'frozen': 1, 'merged': 0},
-        \ ['deoplete-*', '*.nvim'])
-endif
+call dein#load_toml('~/.vim/rc/dein/dein.toml', {'lazy': 0})
+call dein#load_toml('~/.vim/rc/dein/deinlazy.toml', {'lazy' : 1})
+call dein#load_toml('~/.vim/rc/dein/deinft.toml')
 
 call dein#end()
 call dein#save_state()

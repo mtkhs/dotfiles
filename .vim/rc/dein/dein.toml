@@ -2,33 +2,42 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
 repo = 'aereal/vim-colors-japanesque'
 hook_add = '''
-au MyAutoCmd VimEnter * nested colorscheme japanesque
+"au MyAutoCmd VimEnter * nested colorscheme japanesque
 '''
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 hook_add = '''
-" vim-devicons
+let g:webdevicons_enable_nerdtree = 0
 let g:webdevicons_conceal_nerdtree_brackets = 1
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 
-" dir-icons
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
+let g:WebDevIconsUnicodeByteOrderMarkerDefaultSymbol = ''
 let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:DevIconsDefaultFolderOpenSymbol = ''
-" file-icons
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['html'] = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md'] = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['txt'] = ''
-'''
 
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {
+      \ 'fcgi':     '',
+      \ 'perl':     '',
+      \ 'sqlite':   '',
+      \ 'tt':       '',
+      \ 'vue':      '',
+      \ 'html':     '',
+      \ 'css':      '',
+      \ 'md':       '',
+      \ 'txt':      ''
+      \ }
+'''
 
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
@@ -46,6 +55,12 @@ let g:context_filetype#filetypes = {
 
 [[plugins]] # for <Plug>(textobj-precious-i) in vim-precious
 repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo     = 'airblade/vim-rooter'
+hook_add = '''
+  let g:rooter_silent_chdir = 1
+'''
 
 [[plugins]]
 repo = 'scrooloose/nerdtree'
@@ -69,27 +84,10 @@ let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red " sets th
 '''
 
 [[plugins]]
-repo = 'delphinus/lightline-delphinus'
-hook_add = '''
-let g:lightline_delphinus_colorscheme='nord_improved'
-let g:ale_echo_msg_error_str = nr2char(0xf421) . ' '
-let g:ale_echo_msg_warning_str = nr2char(0xf420) . ' '
-let g:ale_echo_msg_info_str = nr2char(0xf05a) . ' '
-let g:ale_echo_msg_format = '%severity%  %linter% - %s'
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = g:ale_echo_msg_error_str
-let g:ale_sign_warning = g:ale_echo_msg_warning_str
-let g:ale_statusline_format = [
-    \ g:ale_echo_msg_error_str . ' %d',
-    \ g:ale_echo_msg_warning_str . ' %d',
-    \ nr2char(0xf4a1) . '  '
-\ ]
-'''
-
-[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
 let g:lightline = {
+    \ 'colorscheme': 'wombat',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'readonly', 'filename', 'modified' ],
@@ -133,21 +131,6 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 nmap <silent> <C-n> <Plug>(ale_next_wrap)
 '''
-
-#[[plugins]]
-#repo = 'majutsushi/tagbar'
-#hook_add = '''
-#let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
-#let g:tagbar_width = 26
-#let g:tagbar_type_markdown = {
-#    \ 'ctagstype' : 'markdown',
-#    \ 'kinds' : [
-#        \ 'h:Heading_L1',
-#        \ 'i:Heading_L2',
-#        \ 'k:Heading_L3'
-#    \ ]
-#\ }
-#'''
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'

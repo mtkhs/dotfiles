@@ -85,11 +85,10 @@ zplug "zsh-users/zsh-completions"
 zplug "glidenote/hub-zsh-completion"
 zplug "Valodim/zsh-curl-completion"
 
-zplug "reorx/httpstat", \
-    as:command, \
-    use:'(httpstat).py', \
-    rename-to:'$1', \
-    if:'(( $+commands[python] ))'
+zplug "direnv/direnv", as:command, rename-to:direnv, use:"direnv", hook-build:"make"
+zplug "jingweno/ccat", as:command, from:gh-r, rename-to:ccat
+zplug "denilsonsa/prettyping", as:command, use:"prettyping"
+zplug "b4b4r07/httpstat", as:command, use:"httpstat.sh", rename-to:httpstat
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "

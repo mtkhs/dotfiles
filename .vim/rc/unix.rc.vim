@@ -60,6 +60,5 @@ endif
 set mouse=
 
 " Colorscheme
-"colorscheme japanesque
-colorscheme candy
+colorscheme evening
 

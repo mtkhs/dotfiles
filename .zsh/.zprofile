@@ -75,6 +75,10 @@ if [[ -d "$HOME/.anyenv" ]]; then
 	eval "$(anyenv init - --no-rehash zsh)"
 fi
 
+if type direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
+
 # zsh config
 export ENHANCD_DISABLE_DOT=1
 export ENHANCD_DISABLE_HOME=1
