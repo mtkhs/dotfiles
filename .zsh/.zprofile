@@ -14,7 +14,8 @@ fi
 
 umask 002
 
-# [[ $TMUX = "" ]] && export TERM="xterm-256color"
+# xtermだとtmuxでlsした日本語ファイル名がおかしくなった
+#[[ $TMUX = "" ]] && export TERM="xterm-256color"
 
 export LV="-c -l"
 export LESS="-R"
@@ -45,7 +46,7 @@ case ${OSTYPE} in
 	linux*|cygwin*|msys*)
 		export GOPATH=$HOME/go
 		export GOBIN=$GOPATH/bin
-		export PATH=/usr/sbin:/sbin:$GOBIN:$PATH
+		export PATH=$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
 		export EDITOR='vim'
 		
 		#

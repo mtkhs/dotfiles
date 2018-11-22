@@ -21,18 +21,18 @@ function! s:source_rc(path, ...) abort
   endif
 
   " substitute all 'set' to 'setglobal'
-  let content = map(readfile(abspath),
+"  let content = map(readfile(abspath),
         \ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")')
   " create tempfile and source the tempfile
-  let tempfile = tempname()
-  try
-    call writefile(content, tempfile)
-    execute 'source' fnameescape(tempfile)
-  finally
-    if filereadable(tempfile)
-      call delete(tempfile)
-    endif
-  endtry
+"  let tempfile = tempname()
+"  try
+"    call writefile(content, tempfile)
+"    execute 'source' fnameescape(tempfile)
+"  finally
+"    if filereadable(tempfile)
+"      call delete(tempfile)
+"    endif
+"  endtry
 endfunction
 
 "filetype off
@@ -43,7 +43,7 @@ augroup MyAutoCmd
   autocmd!
   autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?
         \ call vimrc#on_filetype()
-  autocmd CursorHold *.toml syntax sync minlines=300
+"  autocmd CursorHold *.toml syntax sync minlines=300
 augroup END
 
 if has('vim_starting')
@@ -140,22 +140,17 @@ let t:cwd = getcwd()
 set secure
 
 " colorscheme_transparent
-if !has('gui_running')
-  augroup colorscheme_transparent
-    autocmd!
-    autocmd VimEnter,ColorScheme * highlight Normal ctermbg=none
-    autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=none
-    autocmd VimEnter,ColorScheme * highlight SignColumn ctermbg=none
-    autocmd VimEnter,ColorScheme * highlight VertSplit ctermbg=none
-    autocmd VimEnter,ColorScheme * highlight NonText ctermbg=none
-    autocmd VimEnter,ColorScheme * highlight Identifier ctermbg=none
-  augroup END
-endif
-
-"augroup BufferAu
-"  autocmd!
-"  autocmd BufNewFile,BufRead,BufEnter * if isdirectory( expand( "%:p:h" ) ) | cd %:p:h | endif
-"augroup END
+"if !has('gui_running')
+"  augroup colorscheme_transparent
+"    autocmd!
+"    autocmd VimEnter,ColorScheme * highlight Normal ctermbg=none
+"    autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=none
+"    autocmd VimEnter,ColorScheme * highlight SignColumn ctermbg=none
+"    autocmd VimEnter,ColorScheme * highlight VertSplit ctermbg=none
+"    autocmd VimEnter,ColorScheme * highlight NonText ctermbg=none
+"    autocmd VimEnter,ColorScheme * highlight Identifier ctermbg=none
+"  augroup END
+"endif
 
 augroup SkeletonAu
   autocmd!

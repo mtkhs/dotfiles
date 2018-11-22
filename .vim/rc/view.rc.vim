@@ -9,7 +9,8 @@ endfunction
 
 " Show line number.
 set number
-" Show <TAB> and <CR>
+" Show <TAB>
+set list
 set listchars=tab:>-,trail:-
 " Always display statusline.
 set laststatus=2
@@ -17,28 +18,22 @@ set laststatus=2
 set cmdheight=2
 " Not show command on statusline.
 set noshowcmd
-" Show title.
-set title
-" Title length.
-set titlelen=95
-" Title string.
-let &g:titlestring="
-      \ %{expand('%:p:~:.')}%(%m%r%w%)
-      \ %<\(%{WidthPart(
-      \ fnamemodify(&filetype ==# 'vimfiler' ?
-      \ substitute(b:vimfiler.current_dir, '.\\zs/$', '', '') : getcwd(), ':~'),
-      \ &columns-len(expand('%:p:.:~')))}\) - VIM"
-" Tabline.
-set showtabline=2
+
+" The value of this option specifies when the line with tab page labels
+" will be displayed:
+"   0: never
+"   1: only if there are at least two tab pages
+"   2: always
+set showtabline=1
 
 " Set statusline.
-let &g:statusline="%{winnr('$')>1?'['.winnr().'/'.winnr('$')"
-      \ . ".(winnr('#')==winnr()?'#':'').']':''}\ "
-      \ . "%{(&previewwindow?'[preview] ':'').expand('%:t')}"
-      \ . "\ %=%{(winnr('$')==1 || winnr('#')!=winnr()) ?
-      \ '['.(&filetype!=''?&filetype.',':'')"
-      \ . ".(&fenc!=''?&fenc:&enc).','.&ff.']' : ''}"
-      \ . "%m%{printf('%'.(len(line('$'))+2).'d/%d',line('.'),line('$'))}"
+"let &g:statusline="%{winnr('$')>1?'['.winnr().'/'.winnr('$')"
+"      \ . ".(winnr('#')==winnr()?'#':'').']':''}\ "
+"      \ . "%{(&previewwindow?'[preview] ':'').expand('%:t')}"
+"      \ . "\ %=%{(winnr('$')==1 || winnr('#')!=winnr()) ?
+"      \ '['.(&filetype!=''?&filetype.',':'')"
+"      \ . ".(&fenc!=''?&fenc:&enc).','.&ff.']' : ''}"
+"      \ . "%m%{printf('%'.(len(line('$'))+2).'d/%d',line('.'),line('$'))}"
 
 " Turn down a long line appointed in 'breakat'
 set linebreak
@@ -74,12 +69,8 @@ set wildmode=list:longest,full
 set history=1000
 " Display all the information of the tag by the supplement of the Insert mode.
 set showfulltag
-" Can supplement a tag in a command-line.
-set wildoptions=tagfile
-
 " Maintain a current line at the time of movement as much as possible.
 set nostartofline
-
 " Splitting a window will put the new window below the current one.
 set splitbelow
 " Splitting a window will put the new window right the current one.
@@ -99,6 +90,7 @@ set previewheight=8
 set helpheight=12
 
 set ttyfast
+set lazyredraw
 
 " When a line is long, do not omit it in @.
 set display=lastline

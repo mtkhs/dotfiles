@@ -137,8 +137,7 @@ repo = 'Shougo/neomru.vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-if = 'has("nvim")'
-on_cmd = 'Denite'
+#on_cmd = 'Denite'
 depends = ['neomru.vim']
 
 [[plugins]]
