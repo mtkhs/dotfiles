@@ -98,20 +98,17 @@ else
     mkdir -p ~/.tmux/plugins
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     echo "Install tpm plugins..."
-    tmux start-server
-    tmux new-session -d
-    ~/.tmux/plugins/tpm/scripts/install_plugins.sh
-    tmux kill-server
+    ${HOME}/.tmux/plugins/tpm/bin/install_plugins
 fi
 
 # vim dein
 if [ -d ${HOME}/.cache/dein ]; then
     echo "dein is already installed."
 else
-    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ./installer.sh
-    # For example, we just use `~/.cache/dein` as installation directory
-    sh ./installer.sh ~/.cache/dein
-    rm -f ./installer.sh
+    echo "Install dein..."
+    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ${HOME}/dein-installer.sh
+    sh ${HOME}/dein-installer.sh ~/.cache/dein
+    rm -f ${HOME}/dein-installer.sh
 fi
 
 # chsh
