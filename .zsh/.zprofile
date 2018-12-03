@@ -84,5 +84,9 @@ fi
 export ENHANCD_DISABLE_DOT=1
 export ENHANCD_DISABLE_HOME=1
 
+# for docker-compose
+export UID=${UID}
+export GID=${GID}
+
 [ -f $HOME/.zprofile_local ] && source $HOME/.zprofile_local
 

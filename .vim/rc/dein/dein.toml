@@ -2,15 +2,36 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'wsdjeg/dein-ui.vim'
-
-[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
-repo = 'aereal/vim-colors-japanesque'
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+#on_cmd = 'Denite'
+depends = [ 'neomru.vim' ]
+
+[[plugins]]
+repo = 'w0rp/ale'
 hook_add = '''
-"au MyAutoCmd VimEnter * nested colorscheme japanesque
+let g:ale_linters = {
+    \ 'javascript': [ 'prettier', 'eslint', 'eslint-plugin-vue' ],
+    \ 'python': [ 'pyflakes', 'black', 'isort' ],
+    \ 'ruby': [ 'rubocop' ],
+    \ 'tex': [ 'textlint' ],
+    \ 'markdown': [ 'textlint' ],
+    \ 'css': [ 'stylelint' ],
+\ }
+let g:ale_lint_on_text_changed = 1
+let g:ale_statusline_format = [ 'E%d', 'W%d', 'ok' ]
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_fix_on_save = 0
+"let g:ale_sign_error = ''
+"let g:ale_sign_warning = ''
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
 '''
 
 [[plugins]]
@@ -41,7 +62,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {
 
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim', 'vim-textobj-user']
+depends = [ 'context_filetype.vim', 'vim-textobj-user' ]
 hook_add = '''
 let g:context_filetype#filetypes = {
     \ 'sh': [
@@ -86,133 +107,100 @@ let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red " sets th
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
+" # hide --INSERT--
+set noshowmode
+
 let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'readonly', 'filename', 'modified' ],
     \             [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]
+    \   ]
+    \ },
+    \ 'tabline': {
+    \   'left': [ [ 'bufferinfo' ],
+    \             [ 'separator' ],
+    \             [ 'bufferbefore', 'buffercurrent', 'bufferafter' ],
     \   ],
-    \ }
+    \   'right': []
+    \ },
+    \ 'component_expand': {
+    \   'linter_checking': 'lightline#ale#checking',
+    \   'linter_warnings': 'lightline#ale#warnings',
+    \   'linter_errors': 'lightline#ale#errors',
+    \   'linter_ok': 'lightline#ale#ok',
+    \   'buffercurrent': 'lightline#buffer#buffercurrent',
+    \   'bufferbefore': 'lightline#buffer#bufferbefore',
+    \   'bufferafter': 'lightline#buffer#bufferafter',
+    \ },
+    \ 'component_type': {
+    \   'linter_checking': 'left',
+    \   'linter_warnings': 'warning',
+    \   'linter_errors': 'error',
+    \   'linter_ok': 'left',
+    \   'buffercurrent': 'tabsel',
+    \   'bufferbefore': 'raw',
+    \   'bufferafter': 'raw',
+    \ },
+    \ 'component_function': {
+    \   'bufferinfo': 'lightline#buffer#bufferinfo',
+    \ },
+"    \ 'separator': { 'left': '', 'right': '' },
+"    \ 'subseparator': { 'left': '|', 'right': '|' }
 \ }
+
+function! LightlineTabFilename(n) abort
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  let _ = pathshorten(expand('#'.buflist[winnr - 1].':f'))
+  return _ !=# '' ? _ : '[No Name]'
+endfunction
+
+function! LightlineFilename()
+  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+       \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
 '''
 
 [[plugins]]
 repo = 'maximbaz/lightline-ale'
-depends = ['lightline.vim', 'ale']
+depends = [ 'lightline.vim', 'ale' ]
+
+[[plugins]]
+repo = 'taohexxx/lightline-buffer'
+depends = [ 'lightline.vim' ]
+
+#
+# TableMode
+# VIM Table Mode for instant table creation.
+#
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode'
 hook_add = '''
-let g:lightline.component_expand = {
-    \  'linter_checking': 'lightline#ale#checking',
-    \  'linter_warnings': 'lightline#ale#warnings',
-    \  'linter_errors': 'lightline#ale#errors',
-    \  'linter_ok': 'lightline#ale#ok',
-\ }
-let g:lightline.component_type = {
-    \     'linter_checking': 'left',
-    \     'linter_warnings': 'warning',
-    \     'linter_errors': 'error',
-    \     'linter_ok': 'left',
-\ }
+let g:table_mode_corner = '|'
 '''
 
+#
+# Seiya
+# Clear and make transparent vim's background color in terminal
+#
 [[plugins]]
-repo = 'w0rp/ale'
+repo = 'miyakogi/seiya.vim'
 hook_add = '''
-let b:ale_linters = {
-    \ 'javascript': [ 'eslint', 'eslint-plugin-vue' ],
-    \ 'python': [ 'pyflakes', 'pep8' ],
-    \ 'ruby': [ 'rubocop' ],
-    \ 'tex': [ 'textlint' ],
-    \ 'markdown': [ 'textlint' ],
-    \ 'css': [ 'stylelint' ],
-\ }
-let g:ale_statusline_format = [ 'E%d', 'W%d', 'ok' ]
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-nmap <silent> <C-n> <Plug>(ale_next_wrap)
+"let g:seiya_auto_enable=1
+" Default value: ['ctermbg']
+let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 '''
 
+#
+# Japanesque
+# The colorscheme featuring Japanese traditional colors.<Paste>
+#
 [[plugins]]
-repo = 'Shougo/neomru.vim'
-
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-#on_cmd = 'Denite'
-depends = ['neomru.vim']
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = ['context_filetype.vim']
-if = 'has("nvim")'
-on_i = 1
-hook_source = '''
-source ~/.vim/rc/plugins/deoplete.rc.vim
-call deoplete#enable()
-'''
-
-[[plugins]]
-repo = 'Shougo/neoinclude.vim'
-on_ft = ['c', 'cpp']
-depends = ['deoplete.nvim']
-
-[[plugins]]
-repo = 'fishbullet/deoplete-ruby'
-on_ft = ['ruby']
-depends = ['deoplete.nvim']
-
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-on_ft = ['python']
-depends = ['deoplete.nvim']
-
-[[plugins]]
-repo = 'jmcantrell/vim-virtualenv'
-on_ft = ['python']
-
-[[plugins]]
-repo = 'hynek/vim-python-pep8-indent'
-on_ft = ['python']
-
-[[plugins]]
-repo = 'roxma/nvim-yarp'
-
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-
-[[plugins]]
-repo = 'stephpy/vim-yaml'
-on_ft = 'yaml'
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
-
-[[plugins]]
-repo = 'elzr/vim-json'
-on_ft = 'json'
+repo = 'aereal/vim-colors-japanesque'
 hook_add = '''
-" Disable fancy concealing of attribute quotes
-let g:vim_json_syntax_conceal = 0
+"au MyAutoCmd VimEnter * nested colorscheme japanesque
 '''
-
-[[plugins]]
-repo = 'ericpruitt/tmux.vim'
-on_ft = 'tmux'
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = ['markdown', 'mkd']
-
-[[plugins]]
-repo = 'vim-ruby/vim-ruby'
-on_map = '<Plug>'
-on_ft = 'ruby'
-
-[[plugins]]
-repo = 'jelera/vim-javascript-syntax'
-on_ft = 'javascript'
-
-[[plugins]]
-repo = 'ekalinin/Dockerfile.vim'
-on_ft = 'dockerfile'
 

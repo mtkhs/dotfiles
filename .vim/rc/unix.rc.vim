@@ -22,6 +22,7 @@ endif
 set t_Co=256
 
 if &term =~# 'xterm' && !has('nvim')
+  " ペースト時に自動でPASTEモード
   let &t_ti .= "\e[?2004h"
   let &t_te .= "\e[?2004l"
   let &pastetoggle = "\e[201~"
@@ -46,7 +47,6 @@ if &term =~# 'xterm' && !has('nvim')
   " Change cursor shape.
   let &t_SI = "\<Esc>]12;lightgreen\x7"
   let &t_EI = "\<Esc>]12;white\x7"
-
 endif
 
 " Enable true color

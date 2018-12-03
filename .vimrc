@@ -22,7 +22,7 @@ function! s:source_rc(path, ...) abort
 
   " substitute all 'set' to 'setglobal'
 "  let content = map(readfile(abspath),
-        \ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")')
+"        \ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")')
   " create tempfile and source the tempfile
 "  let tempfile = tempname()
 "  try
@@ -35,15 +35,14 @@ function! s:source_rc(path, ...) abort
 "  endtry
 endfunction
 
-"filetype off
-"filetype plugin indent off
+syntax off
+filetype plugin indent off
 
 " Set augroup.
 augroup MyAutoCmd
   autocmd!
-  autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?
-        \ call vimrc#on_filetype()
-"  autocmd CursorHold *.toml syntax sync minlines=300
+"  autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?
+"        \ call vimrc#on_filetype()
 augroup END
 
 if has('vim_starting')
@@ -52,17 +51,17 @@ endif
 
 call s:source_rc('dein.rc.vim')
 
-if has('vim_starting') && !empty(argv())
-  call vimrc#on_filetype()
-endif
+"if has('vim_starting') && !empty(argv())
+"  call vimrc#on_filetype()
+"endif
 
-if !has('vim_starting')
-  call dein#call_hook('source')
-  call dein#call_hook('post_source')
+"if !has('vim_starting')
+"  call dein#call_hook('source')
+"  call dein#call_hook('post_source')
 
-  syntax enable
-  filetype plugin indent on
-endif
+"  syntax enable
+"  filetype plugin indent on
+"endif
 
 "---------------------------------------------------------------------------
 " Encoding:
@@ -124,15 +123,15 @@ endif
 " Syntax On:
 "
 
-"syntax enable
-"filetype plugin indent on
+filetype plugin indent on
+syntax enable
 
 "---------------------------------------------------------------------------
 " Others:
 "
 
 " If true Vim master, use English help file.
-set helplang& helplang=en,ja
+set helplang& helplang=ja,en
 
 " Default home directory.
 let t:cwd = getcwd()

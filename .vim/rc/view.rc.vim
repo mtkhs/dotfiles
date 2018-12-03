@@ -24,7 +24,7 @@ set noshowcmd
 "   0: never
 "   1: only if there are at least two tab pages
 "   2: always
-set showtabline=1
+set showtabline=2
 
 " Set statusline.
 "let &g:statusline="%{winnr('$')>1?'['.winnr().'/'.winnr('$')"
