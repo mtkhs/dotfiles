@@ -2,6 +2,10 @@
 # .zprofile
 #---------------------------------------------------------------------------
 
+OS=$(lsb_release -si)
+#ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
+#VER=$(lsb_release -sr)
+
 umask 002
 
 export LV="-c -l"
@@ -38,23 +42,25 @@ case ${OSTYPE} in
         export PATH=$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
         export EDITOR='vim'
         
-        #
-        # Attach tmux
-        # http://d.hatena.ne.jp/nari_memo/20120129/1327822418
-        #
-        if ( ! test $TMUX ) && ( ! expr $TERM : "^screen\\." > /dev/null ) && which tmux > /dev/null; then
-            if ( tmux has-session ); then
-                session=`tmux list-sessions | grep -e '^[0-9].*]$' | head -n 1 | sed -e 's/^\([0-9]\+\).*$/\1/'`
-                if [ -n "$session" ]; then
-                    echo "Attach tmux session $session."
-                    tmux attach-session -t $session
+        if [ "${OS}" != "WLinux" ]; then
+            #
+            # Attach tmux
+            # http://d.hatena.ne.jp/nari_memo/20120129/1327822418
+            #
+            if ( ! test $TMUX ) && ( ! expr $TERM : "^screen\\." > /dev/null ) && which tmux > /dev/null; then
+                if ( tmux has-session ); then
+                    session=`tmux list-sessions | grep -e '^[0-9].*]$' | head -n 1 | sed -e 's/^\([0-9]\+\).*$/\1/'`
+                    if [ -n "$session" ]; then
+                        echo "Attach tmux session $session."
+                        tmux attach-session -t $session
+                    else
+                        echo "Session has been already attached."
+                        tmux list-sessions
+                    fi
                 else
-                    echo "Session has been already attached."
-                    tmux list-sessions
+                    echo "Create new tmux session."
+                    TERM=xterm-256color tmux new-session -s "0"
                 fi
-            else
-                echo "Create new tmux session."
-                TERM=xterm-256color tmux new-session -s "0"
             fi
         fi
     ;;
