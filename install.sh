@@ -64,7 +64,7 @@ else
 
     anyenv install rbenv
     RBENV_ROOT="$(anyenv root)/envs/rbenv" # $(rbenv root)
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git $RBENV_ROOT/plugins/rbenv-gem-rehash
+#    git clone https://github.com/sstephenson/rbenv-gem-rehash.git $RBENV_ROOT/plugins/rbenv-gem-rehash
     git clone https://github.com/rbenv/rbenv-default-gems.git $RBENV_ROOT/plugins/rbenv-default-gems
     cat > $RBENV_ROOT/default-gems << "EOF"
 bundler
@@ -73,9 +73,12 @@ EOF
 
     anyenv install pyenv
     PYENV_ROOT="$(anyenv root)/envs/pyenv" # $(pyenv root)
+#    git clone https://github.com/yyuu/pyenv-pip-rehash.git $PYENV_ROOT/plugins/pyenv-pip-rehash
     git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
 
     anyenv install nodenv
+    NODENV_ROOT="$(anyenv root)/envs/nodenv" # $(nodenv root)
+    git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_ROOT/plugins/nodenv-package-rehash
 fi
 
 # zsh zplug

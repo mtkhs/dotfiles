@@ -15,28 +15,54 @@ depends = [ 'neomru.vim' ]
 [[plugins]]
 repo = 'w0rp/ale'
 hook_add = '''
-let g:ale_linters = {
-    \ 'javascript': [ 'prettier', 'eslint', 'eslint-plugin-vue' ],
-    \ 'python': [ 'pyflakes', 'black', 'isort' ],
+let g:ale_fixers = {
     \ 'ruby': [ 'rubocop' ],
-    \ 'tex': [ 'textlint' ],
-    \ 'markdown': [ 'textlint' ],
+    \ 'python': [ 'pycodestyle' ],
+    \ 'javascript': [ 'eslint' ],
     \ 'css': [ 'stylelint' ],
+    \ 'scss': [ 'stylelint' ],
+    \ 'typescript': [ 'prettier' ],
+    \ 'less': [ 'prettier' ],
+    \ 'json': [ 'prettier' ],
+    \ 'markdown': [ 'prettier' ],
+\}
+let g:ale_linters = {
+    \ 'ruby': [ 'rubocop' ],
+    \ 'python': [ 'pyflakes', 'black', 'isort' ],
+    \ 'javascript': [ 'eslint', 'eslint-plugin-vue' ],
+    \ 'tex': [ 'textlint' ],
+    \ 'markdown': [ 'write-good' ],
+    \ 'css': [ 'stylelint' ],
+    \ 'scss': [ 'stylelint' ],
+    \ 'html': [ 'htmlhint' ],
 \ }
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 0
 let g:ale_lint_on_text_changed = 1
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+"highlight clear ALEErrorSign
+"highlight clear ALEWarningSign
 let g:ale_statusline_format = [ 'E%d', 'W%d', 'ok' ]
 let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_quickfix = 0
+let g:ale_open_list = 0
+let g:ale_keep_list_window_open = 0
 let g:ale_fix_on_save = 0
-"let g:ale_sign_error = ''
-"let g:ale_sign_warning = ''
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-nmap <silent> <C-n> <Plug>(ale_next_wrap)
+
+"let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
+
+"nmap <silent> <C-n> <Plug>(ale_next_wrap)
+nmap <silent> <C-N> <Plug>(ale_next)
+nmap <silent> <C-P> <Plug>(ale_previous)
 '''
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 hook_add = '''
+let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 0
 let g:webdevicons_conceal_nerdtree_brackets = 1
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
