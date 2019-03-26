@@ -38,11 +38,8 @@ endfunction
 syntax off
 filetype plugin indent off
 
-" Set augroup.
 augroup MyAutoCmd
   autocmd!
-"  autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?
-"        \ call vimrc#on_filetype()
 augroup END
 
 if has('vim_starting')
@@ -100,6 +97,17 @@ call s:source_rc('mappings.rc.vim')
 "---------------------------------------------------------------------------
 " Commands:
 "
+
+"autocmd MyAutoCmd BufEnter * silent! lcd %:p:h
+"autocmd MyAutoCmd BufEnter * execute ":lcd " . expand("%:p:h")
+
+function! s:ChangeCurrentDirectory()
+  let l:dir = expand("%:p:h")
+  if isdirectory(fnamemodify(l:dir, ":p"))
+    execute printf('lcd `=%s`', string(fnamemodify(l:dir, ":p")))
+  endif
+endfunction
+autocmd BufEnter * call s:ChangeCurrentDirectory()
 
 "---------------------------------------------------------------------------
 " Platform:

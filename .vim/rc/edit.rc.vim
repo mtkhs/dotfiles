@@ -22,7 +22,6 @@ set autoindent smartindent
 set modeline
 
 " Use clipboard register.
-
 if (!has('nvim') || $DISPLAY != '') && has('clipboard')
   if has('unnamedplus')
      set clipboard& clipboard+=unnamedplus
@@ -36,14 +35,18 @@ set backspace=indent,eol,start
 
 " Highlight parenthesis.
 set showmatch
+
 " Highlight when CursorMoved.
 set cpoptions-=m
 set matchtime=1
+
 " Highlight <>.
 set matchpairs+=<:>
 
 " Display another buffer when current buffer isn't saved.
 set hidden
+
+"set autochdir
 
 " Ignore case on insert completion.
 set infercase
