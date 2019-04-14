@@ -13,6 +13,10 @@ autoload -Uz compinit && compinit -u
 autoload -Uz add-zsh-hook
 #autoload -Uz vcs_info
 
+# for WSL
+setopt no_bg_nice
+unsetopt bg_nice
+
 #---------------------------------------------------------------------------
 # keybind:
 #
@@ -67,35 +71,34 @@ bindkey "^S" history-incremental-search-forward
 # zplug:
 #
 source ~/.zplug/init.zsh
-source ~/.zsh/.ZPLUG_SUDO_PASSWORD
+#source ~/.zsh/.ZPLUG_SUDO_PASSWORD
 
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 zplug "jhawthorn/fzy", \
     as:command, \
-    hook-build:"make && sudo make install"
+    hook-build:"source ~/.zsh/.ZPLUG_SUDO_PASSWORD && make && sudo make install && unset ZPLUG_SUDO_PASSWORD"
 
-#zplug "rupa/z", use:z.sh
 zplug "b4b4r07/enhancd", use:init.sh
-zplug "b4b4r07/zsh-vimode-visual", use:"*.zsh", defer:3
+#zplug "b4b4r07/zsh-vimode-visual", use:"*.zsh", defer:3
 
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "zsh-users/zsh-completions"
+#zplug "zsh-users/zsh-completions"
 
-zplug "glidenote/hub-zsh-completion"
-zplug "Valodim/zsh-curl-completion"
+#zplug "glidenote/hub-zsh-completion"
+#zplug "Valodim/zsh-curl-completion"
 
 zplug "direnv/direnv", as:command, rename-to:direnv, use:"direnv", hook-build:"make"
 zplug "jingweno/ccat", as:command, from:gh-r, rename-to:ccat
 zplug "denilsonsa/prettyping", as:command, use:"prettyping"
 zplug "b4b4r07/httpstat", as:command, use:"httpstat.sh", rename-to:httpstat
 
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
+#if ! zplug check --verbose; then
+#    printf "Install? [y/N]: "
+#    if read -q; then
+#        echo; zplug install
+#    fi
+#fi
 
 zplug load
 
