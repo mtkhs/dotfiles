@@ -18,6 +18,7 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
         ln -s -h $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
+        ln -s    $DOTFILES/.latexmkrc  $HOME/.latexmkrc
         ;;
     linux*)
         ln -s -T $DOTFILES/.zsh        $HOME/.zsh
@@ -32,6 +33,7 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
         ln -s -T $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
+        ln -s    $DOTFILES/.latexmkrc  $HOME/.latexmkrc
 #        ln -s    $DOTFILES/.rubocop.yml $HOME/.rubocop.yml
 #        ln -s    $DOTFILES/.pylintrc $HOME/.pylintrc
 #        ln -s    $DOTFILES/.eslintrc.js $HOME/.eslintrc.js
@@ -50,6 +52,7 @@ case ${OSTYPE} in
         ln -s -T $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
         ln -s    $DOTFILES/.minttyrc   $HOME/.minttyrc
+        ln -s    $DOTFILES/.latexmkrc  $HOME/.latexmkrc
         ;;
 esac
 
