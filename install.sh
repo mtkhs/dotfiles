@@ -80,7 +80,8 @@ EOF
     anyenv install pyenv
     PYENV_ROOT="$(anyenv root)/envs/pyenv" # $(pyenv root)
 #    git clone https://github.com/yyuu/pyenv-pip-rehash.git $PYENV_ROOT/plugins/pyenv-pip-rehash
-    git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
+#    git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
+#    pip3 install --user pipenv
 
     anyenv install nodenv
     NODENV_ROOT="$(anyenv root)/envs/nodenv" # $(nodenv root)
