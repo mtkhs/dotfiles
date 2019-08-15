@@ -18,8 +18,9 @@ endif
 
 "set background=dark
 
-" Enable 256 color terminal.
-set t_Co=256
+" $TERMを見て自動検出してくれるので設定は不要
+" 実際は256色表示じゃないのに値だけ256になりかねない
+"set t_Co=256
 
 if &term =~# 'xterm' && !has('nvim')
   " ペースト時に自動でPASTEモード

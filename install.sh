@@ -62,8 +62,8 @@ if [ -d ${HOME}/.anyenv ]; then
 else
     echo "Install anyenv..."
     git clone https://github.com/riywo/anyenv ~/.anyenv
-    PATH="$HOME/.anyenv/bin:$PATH"
-    eval "$(anyenv init -)"
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init - --no-rehash)"
     mkdir -p $(anyenv root)/plugins
     git clone https://github.com/znz/anyenv-update $(anyenv root)/plugins/anyenv-update
     git clone https://github.com/znz/anyenv-git $(anyenv root)/plugins/anyenv-git
@@ -86,18 +86,30 @@ EOF
     anyenv install nodenv
     NODENV_ROOT="$(anyenv root)/envs/nodenv" # $(nodenv root)
     git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_ROOT/plugins/nodenv-package-rehash
+
+    anyenv install goenv
+    GOENV_ROOT="$(anyenv root)/envs/goenv" # $(goenv root)
+fi
+
+# zsh zplugin
+if [ -d ${HOME}/.zplugin ]; then
+    echo "zplugin is already installed."
+else
+    echo "Install zplugin..."
+    mkdir ~/.zplugin
+    git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
 fi
 
 # zsh zplug
-if [ -d ${HOME}/.zplug ]; then
-    echo "zplug is already installed."
-else
-    echo "Install zplug..."
-    git clone https://github.com/zplug/zplug ~/.zplug
-
-    read -sp "ZPLUG_SUDO_PASSWORD: " input
-    echo "ZPLUG_SUDO_PASSWORD=$input" > ~/.zsh/.ZPLUG_SUDO_PASSWORD
-fi
+#if [ -d ${HOME}/.zplug ]; then
+#    echo "zplug is already installed."
+#else
+#    echo "Install zplug..."
+#    git clone https://github.com/zplug/zplug ~/.zplug
+#
+#    read -sp "ZPLUG_SUDO_PASSWORD: " input
+#    echo "ZPLUG_SUDO_PASSWORD=$input" > ~/.zsh/.ZPLUG_SUDO_PASSWORD
+#fi
 
 # tmux tpm
 if [ -d ${HOME}/.tmux/plugins ]; then

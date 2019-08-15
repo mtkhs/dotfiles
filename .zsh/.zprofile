@@ -2,7 +2,7 @@
 # .zprofile
 #---------------------------------------------------------------------------
 
-OS=$(lsb_release -si)
+#OS=$(lsb_release -si)
 #ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
 #VER=$(lsb_release -sr)
 
@@ -41,6 +41,11 @@ case ${OSTYPE} in
         export GOBIN=$GOPATH/bin
         export PATH=$HOME/.local/bin:$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
         export EDITOR='vim'
+
+        # WSL
+        if ( which wslfetch > /dev/null ); then
+            alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'
+        fi
         
         if [ "${OS}" != "WLinux" ]; then
             #
@@ -59,7 +64,8 @@ case ${OSTYPE} in
                     fi
                 else
                     echo "Create new tmux session."
-                    TERM=xterm-256color tmux new-session -s "0"
+                    # TERM=xterm-256color tmux new-session -s "0"
+                    tmux new-session -s "0"
                 fi
             fi
         fi

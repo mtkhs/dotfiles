@@ -9,9 +9,8 @@
 #disable r
 
 autoload -Uz colors && colors
-autoload -Uz compinit && compinit -u
+autoload -Uz compinit
 autoload -Uz add-zsh-hook
-#autoload -Uz vcs_info
 
 # for WSL
 setopt no_bg_nice
@@ -68,39 +67,90 @@ bindkey "^S" history-incremental-search-forward
 #fi
 
 #---------------------------------------------------------------------------
+# zplugin:
+#
+
+source ~/.zplugin/bin/zplugin.zsh
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+
+#zplugin light "zdharma/zui"
+#zplugin light "zdharma/zplugin-crasis"
+
+#zplugin light "chrissicool/zsh-256color"
+
+zplugin ice wait"0" blockf silent
+zplugin light "zsh-users/zsh-completions"
+
+zplugin ice wait"0" silent atload"_zsh_autosuggest_start"
+zplugin light "zsh-users/zsh-autosuggestions"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+
+zplugin light "zsh-users/zsh-syntax-highlighting"
+#zplugin light "zdharma/fast-syntax-highlighting"
+
+zplugin ice from"gh-r" as"program" pick"*/peco"
+zplugin light "peco/peco"
+
+zplugin ice from"gh-r" as"program"
+zplugin light "junegunn/fzf-bin"
+
+zplugin ice from"gh-r" as"program" pick"*/ghq"
+zplugin light "motemen/ghq"
+
+zplugin light "mollifier/anyframe"
+bindkey '^x^r' anyframe-widget-execute-history
+bindkey '^x^f' anyframe-widget-insert-filename
+bindkey '^x^k' anyframe-widget-kill
+zstyle ":anyframe:selector:" use peco
+zstyle ":anyframe:selector:peco:" command 'peco --initial-filter IgnoreCase'
+#zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
+
+
+zplugin ice wait"!0" silent
+zplugin light "b4b4r07/enhancd"
+
+zplugin ice from"gh-r" as"program" mv"direnv* -> direnv"
+zplugin light "direnv/direnv"
+
+#zplugin ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' src"zhook.zsh"
+#zplugin light "direnv/direnv"
+
+#zplugin snippet 'OMZ::plugins/dotenv/dotenv.plugin.zsh'
+#zplugin snippet 'OMZ::plugins/git/git.plugin.zsh'
+
+compinit -Cu
+
+
+#---------------------------------------------------------------------------
 # zplug:
 #
-source ~/.zplug/init.zsh
-#source ~/.zsh/.ZPLUG_SUDO_PASSWORD
 
-zplug "zplug/zplug", hook-build:"zplug --self-manage"
-
-zplug "jhawthorn/fzy", \
-    as:command, \
-    hook-build:"source ~/.zsh/.ZPLUG_SUDO_PASSWORD && make && sudo make install && unset ZPLUG_SUDO_PASSWORD"
-
-zplug "b4b4r07/enhancd", use:init.sh
-#zplug "b4b4r07/zsh-vimode-visual", use:"*.zsh", defer:3
-
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+#source ~/.zplug/init.zsh
+#
+#zplug "zplug/zplug", hook-build:"zplug --self-manage"
+#
+#zplug "b4b4r07/enhancd", use:init.sh, lazy:true
+#zplug "direnv/direnv", as:command, rename-to:direnv, use:"direnv", hook-build:"make", lazy:true
+#zplug "jingweno/ccat", as:command, from:gh-r, rename-to:ccat, lazy:true
+#zplug "denilsonsa/prettyping", as:command, use:"prettyping", lazy:true
+#zplug "b4b4r07/httpstat", as:command, use:"httpstat.sh", rename-to:httpstat, lazy:true
+#zplug "jhawthorn/fzy", \
+#    as:command, \
+#    hook-build:"source ~/.zsh/.ZPLUG_SUDO_PASSWORD && make && sudo make install && unset ZPLUG_SUDO_PASSWORD" \
+#    lazy:true
+#
 #zplug "zsh-users/zsh-completions"
-
-#zplug "glidenote/hub-zsh-completion"
-#zplug "Valodim/zsh-curl-completion"
-
-zplug "direnv/direnv", as:command, rename-to:direnv, use:"direnv", hook-build:"make"
-zplug "jingweno/ccat", as:command, from:gh-r, rename-to:ccat
-zplug "denilsonsa/prettyping", as:command, use:"prettyping"
-zplug "b4b4r07/httpstat", as:command, use:"httpstat.sh", rename-to:httpstat
-
-#if ! zplug check --verbose; then
-#    printf "Install? [y/N]: "
-#    if read -q; then
-#        echo; zplug install
-#    fi
-#fi
-
-zplug load
+#zplug "zsh-users/zsh-syntax-highlighting", defer:2, lazy:true
+#
+##if ! zplug check --verbose; then
+##    printf "Install? [y/N]: "
+##    if read -q; then
+##        echo; zplug install
+##    fi
+##fi
+#
+#zplug load
 
 #---------------------------------------------------------------------------
 # completion:
@@ -252,7 +302,6 @@ setopt hist_expand
 #---------------------------------------------------------------------------
 # command:
 #
-
 
 #---------------------------------------------------------------------------
 # zcompile:

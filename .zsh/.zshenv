@@ -1,8 +1,5 @@
-command_exists () {
-    type "$1" &> /dev/null ;
-}
 
-if command_exists nvim ; then
+if type nvim &> /dev/null; then
     alias vim='nvim'
 fi
 
