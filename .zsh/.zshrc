@@ -22,49 +22,58 @@ unsetopt bg_nice
 
 bindkey -e
 
-# create a zkbd compatible hash;
-# to add other keys to this hash, see: man 5 terminfo
 typeset -A key
 
-key[Home]=${terminfo[khome]}
-key[End]=${terminfo[kend]}
-key[Insert]=${terminfo[kich1]}
-key[Delete]=${terminfo[kdch1]}
-key[Up]=${terminfo[kcuu1]}
-key[Down]=${terminfo[kcud1]}
-key[Left]=${terminfo[kcub1]}
-key[Right]=${terminfo[kcuf1]}
-key[PageUp]=${terminfo[kpp]}
-key[PageDown]=${terminfo[knp]}
+# for cygwin
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
+# for linux
+bindkey "\eOH" beginning-of-line
+bindkey "\eOF" end-of-line
+# for rxvt and kconsole
+bindkey "\e[7~" beginning-of-line
+bindkey "\e[8~" end-of-line
+# for screen
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
 
-# setup key accordingly
-[[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
-[[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
-[[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
-[[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
-[[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       up-line-or-history
-[[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     down-line-or-history
-[[ -n "${key[Left]}"     ]]  && bindkey  "${key[Left]}"     backward-char
-[[ -n "${key[Right]}"    ]]  && bindkey  "${key[Right]}"    forward-char
-[[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   beginning-of-buffer-or-history
-[[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" end-of-buffer-or-history
+if [[ -n "${terminfo}" ]]; then
+#    if [[ $TERM = "xterm-256color" ]]; then
+#    elif [[ $TERM = "screen-256color" ]]; then
+#    fi
+#    key[Home]=${terminfo[khome]}
+#    key[End]=${terminfo[kend]}
+    key[Insert]=${terminfo[kich1]}
+    key[Delete]=${terminfo[kdch1]}
+    key[Up]=${terminfo[kcuu1]}
+    key[Down]=${terminfo[kcud1]}
+    key[Left]=${terminfo[kcub1]}
+    key[Right]=${terminfo[kcuf1]}
+    key[PageUp]=${terminfo[kpp]}
+    key[PageDown]=${terminfo[knp]}
 
-bindkey "^R" history-incremental-search-backward
-bindkey "^S" history-incremental-search-forward
+#    [[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
+#    [[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
+    [[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
+    [[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
+    [[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       up-line-or-history
+    [[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     down-line-or-history
+    [[ -n "${key[Left]}"     ]]  && bindkey  "${key[Left]}"     backward-char
+    [[ -n "${key[Right]}"    ]]  && bindkey  "${key[Right]}"    forward-char
+    [[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   beginning-of-buffer-or-history
+    [[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" end-of-buffer-or-history
+fi
 
-# Finally, make sure the terminal is in application mode, when zle is
-# active. Only then are the values from $terminfo valid.
-#
-#if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-#    function zle-line-init () {
-#        printf '%s' "${terminfo[smkx]}"
-#    }
-#    function zle-line-finish () {
-#        printf '%s' "${terminfo[rmkx]}"
-#    }
-#    zle -N zle-line-init
-#    zle -N zle-line-finish
-#fi
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+    function zle-line-init () {
+        printf '%s' "${terminfo[smkx]}"
+    }
+    function zle-line-finish () {
+        printf '%s' "${terminfo[rmkx]}"
+    }
+    zle -N zle-line-init
+    zle -N zle-line-finish
+fi
 
 #---------------------------------------------------------------------------
 # zplugin:
@@ -106,9 +115,11 @@ zstyle ":anyframe:selector:" use peco
 zstyle ":anyframe:selector:peco:" command 'peco --initial-filter IgnoreCase'
 #zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
 
-
 zplugin ice wait"!0" silent
 zplugin light "b4b4r07/enhancd"
+export ENHANCD_FILTER=peco
+export ENHANCD_DISABLE_DOT=1
+export ENHANCD_DISABLE_HOME=1
 
 zplugin ice from"gh-r" as"program" mv"direnv* -> direnv"
 zplugin light "direnv/direnv"
@@ -120,37 +131,6 @@ zplugin light "direnv/direnv"
 #zplugin snippet 'OMZ::plugins/git/git.plugin.zsh'
 
 compinit -Cu
-
-
-#---------------------------------------------------------------------------
-# zplug:
-#
-
-#source ~/.zplug/init.zsh
-#
-#zplug "zplug/zplug", hook-build:"zplug --self-manage"
-#
-#zplug "b4b4r07/enhancd", use:init.sh, lazy:true
-#zplug "direnv/direnv", as:command, rename-to:direnv, use:"direnv", hook-build:"make", lazy:true
-#zplug "jingweno/ccat", as:command, from:gh-r, rename-to:ccat, lazy:true
-#zplug "denilsonsa/prettyping", as:command, use:"prettyping", lazy:true
-#zplug "b4b4r07/httpstat", as:command, use:"httpstat.sh", rename-to:httpstat, lazy:true
-#zplug "jhawthorn/fzy", \
-#    as:command, \
-#    hook-build:"source ~/.zsh/.ZPLUG_SUDO_PASSWORD && make && sudo make install && unset ZPLUG_SUDO_PASSWORD" \
-#    lazy:true
-#
-#zplug "zsh-users/zsh-completions"
-#zplug "zsh-users/zsh-syntax-highlighting", defer:2, lazy:true
-#
-##if ! zplug check --verbose; then
-##    printf "Install? [y/N]: "
-##    if read -q; then
-##        echo; zplug install
-##    fi
-##fi
-#
-#zplug load
 
 #---------------------------------------------------------------------------
 # completion:
@@ -191,24 +171,24 @@ setopt transient_rprompt
 setopt prompt_subst
 
 function face() {
-	echo '%(?.%F{green}(^-^)%f.%F{red}(`-`%)%f)'
+    echo '%(?.%F{green}(^-^)%f.%F{red}(`-`%)%f)'
 }
 
 case ${UID} in
 0)
-	PROMPT='`face` %n@%m:%~# '
-	PROMPT2='`face` %n@%m:%_# '
-	RPROMPT='%1v'
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		PROMPT="%{[37m%}${PROMPT}%{[m%}"
-	;;
+    PROMPT='`face` %n@%m:%~# '
+    PROMPT2='`face` %n@%m:%_# '
+    RPROMPT='%1v'
+    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+        PROMPT="%{[37m%}${PROMPT}%{[m%}"
+    ;;
 *)
-	 PROMPT='`face` %n@%m:%~$ '
-	 PROMPT2='`face` %n@%m:%_$ '
-	 RPROMPT='%1v'
-	 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		PROMPT="%{[37m%}${PROMPT}%{[m%}"
-	 ;;
+     PROMPT='`face` %n@%m:%~$ '
+     PROMPT2='`face` %n@%m:%_$ '
+     RPROMPT='%1v'
+     [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+        PROMPT="%{[37m%}${PROMPT}%{[m%}"
+     ;;
  esac
 
 #---------------------------------------------------------------------------
@@ -221,9 +201,9 @@ setopt noflowcontrol
 # cd を入力しなくてもディレクトリに遷移
 setopt auto_cd
 # cd -[tab]で履歴表示
-#setopt auto_pushd
+setopt auto_pushd
 # auto_pushdで重複ディレクトリを追加しないように
-#setopt pushd_ignore_dups
+setopt pushd_ignore_dups
 
 # コマンドのスペルチェック
 #setopt correct
@@ -302,6 +282,52 @@ setopt hist_expand
 #---------------------------------------------------------------------------
 # command:
 #
+
+if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
+    autoload -Uz chpwd_recent_dirs cdr
+    add-zsh-hook chpwd chpwd_recent_dirs
+    zstyle ':completion:*' recent-dirs-insert both
+    zstyle ':chpwd:*' recent-dirs-default true
+    zstyle ':chpwd:*' recent-dirs-max 1000
+    zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
+fi
+
+#---------------------------------------------------------------------------
+# peco:
+#
+
+function peco-history-selection() {
+    BUFFER=`history -n 1 | tac  | awk '!a[$0]++' | peco`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
+
+function peco-ghq-look () {
+    local ghq_roots="$(git config --path --get-all ghq.root)"
+    local selected_dir=$(ghq list --full-path | \
+        xargs -I{} ls -dl --time-style=+%s {}/.git | sed 's/.*\([0-9]\{10\}\)/\1/' | sort -nr | \
+        sed "s,.*\(${ghq_roots/$'\n'/\|}\)/,," | \
+        sed 's/\/.git//' | \
+        peco --prompt="cd-ghq >" --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd $(ghq list --full-path | grep --color=never -E "/$selected_dir$")"
+        zle accept-line
+    fi
+}
+zle -N peco-ghq-look
+bindkey '^G' peco-ghq-look
+
+function peco-cdr () {
+    local selected_dir="$(cdr -l | sed 's/^[0-9]\+ \+//' | peco --prompt="cdr >" --query "$LBUFFER")"
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+}
+zle -N peco-cdr
+bindkey '^E' peco-cdr
 
 #---------------------------------------------------------------------------
 # zcompile:

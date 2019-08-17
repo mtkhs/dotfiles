@@ -18,10 +18,6 @@ endif
 
 "set background=dark
 
-" $TERMを見て自動検出してくれるので設定は不要
-" 実際は256色表示じゃないのに値だけ256になりかねない
-"set t_Co=256
-
 if &term =~# 'xterm' && !has('nvim')
   " ペースト時に自動でPASTEモード
   let &t_ti .= "\e[?2004h"

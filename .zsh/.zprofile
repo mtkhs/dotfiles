@@ -81,10 +81,6 @@ if type direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
 
-# zsh config
-export ENHANCD_DISABLE_DOT=1
-export ENHANCD_DISABLE_HOME=1
-
 # for docker-compose
 export UID=${UID}
 export GID=${GID}

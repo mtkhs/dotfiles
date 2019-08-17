@@ -88,3 +88,19 @@ map <silent> [Tag]w :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
+" Buffer
+map <F2> <ESC>:bp<CR>
+map <F3> <ESC>:bn<CR>
+
+map [1;5A <C-Up>
+map [1;5B <C-Down>
+map [1;5C <C-Right>
+map [1;5D <C-Left>
+map [1;2A <S-Up>
+map [1;2B <S-Down>
+map [1;2C <S-Right>
+map [1;2D <S-Left>
+
+map <C-Left> <ESC>:bp<CR>
+map <C-Right> <ESC>:bn<CR>
+
