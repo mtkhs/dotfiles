@@ -43,7 +43,7 @@ case ${OSTYPE} in
         export EDITOR='vim'
 
         # WSL
-        if ( which wslfetch > /dev/null ); then
+        if ( which wslfetch > /dev/null 2>&1 ); then
             alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'
         fi
         
