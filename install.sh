@@ -61,8 +61,9 @@ if [ -d ${HOME}/.anyenv ]; then
     echo "anyenv is already installed."
 else
     echo "Install anyenv..."
-    git clone https://github.com/riywo/anyenv ~/.anyenv
+    git clone https://github.com/anyenv/anyenv ~/.anyenv
     export PATH="$HOME/.anyenv/bin:$PATH"
+    yes | anyenv install --init
     eval "$(anyenv init - --no-rehash)"
     mkdir -p $(anyenv root)/plugins
     git clone https://github.com/znz/anyenv-update $(anyenv root)/plugins/anyenv-update

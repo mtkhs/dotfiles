@@ -195,6 +195,8 @@ case ${UID} in
 # basic:
 #
 
+KEYTIMEOUT=1
+
 # フロー制御無効 (Ctrl+s/Ctrl+qを解放)
 setopt noflowcontrol
 

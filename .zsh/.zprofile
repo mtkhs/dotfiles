@@ -36,6 +36,8 @@ case ${OSTYPE} in
     ;;
     linux*|cygwin*|msys*)
         unset LC_ALL
+#        export LC_ALL=ja_JP.UTF-8
+        export LANG=ja_JP.UTF-8
 
         export GOPATH=$HOME/go
         export GOBIN=$GOPATH/bin
@@ -43,7 +45,7 @@ case ${OSTYPE} in
         export EDITOR='vim'
 
         # WSL
-        if ( which wslfetch > /dev/null ); then
+        if ( which wslfetch > /dev/null 2>&1 ); then
             alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'
         fi
         
