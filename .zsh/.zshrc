@@ -41,8 +41,8 @@ if [[ -n "${terminfo}" ]]; then
 #    if [[ $TERM = "xterm-256color" ]]; then
 #    elif [[ $TERM = "screen-256color" ]]; then
 #    fi
-#    key[Home]=${terminfo[khome]}
-#    key[End]=${terminfo[kend]}
+    key[Home]=${terminfo[khome]}
+    key[End]=${terminfo[kend]}
     key[Insert]=${terminfo[kich1]}
     key[Delete]=${terminfo[kdch1]}
     key[Up]=${terminfo[kcuu1]}
@@ -52,8 +52,8 @@ if [[ -n "${terminfo}" ]]; then
     key[PageUp]=${terminfo[kpp]}
     key[PageDown]=${terminfo[knp]}
 
-#    [[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
-#    [[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
+    [[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
+    [[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
     [[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
     [[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
     [[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       up-line-or-history
