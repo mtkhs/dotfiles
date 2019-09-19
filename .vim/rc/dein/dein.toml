@@ -2,6 +2,9 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
@@ -109,26 +112,26 @@ hook_add = '''
   let g:rooter_silent_chdir = 1
 '''
 
-[[plugins]]
-repo = 'scrooloose/nerdtree'
-hook_add = '''
-let g:NERDTreeDirArrows = 1
-let NERDTreeShowHidden = 1
-let NERDTreeWinSize = 22
-"let g:NERDTreeDirArrowExpandable = '+'
-"let g:NERDTreeDirArrowCollapsible = '~'
-'''
+#[[plugins]]
+#repo = 'scrooloose/nerdtree'
+#hook_add = '''
+#let g:NERDTreeDirArrows = 1
+#let NERDTreeShowHidden = 1
+#let NERDTreeWinSize = 22
+#"let g:NERDTreeDirArrowExpandable = '+'
+#"let g:NERDTreeDirArrowCollapsible = '~'
+#'''
 
-[[plugins]]
-repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
-hook_add = '''
-let s:rspec_red = 'FE405F'
-let s:git_orange = 'F54D27'
-let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
-let g:NERDTreePatternMatchHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red " sets the color for files ending with _spec.rb
-'''
+#[[plugins]]
+#repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
+#hook_add = '''
+#let s:rspec_red = 'FE405F'
+#let s:git_orange = 'F54D27'
+#let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
+#let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
+#let g:NERDTreePatternMatchHighlightColor = {} " this line is needed to avoid error
+#let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red " sets the color for files ending with _spec.rb
+#'''
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'

@@ -24,15 +24,17 @@ bindkey -e
 
 typeset -A key
 
+bindkey "^[[3~" delete-char
+
 # for cygwin
-bindkey "\e[H" beginning-of-line
-bindkey "\e[F" end-of-line
+#bindkey "\e[H" beginning-of-line
+#bindkey "\e[F" end-of-line
 # for linux
-bindkey "\eOH" beginning-of-line
-bindkey "\eOF" end-of-line
+#bindkey "\eOH" beginning-of-line
+#bindkey "\eOF" end-of-line
 # for rxvt and kconsole
-bindkey "\e[7~" beginning-of-line
-bindkey "\e[8~" end-of-line
+#bindkey "\e[7~" beginning-of-line
+#bindkey "\e[8~" end-of-line
 # for screen
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line

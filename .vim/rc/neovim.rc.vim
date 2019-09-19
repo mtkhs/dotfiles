@@ -7,7 +7,8 @@ if has('vim_starting') && empty(argv())
 endif
 
 let g:python_host_prog  = ''
-let g:python3_host_prog = system('type pyenv &>/dev/null && echo -n "$(pyenv root)/versions/$(cat $(pyenv root)/version | head -n 1)/bin/python" || echo -n $(which python)')
+"let g:python3_host_prog = system('type pyenv &>/dev/null && echo -n "$(pyenv root)/versions/$(cat $(pyenv root)/version | head -n 1)/bin/python" || echo -n $(which python)')
+let g:python3_host_prog = substitute(system('which python3'),"\n","","")
 
 if exists('&inccommand')
   set inccommand=nosplit
