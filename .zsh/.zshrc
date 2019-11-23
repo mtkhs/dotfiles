@@ -117,11 +117,11 @@ zstyle ":anyframe:selector:" use peco
 zstyle ":anyframe:selector:peco:" command 'peco --initial-filter IgnoreCase'
 #zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
 
-zplugin ice wait"!0" silent
-zplugin light "b4b4r07/enhancd"
-export ENHANCD_FILTER=peco
-export ENHANCD_DISABLE_DOT=1
-export ENHANCD_DISABLE_HOME=1
+#zplugin ice wait"!0" silent
+#zplugin light "b4b4r07/enhancd"
+#export ENHANCD_FILTER=peco
+#export ENHANCD_DISABLE_DOT=1
+#export ENHANCD_DISABLE_HOME=1
 
 zplugin ice from"gh-r" as"program" mv"direnv* -> direnv"
 zplugin light "direnv/direnv"
