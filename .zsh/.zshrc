@@ -90,15 +90,15 @@ autoload -Uz _zplugin
 
 #zplugin light "chrissicool/zsh-256color"
 
-zplugin ice wait"0" blockf silent
+zplugin ice wait"!0" blockf silent
 zplugin light "zsh-users/zsh-completions"
 
-zplugin ice wait"0" silent atload"_zsh_autosuggest_start"
+zplugin ice wait"!0" silent atload"_zsh_autosuggest_start"
 zplugin light "zsh-users/zsh-autosuggestions"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
+zplugin ice wait"!0" silent atinit"zpcompinit; zpcdreplay"
 zplugin light "zsh-users/zsh-syntax-highlighting"
-#zplugin light "zdharma/fast-syntax-highlighting"
 
 zplugin ice from"gh-r" as"program" pick"*/peco"
 zplugin light "peco/peco"
