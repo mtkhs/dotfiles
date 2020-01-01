@@ -90,15 +90,15 @@ autoload -Uz _zplugin
 
 #zplugin light "chrissicool/zsh-256color"
 
-zplugin ice wait"0" blockf silent
+zplugin ice wait"!0" blockf silent
 zplugin light "zsh-users/zsh-completions"
 
-zplugin ice wait"0" silent atload"_zsh_autosuggest_start"
+zplugin ice wait"!0" silent atload"_zsh_autosuggest_start"
 zplugin light "zsh-users/zsh-autosuggestions"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
+zplugin ice wait"!0" silent atinit"zpcompinit; zpcdreplay"
 zplugin light "zsh-users/zsh-syntax-highlighting"
-#zplugin light "zdharma/fast-syntax-highlighting"
 
 zplugin ice from"gh-r" as"program" pick"*/peco"
 zplugin light "peco/peco"
@@ -117,11 +117,11 @@ zstyle ":anyframe:selector:" use peco
 zstyle ":anyframe:selector:peco:" command 'peco --initial-filter IgnoreCase'
 #zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
 
-zplugin ice wait"!0" silent
-zplugin light "b4b4r07/enhancd"
-export ENHANCD_FILTER=peco
-export ENHANCD_DISABLE_DOT=1
-export ENHANCD_DISABLE_HOME=1
+#zplugin ice wait"!0" silent
+#zplugin light "b4b4r07/enhancd"
+#export ENHANCD_FILTER=peco
+#export ENHANCD_DISABLE_DOT=1
+#export ENHANCD_DISABLE_HOME=1
 
 zplugin ice from"gh-r" as"program" mv"direnv* -> direnv"
 zplugin light "direnv/direnv"
@@ -301,7 +301,8 @@ fi
 #
 
 function peco-history-selection() {
-    BUFFER=`history -n 1 | tac  | awk '!a[$0]++' | peco`
+#    BUFFER="$(history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER" | sed 's/\\n/\n/')"
+    BUFFER=$(history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle reset-prompt
 }

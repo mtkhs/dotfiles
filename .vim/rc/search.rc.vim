@@ -16,5 +16,3 @@ set nohlsearch
 " Searches wrap around the end of the file.
 set wrapscan
 
-set inccommand=split
-
