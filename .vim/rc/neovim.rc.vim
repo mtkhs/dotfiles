@@ -10,9 +10,11 @@ let g:python_host_prog  = ''
 "let g:python3_host_prog = system('type pyenv &>/dev/null && echo -n "$(pyenv root)/versions/$(cat $(pyenv root)/version | head -n 1)/bin/python" || echo -n $(which python)')
 let g:python3_host_prog = substitute(system('which python3'),"\n","","")
 
-if exists('&inccommand')
-  set inccommand=nosplit
-endif
+"if exists('&inccommand')
+"  set inccommand=nosplit
+"endif
+set inccommand=split
+
 
 " Use cursor shape feature
 set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor

@@ -84,9 +84,16 @@ EOF
 #    git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
 #    pip3 install --user pipenv
 
+    anyenv install phpenv
+    PHPENV_ROOT="$(anyenv root)/envs/phpenv" # $(phpenv root)
+
     anyenv install nodenv
     NODENV_ROOT="$(anyenv root)/envs/nodenv" # $(nodenv root)
     git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_ROOT/plugins/nodenv-package-rehash
+    git clone https://github.com/nodenv/nodenv-default-packages.git $NODENV_ROOT/plugins/nodenv-default-packages
+    cat > $NODENV_ROOT/default-packages << "EOF"
+yarn
+EOF
 
     anyenv install goenv
     GOENV_ROOT="$(anyenv root)/envs/goenv" # $(goenv root)
