@@ -12,5 +12,7 @@ if type nvim &> /dev/null; then
     nvim +":call dein#update() | :q"
 fi
 
-~/.tmux/plugins/tpm/bin/update_plugins all
+if type tmux &> /dev/null; then
+    ~/.tmux/plugins/tpm/bin/update_plugins all
+fi
 
