@@ -93,14 +93,6 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {
 repo = 'osyo-manga/vim-precious'
 depends = [ 'context_filetype.vim', 'vim-textobj-user' ]
 hook_add = '''
-let g:context_filetype#filetypes = {
-    \ 'sh': [
-    \   {
-    \    'start': '[^<]<<\([\\''"]\?\)\([a-zA-Z0-9]\+\)\1$',
-    \    'end': '^\2$', 'filetype': '\2',
-    \   },
-    \ ],
-    \}
 '''
 
 [[plugins]] # for <Plug>(textobj-precious-i) in vim-precious
