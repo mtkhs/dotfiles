@@ -4,11 +4,11 @@ source ~/.zsh/.zshrc
 
 anyenv update
 
-zplugin self-update
+zinit self-update
 source ~/.zsh/.zshrc
 
-zplugin update
-zplugin cclear
+zinit update
+zinit cclear
 
 if type nvim &> /dev/null; then
     nvim +":call dein#update() | :q"

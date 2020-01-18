@@ -44,6 +44,14 @@ case ${OSTYPE} in
         export PATH=$HOME/.local/bin:$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
         export EDITOR='vim'
 
+        if [ -e /etc/os-release ]; then
+            DISTRIBUTION_NAME=`cat /etc/os-release | awk -F'["]' 'NR==1{print $2}' | awk '{print $1}'`
+
+            if [ "$DISTRIBUTION_NAME" = "Ubuntu" ]; then
+                # Skip the not really helping Ubuntu global compinit
+                skip_global_compinit=1
+            fi
+        fi
         # WSL
 #        if ( which wslfetch > /dev/null 2>&1 ); then
 #            alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'

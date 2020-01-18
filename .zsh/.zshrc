@@ -78,38 +78,38 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 fi
 
 #---------------------------------------------------------------------------
-# zplugin:
+# zinit:
 #
 
-source ~/.zplugin/bin/zplugin.zsh
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
+source ~/.zinit/bin/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-#zplugin light "zdharma/zui"
-#zplugin light "zdharma/zplugin-crasis"
+#zinit light "zdharma/zui"
+#zinit light "zdharma/zinit-crasis"
 
-#zplugin light "chrissicool/zsh-256color"
+#zinit light "chrissicool/zsh-256color"
 
-zplugin ice wait"!0" blockf silent
-zplugin light "zsh-users/zsh-completions"
+zinit ice wait"!0" blockf silent
+zinit light "zsh-users/zsh-completions"
 
-zplugin ice wait"!0" silent atload"_zsh_autosuggest_start"
-zplugin light "zsh-users/zsh-autosuggestions"
+zinit ice wait"!0" silent atload"_zsh_autosuggest_start"
+zinit light "zsh-users/zsh-autosuggestions"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
-zplugin ice wait"!0" silent atinit"zpcompinit; zpcdreplay"
-zplugin light "zsh-users/zsh-syntax-highlighting"
+zinit ice wait"!0" silent atinit"zpcompinit; zpcdreplay"
+zinit light "zsh-users/zsh-syntax-highlighting"
 
-zplugin ice from"gh-r" as"program" pick"*/peco"
-zplugin light "peco/peco"
+zinit ice from"gh-r" as"program" pick"*/peco"
+zinit light "peco/peco"
 
-zplugin ice from"gh-r" as"program"
-zplugin light "junegunn/fzf-bin"
+zinit ice from"gh-r" as"program"
+zinit light "junegunn/fzf-bin"
 
-zplugin ice from"gh-r" as"program" pick"*/ghq"
-zplugin light "motemen/ghq"
+zinit ice from"gh-r" as"program" pick"*/ghq"
+zinit light "motemen/ghq"
 
-zplugin light "mollifier/anyframe"
+zinit light "mollifier/anyframe"
 bindkey '^x^r' anyframe-widget-execute-history
 bindkey '^x^f' anyframe-widget-insert-filename
 bindkey '^x^k' anyframe-widget-kill
@@ -117,20 +117,20 @@ zstyle ":anyframe:selector:" use peco
 zstyle ":anyframe:selector:peco:" command 'peco --initial-filter IgnoreCase'
 #zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
 
-#zplugin ice wait"!0" silent
-#zplugin light "b4b4r07/enhancd"
+#zinit ice wait"!0" silent
+#zinit light "b4b4r07/enhancd"
 #export ENHANCD_FILTER=peco
 #export ENHANCD_DISABLE_DOT=1
 #export ENHANCD_DISABLE_HOME=1
 
-zplugin ice from"gh-r" as"program" mv"direnv* -> direnv"
-zplugin light "direnv/direnv"
+zinit ice from"gh-r" as"program" mv"direnv* -> direnv"
+zinit light "direnv/direnv"
 
-#zplugin ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' src"zhook.zsh"
-#zplugin light "direnv/direnv"
+#zinit ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' src"zhook.zsh"
+#zinit light "direnv/direnv"
 
-#zplugin snippet 'OMZ::plugins/dotenv/dotenv.plugin.zsh'
-#zplugin snippet 'OMZ::plugins/git/git.plugin.zsh'
+#zinit snippet 'OMZ::plugins/dotenv/dotenv.plugin.zsh'
+#zinit snippet 'OMZ::plugins/git/git.plugin.zsh'
 
 compinit -Cu
 

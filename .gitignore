@@ -8,7 +8,7 @@
 .zsh/.zcompdump
 .zsh/.ZPLUG_SUDO_PASSWORD
 .zsh/.zcompcache/
-.zsh/.zplugin/
+.zsh/.zinit/
 
 .bundle/cache/
 

@@ -99,13 +99,13 @@ EOF
     GOENV_ROOT="$(anyenv root)/envs/goenv" # $(goenv root)
 fi
 
-# zsh zplugin
-if [ -d ${HOME}/.zplugin ]; then
-    echo "zplugin is already installed."
+# zsh zinit
+if [ -d ${HOME}/.zinit ]; then
+    echo "zinit is already installed."
 else
-    echo "Install zplugin..."
-    mkdir ~/.zplugin
-    git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
+    echo "Install zinit..."
+    mkdir ~/.zinit
+    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
 fi
 
 # zsh zplug
