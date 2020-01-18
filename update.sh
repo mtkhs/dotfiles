@@ -5,6 +5,8 @@ source ~/.zsh/.zshrc
 anyenv update
 
 zplugin self-update
+source ~/.zsh/.zshrc
+
 zplugin update
 zplugin cclear
 

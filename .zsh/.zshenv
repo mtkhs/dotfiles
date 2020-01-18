@@ -21,7 +21,7 @@ case ${OSTYPE} in
 #        alias vim='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
         ;;
     linux*)
-        alias ls='ls -F --color=auto'
+        alias ls='ls -F --color=auto --show-control-char'
         ;;
 esac
 
