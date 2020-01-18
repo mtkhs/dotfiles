@@ -100,6 +100,9 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 zinit ice wait"!0" silent atinit"zpcompinit; zpcdreplay"
 zinit light "zsh-users/zsh-syntax-highlighting"
 
+zinit ice wait"!0" silent
+zinit light "rhysd/zsh-bundle-exec"
+
 zinit ice from"gh-r" as"program" pick"*/peco"
 zinit light "peco/peco"
 

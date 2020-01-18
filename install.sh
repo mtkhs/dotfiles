@@ -16,6 +16,7 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
+        ln -s    $DOTFILES/.railsrc    $HOME/.railsrc
         ln -s -h $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
         ln -s    $DOTFILES/.latexmkrc  $HOME/.latexmkrc
@@ -31,6 +32,7 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
+        ln -s    $DOTFILES/.railsrc    $HOME/.railsrc
         ln -s -T $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
         ln -s    $DOTFILES/.latexmkrc  $HOME/.latexmkrc
@@ -49,6 +51,7 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
+        ln -s    $DOTFILES/.railsrc    $HOME/.railsrc
         ln -s -T $DOTFILES/.bundle     $HOME/.bundle
         ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
         ln -s    $DOTFILES/.minttyrc   $HOME/.minttyrc
