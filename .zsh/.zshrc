@@ -341,8 +341,16 @@ bindkey '^E' peco-cdr
 # zcompile:
 #
 
-if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
-   zcompile ~/.zshrc
+if [ ! -s $ZDOTDIR/.zprofile.zwc ] || [ $ZDOTDIR/.zprofile -nt $ZDOTDIR/.zprofile.zwc ]; then
+   zcompile $ZDOTDIR/.zprofile
+fi
+
+if [ ! -s $ZDOTDIR/.zshenv.zwc ] || [ $ZDOTDIR/.zshenv -nt $ZDOTDIR/.zshenv.zwc ]; then
+   zcompile $ZDOTDIR/.zshenv
+fi
+
+if [ ! -s $ZDOTDIR/.zshrc.zwc ] || [ $ZDOTDIR/.zshrc -nt $ZDOTDIR/.zshrc.zwc ]; then
+   zcompile $ZDOTDIR/.zshrc
 fi
 
 [ -f $HOME/.zshrc_local ] && source $HOME/.zshrc_local
