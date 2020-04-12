@@ -15,6 +15,8 @@ set shiftwidth=4
 " Round indent by shiftwidth.
 set shiftround
 
+" Set indentexpr empty.
+set indentexpr=
 " Enable smart indent.
 set autoindent smartindent
 
