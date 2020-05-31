@@ -23,6 +23,7 @@ rm -f ~/.tmux.conf
 
 rm -f ~/.latexmkrc
 rm -f ~/.gitconfig
+rm -f ~/.tigrc
 rm -f ~/.gemrc
 rm -f ~/.hgrc
 rm -f ~/.bundle

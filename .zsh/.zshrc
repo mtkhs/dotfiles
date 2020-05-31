@@ -135,6 +135,24 @@ zinit light "direnv/direnv"
 #zinit snippet 'OMZ::plugins/dotenv/dotenv.plugin.zsh'
 #zinit snippet 'OMZ::plugins/git/git.plugin.zsh'
 
+zinit ice as"program" atclone"./autogen.sh; ./configure" atpull"%atclone" make pick"src/tig"
+zinit light "jonas/tig"
+
+zinit ice from"gh-r" as"program" mv"exa* -> exa"
+zinit light "ogham/exa"
+
+zinit ice from"gh-r" as"program" pick"*/bat"
+zinit light "sharkdp/bat"
+
+zinit ice from"gh-r" as"program" pick"*/hexyl"
+zinit light "sharkdp/hexyl"
+
+zinit ice from"gh-r" as"program" pick"*/fd"
+zinit light "sharkdp/fd"
+
+zinit ice from"gh-r" as"program" pick"*/diskus"
+zinit light "sharkdp/diskus"
+
 compinit -Cu
 
 #---------------------------------------------------------------------------
@@ -204,25 +222,20 @@ KEYTIMEOUT=1
 
 # フロー制御無効 (Ctrl+s/Ctrl+qを解放)
 setopt noflowcontrol
-
 # cd を入力しなくてもディレクトリに遷移
 setopt auto_cd
 # cd -[tab]で履歴表示
 setopt auto_pushd
 # auto_pushdで重複ディレクトリを追加しないように
 setopt pushd_ignore_dups
-
-# コマンドのスペルチェック
-#setopt correct
-# サスペンド中のプロセスと同じコマンド名を実行したらリジューム
-#setopt auto_resume
 # 補完可能な一覧を表示
 setopt auto_list
 # 補完候補一覧でファイルの種別を記号で表示（ls -Fと同じ記号）
 setopt list_types
 # ディレクトリ名の補完で末尾に / を自動付加
 setopt auto_param_slash
-
+# 括弧の対応を補完
+setopt auto_param_keys
 # 補完キー連打で補完候補を自動補充
 setopt auto_menu
 # aliasを補完候補に含める
@@ -231,7 +244,6 @@ setopt complete_aliases
 setopt magic_equal_subst
 # コマンド名に / が含まれているときPATHの中のサブディレクトリを探す
 setopt path_dirs
-
 # 補完候補をできるだけ詰めて表示
 setopt list_packed
 # 数字を数値として解釈してソート
@@ -242,17 +254,11 @@ setopt multios
 setopt mark_dirs
 # jobsでプロセスIDも表示する
 setopt long_list_jobs
-
 # 補完候補リストの日本語を適正表示
 setopt print_eight_bit
-
 # no beep
 setopt no_beep
 setopt nolistbeep
-
-# 戻り値が 0 以外の場合終了コードを表示する
-#setopt print_exit_value
-
 # =COMMANDでCOMMANDのパス名に展開
 setopt equals
 # FOR, REPEAT, SELECT, IF, FUNCTIONなどで簡略文法が使えるようになる

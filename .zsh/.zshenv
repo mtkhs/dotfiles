@@ -9,7 +9,7 @@ alias .....='../../../..'
 
 alias l='la'
 alias la='ls -lAvF'
-alias ll='ls -l'
+alias ll='ls -n'
 
 alias tl='tmux list-sessions'
 

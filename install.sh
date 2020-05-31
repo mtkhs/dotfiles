@@ -15,6 +15,7 @@ case ${OSTYPE} in
         ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
+        ln -s    $DOTFILES/.tigrc      $HOME/.tigrc
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
         ln -s    $DOTFILES/.railsrc    $HOME/.railsrc
         ln -s -h $DOTFILES/.bundle     $HOME/.bundle
@@ -31,6 +32,7 @@ case ${OSTYPE} in
         ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
+        ln -s    $DOTFILES/.tigrc      $HOME/.tigrc
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
         ln -s    $DOTFILES/.railsrc    $HOME/.railsrc
         ln -s -T $DOTFILES/.bundle     $HOME/.bundle
@@ -50,6 +52,7 @@ case ${OSTYPE} in
         ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
+        ln -s    $DOTFILES/.tigrc      $HOME/.tigrc
         ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
         ln -s    $DOTFILES/.railsrc    $HOME/.railsrc
         ln -s -T $DOTFILES/.bundle     $HOME/.bundle

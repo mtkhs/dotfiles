@@ -14,9 +14,12 @@ case ${OSTYPE} in
   linux*)
     case $OS in
       Debian | Ubuntu | Raspbian )
+        sudo apt update
         # Ubuntu 18.04
+        sudo apt install -y build-essential
         sudo apt install -y zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev
         sudo apt install -y golang-go # direnv
+        sudo apt install -y autoconf # tig build
         ;;
       CentOS )
     esac

@@ -1,0 +1,11 @@
+# コミットIDを表示 ( default: date author commit-title:graph=yes,refs=yes )
+set main-view = id date author commit-title:graph=yes,refs=yes
+
+# 画面を垂直分割 ( default: auto )
+#set vertical-split = yes
+
+# 水平分割したウィンドウの下画面サイズ
+set split-view-height = 75%
+
+# diffで差分の前後表示行数
+set diff-context = 5
