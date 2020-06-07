@@ -4,13 +4,15 @@ DOTFILES="$HOME/dotfiles"
 
 cd $DOTFILES
 
+mkdir -p $HOME/.config/
+
 case ${OSTYPE} in
     darwin*)
         ln -s -h $DOTFILES/.zsh        $HOME/.zsh
         ln -s    $DOTFILES/.zshenv     $HOME/.zshenv
         ln -s -h $DOTFILES/.vim        $HOME/.vim
         ln -s    $DOTFILES/.vimrc      $HOME/.vimrc
-        mkdir -p $HOME/.config
+        ln -s -h $DOTFILES/.config/bat $HOME/.config/bat
         ln -s -h $HOME/.vim            $HOME/.config/nvim
         ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
@@ -27,7 +29,7 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.zshenv     $HOME/.zshenv
         ln -s -T $DOTFILES/.vim        $HOME/.vim
         ln -s    $DOTFILES/.vimrc      $HOME/.vimrc
-        mkdir -p $HOME/.config
+        ln -s -T $DOTFILES/.config/bat $HOME/.config/bat
         ln -s -T $HOME/.vim            $HOME/.config/nvim
         ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
@@ -41,24 +43,6 @@ case ${OSTYPE} in
 #        ln -s    $DOTFILES/.rubocop.yml $HOME/.rubocop.yml
 #        ln -s    $DOTFILES/.pylintrc $HOME/.pylintrc
 #        ln -s    $DOTFILES/.eslintrc.js $HOME/.eslintrc.js
-        ;;
-    cygwin*)
-        ln -s -T $DOTFILES/.zsh        $HOME/.zsh
-        ln -s    $DOTFILES/.zshenv     $HOME/.zshenv
-        ln -s -T $DOTFILES/.vim        $HOME/.vim
-        ln -s    $DOTFILES/.vimrc      $HOME/.vimrc
-        mkdir -p $HOME/.config
-        ln -s -T $HOME/.vim            $HOME/.config/nvim
-        ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
-        ln -s    $DOTFILES/.tmux.conf  $HOME/.tmux.conf
-        ln -s    $DOTFILES/.gitconfig  $HOME/.gitconfig
-        ln -s    $DOTFILES/.tigrc      $HOME/.tigrc
-        ln -s    $DOTFILES/.gemrc      $HOME/.gemrc
-        ln -s    $DOTFILES/.railsrc    $HOME/.railsrc
-        ln -s -T $DOTFILES/.bundle     $HOME/.bundle
-        ln -s    $DOTFILES/.hgrc       $HOME/.hgrc
-        ln -s    $DOTFILES/.minttyrc   $HOME/.minttyrc
-        ln -s    $DOTFILES/.latexmkrc  $HOME/.latexmkrc
         ;;
 esac
 
