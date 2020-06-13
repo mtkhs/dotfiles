@@ -135,6 +135,9 @@ zinit light "direnv/direnv"
 #zinit snippet 'OMZ::plugins/dotenv/dotenv.plugin.zsh'
 #zinit snippet 'OMZ::plugins/git/git.plugin.zsh'
 
+zinit ice as"program"  make pick"fzy"
+zinit light "jhawthorn/fzy"
+
 zinit ice as"program" atclone"./autogen.sh; ./configure" atpull"%atclone" make pick"src/tig"
 zinit light "jonas/tig"
 

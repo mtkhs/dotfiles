@@ -16,16 +16,17 @@ case ${OSTYPE} in
       Debian | Ubuntu | Raspbian )
         sudo apt update
         # Ubuntu 18.04
-        sudo apt install -y build-essential
+        # golang-go # direnv
+        # libncurses5-dev autoconf # tig build
+        sudo apt install -y build-essential libncurses5-dev autoconf golang-go
         sudo apt install -y zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev
-        sudo apt install -y golang-go # direnv
-        sudo apt install -y autoconf # tig build
         ;;
       CentOS )
     esac
     ;;
 esac
 
+<< COMMENTOUT
 if builtin command -v fzy > /dev/null ; then
   echo "fzy is already installed."
 else
@@ -45,4 +46,5 @@ else
       ;;
   esac
 fi
+COMMENTOUT
 
