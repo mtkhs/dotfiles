@@ -17,8 +17,9 @@ case ${OSTYPE} in
         sudo apt update
         # Ubuntu 18.04
         # golang-go # direnv
-        # libncurses5-dev autoconf # tig build
-        sudo apt install -y build-essential libncurses5-dev autoconf golang-go
+        # libncurses5-dev # tig
+        # libncurses5-dev libevent-dev # tmux
+        sudo apt install -y build-essential autoconf golang-go libncurses5-dev libevent-dev
         sudo apt install -y zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev
         ;;
       CentOS )

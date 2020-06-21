@@ -109,36 +109,22 @@ zinit light "peco/peco"
 zinit ice from"gh-r" as"program"
 zinit light "junegunn/fzf-bin"
 
+zinit ice as"program" make pick"fzy"
+zinit light "jhawthorn/fzy"
+
 zinit ice from"gh-r" as"program" pick"*/ghq"
 zinit light "x-motemen/ghq"
-
-zinit light "mollifier/anyframe"
-bindkey '^x^r' anyframe-widget-execute-history
-bindkey '^x^f' anyframe-widget-insert-filename
-bindkey '^x^k' anyframe-widget-kill
-zstyle ":anyframe:selector:" use peco
-zstyle ":anyframe:selector:peco:" command 'peco --initial-filter IgnoreCase'
-#zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
-
-#zinit ice wait"!0" silent
-#zinit light "b4b4r07/enhancd"
-#export ENHANCD_FILTER=peco
-#export ENHANCD_DISABLE_DOT=1
-#export ENHANCD_DISABLE_HOME=1
 
 zinit ice from"gh-r" as"program" mv"direnv* -> direnv"
 zinit light "direnv/direnv"
 
-#zinit ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' src"zhook.zsh"
-#zinit light "direnv/direnv"
+zinit ice from"gh-r" as"program" pick"*/bin/nvim"
+zinit light "neovim/neovim"
 
-#zinit snippet 'OMZ::plugins/dotenv/dotenv.plugin.zsh'
-#zinit snippet 'OMZ::plugins/git/git.plugin.zsh'
+zinit ice from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure; make" atpull"%atclone" pick"*/tmux"
+zinit light "tmux/tmux"
 
-zinit ice as"program"  make pick"fzy"
-zinit light "jhawthorn/fzy"
-
-zinit ice as"program" atclone"./autogen.sh; ./configure" atpull"%atclone" make pick"src/tig"
+zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
 
 zinit ice from"gh-r" as"program" mv"exa* -> exa"
@@ -155,6 +141,26 @@ zinit light "sharkdp/fd"
 
 zinit ice from"gh-r" as"program" pick"*/diskus"
 zinit light "sharkdp/diskus"
+
+zinit light "mollifier/anyframe"
+bindkey '^x^r' anyframe-widget-execute-history
+bindkey '^x^f' anyframe-widget-insert-filename
+bindkey '^x^k' anyframe-widget-kill
+zstyle ":anyframe:selector:" use peco
+zstyle ":anyframe:selector:peco:" command 'peco --initial-filter IgnoreCase'
+#zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
+
+#zinit ice wait"!0" silent
+#zinit light "b4b4r07/enhancd"
+#export ENHANCD_FILTER=peco
+#export ENHANCD_DISABLE_DOT=1
+#export ENHANCD_DISABLE_HOME=1
+
+#zinit ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' src"zhook.zsh"
+#zinit light "direnv/direnv"
+
+#zinit snippet 'OMZ::plugins/dotenv/dotenv.plugin.zsh'
+#zinit snippet 'OMZ::plugins/git/git.plugin.zsh'
 
 compinit -Cu
 
