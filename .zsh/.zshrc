@@ -118,8 +118,8 @@ zinit light "x-motemen/ghq"
 zinit ice from"gh-r" as"program" mv"direnv* -> direnv"
 zinit light "direnv/direnv"
 
-zinit ice from"gh-r" as"program" pick"*/bin/nvim"
-zinit light "neovim/neovim"
+#zinit ice from"gh-r" as"program" pick"*/bin/nvim"
+#zinit light "neovim/neovim"
 
 zinit ice from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure; make" atpull"%atclone" pick"*/tmux"
 zinit light "tmux/tmux"
