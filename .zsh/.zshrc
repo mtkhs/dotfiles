@@ -318,16 +318,16 @@ fi
 # peco:
 #
 
-function peco-history-selection() {
+function peco_history_selection() {
 #    BUFFER="$(history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER" | sed 's/\\n/\n/')"
     BUFFER=$(history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle reset-prompt
 }
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
+zle -N peco_history_selection
+bindkey '^R' peco_history_selection
 
-function peco-ghq-look () {
+function peco_ghq_look() {
     local ghq_roots="$(git config --path --get-all ghq.root)"
     local selected_dir=$(ghq list --full-path | \
         xargs -I{} ls -dl --time-style=+%s {}/.git | sed 's/.*\([0-9]\{10\}\)/\1/' | sort -nr | \
@@ -339,18 +339,34 @@ function peco-ghq-look () {
         zle accept-line
     fi
 }
-zle -N peco-ghq-look
-bindkey '^G' peco-ghq-look
+zle -N peco_ghq_look
+bindkey '^G' peco_ghq_look
 
-function peco-cdr () {
+function peco_cdr() {
     local selected_dir="$(cdr -l | sed 's/^[0-9]\+ \+//' | peco --prompt="cdr >" --query "$LBUFFER")"
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
     fi
 }
-zle -N peco-cdr
-bindkey '^E' peco-cdr
+zle -N peco_cdr
+bindkey '^E' peco_cdr
+
+#---------------------------------------------------------------------------
+# fzf:
+#
+
+function fzf_cdr(){
+    local selected_dir=$(cdr -l | awk '{ print $2 }' | \
+      fzf --preview 'f() { sh -c "ls -hFGl $1" }; f {}')
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N fzf_cdr
+#bindkey '^E' fzf_cdr
 
 #---------------------------------------------------------------------------
 # zcompile:

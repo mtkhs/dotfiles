@@ -10,6 +10,7 @@ umask 002
 
 export LV="-c -l"
 export LESS="-R"
+export FZF_DEFAULT_OPTS="--no-sort --exact --cycle --multi --ansi --reverse --border --sync --bind=ctrl-t:toggle --bind=ctrl-k:kill-line --bind=?:toggle-preview --bind=down:preview-down --bind=up:preview-up"
 
 case ${OSTYPE} in
     darwin*)

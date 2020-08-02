@@ -7,21 +7,26 @@ alias ...='../..'
 alias ....='../../..'
 alias .....='../../../..'
 
+alias ls='exa --color=always --group-directories-first'
+alias la='exa -halgF --git --color=always --group-directories-first'
 alias l='la'
-alias la='ls -lAvF'
-alias ll='ls -n'
+alias ll='\ls -n'
 
 alias tl='tmux list-sessions'
+
+alias gb="git branch"
+alias gd="git diff"
+alias gs="git status"
 
 alias sudo='sudo -E '
 
 case ${OSTYPE} in
     darwin*)
-        alias ls='LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx ls -G'
+#        alias ls='LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx ls -G'
 #        alias vim='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
         ;;
     linux*)
-        alias ls='ls -F --color=auto --show-control-char'
+#        alias ls='ls -F --color=auto --show-control-char'
         ;;
 esac
 
