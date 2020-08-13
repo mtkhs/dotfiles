@@ -118,29 +118,42 @@ zinit light "x-motemen/ghq"
 zinit ice from"gh-r" as"program" mv"direnv* -> direnv"
 zinit light "direnv/direnv"
 
-#zinit ice from"gh-r" as"program" pick"*/bin/nvim"
-#zinit light "neovim/neovim"
-
 zinit ice from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure; make" atpull"%atclone" pick"*/tmux"
 zinit light "tmux/tmux"
 
 zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
 
-zinit ice from"gh-r" as"program" mv"exa* -> exa"
-zinit light "ogham/exa"
+case ${OS} in
+    Rasp*)
+        zinit ice from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/hexyl"
+        zinit light "sharkdp/hexyl"
+
+        zinit ice from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/diskus"
+        zinit light "sharkdp/diskus"
+
+        ;;
+    *)
+        zinit ice from"gh-r" as"program" pick"*/hexyl"
+        zinit light "sharkdp/hexyl"
+
+        zinit ice from"gh-r" as"program" pick"*/diskus"
+        zinit light "sharkdp/diskus"
+
+        zinit ice from"gh-r" as"program" mv"exa* -> exa"
+        zinit light "ogham/exa"
+
+        zinit ice from"gh-r" as"program" pick"*/bin/nvim"
+        zinit light "neovim/neovim"
+
+        ;;
+esac
 
 zinit ice from"gh-r" as"program" pick"*/bat"
 zinit light "sharkdp/bat"
 
-zinit ice from"gh-r" as"program" pick"*/hexyl"
-zinit light "sharkdp/hexyl"
-
 zinit ice from"gh-r" as"program" pick"*/fd"
 zinit light "sharkdp/fd"
-
-zinit ice from"gh-r" as"program" pick"*/diskus"
-zinit light "sharkdp/diskus"
 
 zinit light "mollifier/anyframe"
 bindkey '^x^r' anyframe-widget-execute-history

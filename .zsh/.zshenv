@@ -7,7 +7,7 @@ alias ...='../..'
 alias ....='../../..'
 alias .....='../../../..'
 
-alias ls='exa --color=always --group-directories-first'
+alias ls='exa --color=always --group-directories-first --group'
 alias la='exa -halgF --git --color=always --group-directories-first'
 alias l='la'
 alias ll='\ls -n'

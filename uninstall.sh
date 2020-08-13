@@ -6,6 +6,8 @@ rm -rf ~/.cache/dein
 rm -rf ~/dein.log
 rm -rf ~/.local/share/nvim
 
+rm -f ~/.config/bat
+
 rm -f ~/.vimrc
 rm -f ~/.viminfo
 rm -f ~/.vim
@@ -15,7 +17,7 @@ rm -rf ~/.anyenv
 rm -f ~/.zshenv
 rm -f ~/.zsh
 rm -f ~/.zsh_history
-rm -rf ~/.zplug
+rm -rf ~/.zinit
 rm -rf ~/.enhancd
 
 rm -rf ~/.tmux
@@ -25,6 +27,7 @@ rm -f ~/.latexmkrc
 rm -f ~/.gitconfig
 rm -f ~/.tigrc
 rm -f ~/.gemrc
+rm -f ~/.railsrc
 rm -f ~/.hgrc
 rm -f ~/.bundle
 
