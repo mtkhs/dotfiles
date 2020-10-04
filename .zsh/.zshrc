@@ -112,9 +112,6 @@ zinit light "junegunn/fzf-bin"
 zinit ice as"program" make pick"fzy"
 zinit light "jhawthorn/fzy"
 
-zinit ice from"gh-r" as"program" pick"*/ghq"
-zinit light "x-motemen/ghq"
-
 zinit ice from"gh-r" as"program" mv"direnv* -> direnv"
 zinit light "direnv/direnv"
 
@@ -133,7 +130,13 @@ case ${OS} in
         zinit light "sharkdp/diskus"
 
         ;;
+    Manjaro*)
+        
+        ;;
     *)
+        zinit ice from"gh-r" as"program" pick"*/ghq"
+        zinit light "x-motemen/ghq"
+
         zinit ice from"gh-r" as"program" pick"*/hexyl"
         zinit light "sharkdp/hexyl"
 

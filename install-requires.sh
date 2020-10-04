@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OS=$(lsb_release -si)
-ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
+ARCH=$(uname -m | sed 's/x86_|aarch//;s/i[3-6]86/32/')
 VER=$(lsb_release -sr)
 
 #echo $OSTYPE
@@ -20,10 +20,14 @@ case ${OSTYPE} in
         # libncurses5-dev # tig
         # libncurses5-dev libevent-dev # tmux
         sudo apt install -y build-essential autoconf golang-go libncurses5-dev libevent-dev \
-        zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev \
-        exa
+            zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev \
+            exa
         ;;
       CentOS )
+        ;;
+      Manjaro )
+        sudo pacman -S base-devel go \
+            exa
         ;;
     esac
     ;;
