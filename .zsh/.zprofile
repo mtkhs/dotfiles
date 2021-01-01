@@ -75,8 +75,7 @@ case ${OSTYPE} in
                     fi
                 else
                     echo "Create new tmux session."
-                    # TERM=xterm-256color tmux new-session -s "0"
-                    tmux new-session -s "0"
+                    TERM=xterm-256color tmux new-session -s "0"
                 fi
             fi
         fi
