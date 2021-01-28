@@ -158,6 +158,9 @@ zinit light "sharkdp/bat"
 zinit ice from"gh-r" as"program" pick"*/fd"
 zinit light "sharkdp/fd"
 
+zinit ice from"gh" as"program" pick"neofetch"
+zinit light "dylanaraps/neofetch"
+
 zinit light "mollifier/anyframe"
 bindkey '^x^r' anyframe-widget-execute-history
 bindkey '^x^f' anyframe-widget-insert-filename
@@ -329,6 +332,12 @@ if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]
     zstyle ':chpwd:*' recent-dirs-max 1000
     zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
 fi
+
+# mkdir, cd into it
+function mkcd () {
+    mkdir -p "$*"
+    cd "$*"
+}
 
 #---------------------------------------------------------------------------
 # peco:
