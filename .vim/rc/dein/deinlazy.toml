@@ -101,6 +101,10 @@ repo = 'zchee/deoplete-zsh'
 on_ft = ['zsh', 'sh']
 
 [[plugins]]
+repo = 'gko/vim-coloresque'
+on_ft = ['css', 'scss', 'html']
+
+[[plugins]]
 repo = 'stephpy/vim-yaml'
 on_ft = ['yaml']
 

@@ -19,7 +19,7 @@ case ${OSTYPE} in
         # golang-go # direnv
         # libncurses5-dev # tig
         # libncurses5-dev libevent-dev # tmux
-        sudo apt install -y software-properties-common cargo \
+        sudo apt install -y software-properties-common cargo rustc \
         build-essential autoconf golang-go libncurses5-dev libevent-dev \
         zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev \
         exa

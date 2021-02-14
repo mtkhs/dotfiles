@@ -72,7 +72,15 @@ EOF
     PYENV_ROOT="$(anyenv root)/envs/pyenv" # $(pyenv root)
 #    git clone https://github.com/yyuu/pyenv-pip-rehash.git $PYENV_ROOT/plugins/pyenv-pip-rehash
 #    git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
+    git clone https://github.com/massongit/pyenv-pip-update.git $PYENV_ROOT/plugins/pyenv-pip-update
+    git clone https://github.com/jawshooah/pyenv-default-packages.git $PYENV_ROOT/plugins/pyenv-default-packages
 #    pip3 install --user pipenv
+    cat > $PYENV_ROOT/default-packages << "EOF"
+neovim
+jedi
+httpie
+EOF
+
 
     anyenv install phpenv
     PHPENV_ROOT="$(anyenv root)/envs/phpenv" # $(phpenv root)

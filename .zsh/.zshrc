@@ -121,6 +121,9 @@ zinit light "tmux/tmux"
 zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
 
+zinit ice from"gh-r" as"program" pick"*/gitui"
+zinit light "extrawurst/gitui"
+
 case ${OS} in
     Rasp*)
         zinit ice from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/hexyl"
@@ -158,8 +161,26 @@ zinit light "sharkdp/bat"
 zinit ice from"gh-r" as"program" pick"*/fd"
 zinit light "sharkdp/fd"
 
+zinit ice from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg"
+zinit light "BurntSushi/ripgrep"
+
+zinit ice from"gh-r" as"program" pick"*/delta"
+zinit light "dandavison/delta"
+
+zinit ice from"gh-r" as"program" pick"*/navi"
+zinit light "denisidoro/navi"
+
+zinit ice from"gh-r" as"program" pick"*/xh"
+zinit light "ducaale/xh"
+
+zinit ice from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/dog"
+zinit light "ogham/dog"
+
 zinit ice from"gh" as"program" pick"neofetch"
 zinit light "dylanaraps/neofetch"
+
+zinit ice from"gh" as"program" pick"prettyping"
+zinit light "denilsonsa/prettyping"
 
 zinit light "mollifier/anyframe"
 bindkey '^x^r' anyframe-widget-execute-history
