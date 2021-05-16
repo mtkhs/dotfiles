@@ -17,16 +17,12 @@ let g:deoplete#enable_camel_case = 1
 
 " <TAB>: completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-
 " <S-TAB>: completion back.
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 " <BS>: close popup and delete backword char.
 inoremap <expr><BS> pumvisible() ? deoplete#smart_close_popup() . "\<C-h>" : "\<C-h>"
-
 " <ESC>: cancel popup.
 inoremap <expr><ESC> pumvisible() ? deoplete#cancel_popup() : "\<ESC>"
-
 " <CR>: close popup and save indent.
 inoremap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>"
 
@@ -36,34 +32,6 @@ inoremap <expr> ' pumvisible() ? deoplete#close_popup() : "'"
 
 set completeopt-=preview
 '''
-
-#[[plugins]]
-#repo = 'carlitux/deoplete-ternjs'
-#build = 'npm install -g tern'
-#on_ft = ['javascript']
-#depends = ['deoplete.nvim']
-#hook_source = '''
-#" Use deoplete.
-#let g:tern_request_timeout = 1
-#let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
-#
-#"Add extra filetypes
-#let g:tern#filetypes = [
-#                \ 'jsx',
-#                \ 'javascript.jsx',
-#                \ 'vue'
-#                \ ]
-#'''
-
-#[[plugins]]
-#repo = 'wokalski/autocomplete-flow'
-#on_ft = ['javascript']
-#depends = ['deoplete.nvim']
-
-#[[plugins]]
-#repo = 'uplus/deoplete-solargraph'
-#on_ft = ['ruby']
-#depends = ['deoplete.nvim']
 
 [[plugins]]
 repo = 'zchee/deoplete-clang'
@@ -75,10 +43,6 @@ let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-6.0/lib/libclang-6.0
 let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
 '''
 
-#[[plugins]]
-#repo = 'davidhalter/jedi'
-#on_ft = ['python']
-
 [[plugins]]
 repo = 'zchee/deoplete-jedi'
 on_ft = ['python']
@@ -88,16 +52,9 @@ let g:deoplete#sources#jedi#enable_typeinfo = v:false
 let g:deoplete#sources#jedi#ignore_errors = v:true
 '''
 
-#[[plugins]]
-#repo = 'jmcantrell/vim-virtualenv'
-#on_ft = ['python']
-
-#[[plugins]]
-#repo = 'hynek/vim-python-pep8-indent'
-#on_ft = ['python']
-
 [[plugins]]
 repo = 'zchee/deoplete-zsh'
+depends = ['deoplete.nvim']
 on_ft = ['zsh', 'sh']
 
 [[plugins]]
@@ -119,6 +76,22 @@ hook_add = '''
 " Disable fancy concealing of attribute quotes
 let g:vim_json_syntax_conceal = 0
 '''
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescriptreact']
+
+[[plugins]]
+repo = 'peitalin/vim-jsx-typescript'
+on_ft = ['typescriptreact']
+
+[[plugins]]
+repo = 'yuezk/vim-js'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'
+on_ft = ['javascript', 'javascript.jsx', 'typescriptreact']
 
 [[plugins]]
 repo = 'ericpruitt/tmux.vim'

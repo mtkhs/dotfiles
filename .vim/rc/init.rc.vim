@@ -59,6 +59,9 @@ endif
 " Disable packpath
 set packpath=
 
+" Change the current working directory automatically
+set autochdir
+
 "---------------------------------------------------------------------------
 " Disable default plugins
 

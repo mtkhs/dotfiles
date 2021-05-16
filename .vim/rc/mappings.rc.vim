@@ -89,8 +89,8 @@ map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
 " Buffer
-map <F2> <ESC>:bp<CR>
-map <F3> <ESC>:bn<CR>
+nmap <F2> <ESC>:bp<CR>
+nmap <F3> <ESC>:bn<CR>
 
 map [1;5A <C-Up>
 map [1;5B <C-Down>
@@ -101,6 +101,13 @@ map [1;2B <S-Down>
 map [1;2C <S-Right>
 map [1;2D <S-Left>
 
-map <C-Left> <ESC>:bp<CR>
-map <C-Right> <ESC>:bn<CR>
+nmap <C-Left> <ESC>:bp<CR>
+nmap <C-Right> <ESC>:bn<CR>
+
+nmap <S-Tab> <ESC>:bp<CR>
+nmap <Tab> <ESC>:bn<CR>
+
+" Switch tab
+"nmap <S-Tab> :tabprev<Return>
+"nmap <Tab> :tabnext<Return>
 
