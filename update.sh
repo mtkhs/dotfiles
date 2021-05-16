@@ -7,6 +7,8 @@ anyenv update
 zinit self-update
 source ~/.zsh/.zshrc
 
+compaudit
+
 zinit update
 zinit cclear
 
