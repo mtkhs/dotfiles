@@ -38,7 +38,7 @@ case ${OSTYPE} in
     linux*|cygwin*|msys*)
         unset LC_ALL
 #        export LC_ALL=ja_JP.UTF-8
-        export LANG=ja_JP.UTF-8
+        export LANG=en_US.UTF-8
 
         export GOPATH=$HOME/go
         export GOBIN=$GOPATH/bin

@@ -44,3 +44,5 @@ lm = log --merges --pretty=format:'%C(yellow)%h %Cgreen%ci %Cblue%cn%Cred%d %Cre
 [include]
 path = ~/.gitconfig_local
 
+[pager]
+	log = false
