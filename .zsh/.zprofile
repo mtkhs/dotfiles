@@ -28,7 +28,7 @@ case ${OSTYPE} in
         export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8 # javacの出力文字コードがなぜかShift_JISで化けるので
         
         # homebrew
-        export PATH=$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+        export PATH=/snap/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
         export HOMEBREW_MAKE_JOBS=3
         export HOMEBREW_CACHE=~/Library/Caches/Homebrew
         
@@ -42,7 +42,7 @@ case ${OSTYPE} in
 
         export GOPATH=$HOME/go
         export GOBIN=$GOPATH/bin
-        export PATH=$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
+        export PATH=/snap/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
         export EDITOR='vim'
 
         if [ -e /etc/os-release ]; then

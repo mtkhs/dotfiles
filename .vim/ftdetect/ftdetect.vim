@@ -1,21 +1,16 @@
-autocmd BufNewFile,BufRead .amethyst set filetype=javascript
-autocmd BufNewFile,BufRead *.jbuilder set filetype=ruby
-autocmd BufNewFile,BufRead */nginx* set filetype=nginx
+autocmd BufNewFile,BufRead *.jbuilder setf ruby
+autocmd BufNewFile,BufRead */nginx* setf nginx
 autocmd BufNewFile,BufRead *.m setf objc
 autocmd BufNewFile,BufRead *.h setf objc
-autocmd BufNewFile,BufRead *pentadactylrc*,*.penta set filetype=pentadactyl
-"autocmd BufNewFile,BufRead *.t call delphinus#perl#test_filetype()
-"autocmd BufNewFile,BufRead *.xt call delphinus#perl#test_filetype()
-autocmd BufNewFile,BufRead * :if getline(1) =~ '^.*startuml.*$'|  setfiletype plantuml | endif
-autocmd BufNewFile,BufRead *.psgi set filetype=perl
-autocmd BufNewFile,BufRead *.pu,*.uml,*.plantuml setfiletype plantuml
-"autocmd BufNewFile,BufRead *.conf call delphinus#tmux#tmux_filetype()
+autocmd BufNewFile,BufRead *.psgi setf perl
+autocmd BufNewFile,BufRead *.pu,*.uml,*.plantuml setf plantuml
+"autocmd BufNewFile,BufRead * :if getline(1) =~ '^.*startuml.*$'|  setf plantuml | endif
 autocmd BufNewFile,BufRead *.tt2 setf tt2html
 autocmd BufNewFile,BufRead *.tt setf tt2html
 autocmd BufNewFile,BufRead .zpreztorc setf zsh
 autocmd BufNewFile,BufRead *.plist,*.ttx setf xml
 autocmd BufNewFile,BufRead *.applescript setf applescript
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
+autocmd BufNewFile,BufRead *.tsx,*.jsx setf typescriptreact
 
 function! s:detect_script_filetype()
   if len(&ft) == 0
