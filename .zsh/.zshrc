@@ -146,7 +146,7 @@ case ${OS} in
         zinit ice from"gh-r" as"program" pick"*/diskus"
         zinit light "sharkdp/diskus"
 
-        zinit ice from"gh-r" as"program" mv"exa* -> exa"
+        zinit ice from"gh-r" as"program" pick"bin/exa"
         zinit light "ogham/exa"
 
         zinit ice from"gh-r" as"program" pick"*/bin/nvim"
