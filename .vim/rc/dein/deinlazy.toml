@@ -1,4 +1,15 @@
 [[plugins]]
+repo = 'fholgado/minibufexpl.vim'
+on_cmd = ['MBEbp', 'MBEbn', 'MBEToggle']
+augroup = 'MiniBufExpl'
+hook_add = '''
+let g:miniBufExplAutoStart = 0
+let g:miniBufExplHideWhenDiff = 1
+let g:miniBufExplCycleArround = 1
+let g:miniBufExplMaxSize = 1
+'''
+
+[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 depends = ['context_filetype.vim']
 if = "has('nvim')"
