@@ -64,11 +64,15 @@ set virtualedit=block
 " Set keyword help.
 set keywordprg=:help
 
-set mouse=a                  " マウスを全ての場面で使う
-if !has('nvim')
-  set ttymouse=sgr           " マウスホイールを有効化
-  set clipboard=autoselectml " モードレスセレクション時に OS 標準のクリップボードを使う
-endif
+" Disable mouse support
+set mouse-=a
+
+" Enable mouse support
+"set mouse=a
+"if !has('nvim')
+"  set ttymouse=sgr
+"  set clipboard=autoselectml
+"endif
 
 " Make directory automatically.
 " --------------------------------------

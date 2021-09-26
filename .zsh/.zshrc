@@ -103,9 +103,6 @@ zinit light "zsh-users/zsh-syntax-highlighting"
 zinit ice wait"!0" silent
 zinit light "rhysd/zsh-bundle-exec"
 
-zinit ice from"gh-r" as"program" pick"*/peco"
-zinit light "peco/peco"
-
 zinit ice from"gh-r" as"program"
 zinit light "junegunn/fzf-bin"
 
@@ -132,11 +129,17 @@ case ${OS} in
         zinit ice from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/diskus"
         zinit light "sharkdp/diskus"
 
+        zinit ice from"gh-r" as"program" bpick"*linux_arm64*" pick"*/peco"
+        zinit light "peco/peco"
+
         ;;
     Manjaro*)
         
         ;;
     *)
+        zinit ice from"gh-r" as"program" pick"*/peco"
+        zinit light "peco/peco"
+
         zinit ice from"gh-r" as"program" pick"*/ghq"
         zinit light "x-motemen/ghq"
 
