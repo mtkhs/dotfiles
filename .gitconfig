@@ -47,4 +47,4 @@ path = ~/.gitconfig_local
 [pager]
 	log = false
 [credential]
-	helper = cache
+	helper = store
