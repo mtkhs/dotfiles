@@ -59,32 +59,30 @@ else
     git clone https://github.com/znz/anyenv-update $(anyenv root)/plugins/anyenv-update
     git clone https://github.com/znz/anyenv-git $(anyenv root)/plugins/anyenv-git
 
+    # rbenv
     anyenv install rbenv
     RBENV_ROOT="$(anyenv root)/envs/rbenv" # $(rbenv root)
-#    git clone https://github.com/sstephenson/rbenv-gem-rehash.git $RBENV_ROOT/plugins/rbenv-gem-rehash
     git clone https://github.com/rbenv/rbenv-default-gems.git $RBENV_ROOT/plugins/rbenv-default-gems
     cat > $RBENV_ROOT/default-gems << "EOF"
 bundler
 pry
 EOF
 
+    # pyenv
     anyenv install pyenv
     PYENV_ROOT="$(anyenv root)/envs/pyenv" # $(pyenv root)
-#    git clone https://github.com/yyuu/pyenv-pip-rehash.git $PYENV_ROOT/plugins/pyenv-pip-rehash
-#    git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
     git clone https://github.com/massongit/pyenv-pip-update.git $PYENV_ROOT/plugins/pyenv-pip-update
     git clone https://github.com/jawshooah/pyenv-default-packages.git $PYENV_ROOT/plugins/pyenv-default-packages
-#    pip3 install --user pipenv
     cat > $PYENV_ROOT/default-packages << "EOF"
-neovim
 jedi
 httpie
 EOF
 
-
+    # phpenv
     anyenv install phpenv
     PHPENV_ROOT="$(anyenv root)/envs/phpenv" # $(phpenv root)
 
+    # nodenv
     anyenv install nodenv
     NODENV_ROOT="$(anyenv root)/envs/nodenv" # $(nodenv root)
     git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_ROOT/plugins/nodenv-package-rehash
@@ -93,6 +91,7 @@ EOF
 yarn
 EOF
 
+    # goenv
     anyenv install goenv
     GOENV_ROOT="$(anyenv root)/envs/goenv" # $(goenv root)
 fi
@@ -103,7 +102,7 @@ if [ -d ${HOME}/.zinit ]; then
 else
     echo "Install zinit..."
     mkdir ~/.zinit
-    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+    git clone https://github.com/zdharma-continuum/zinit.git ~/.zinit/bin
 fi
 
 # zsh zplug

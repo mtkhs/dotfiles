@@ -2,7 +2,6 @@
 # .zprofile
 #---------------------------------------------------------------------------
 
-OS=$(lsb_release -si)
 ARCH=$(uname -m | sed 's/x86_\|aarch//;s/i[3-6]86/32/')
 #VER=$(lsb_release -sr)
 
@@ -14,8 +13,10 @@ export FZF_DEFAULT_OPTS="--no-sort --exact --cycle --multi --ansi --reverse --bo
 
 case ${OSTYPE} in
     darwin*)
-        export LC_ALL=ja_JP.UTF-8
-        export LANG=ja_JP.UTF-8
+        unset LC_ALL
+        export LANG=en_US.UTF-8
+#        export LC_ALL=ja_JP.UTF-8
+#        export LANG=ja_JP.UTF-8
         export EDITOR='vim'
         export PAGER='lv'
         
@@ -25,17 +26,23 @@ case ${OSTYPE} in
         # Java
         export JAVA_HOME=$(/usr/libexec/java_home)
         export PATH=$JAVA_HOME/bin:$PATH
-        export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8 # javacの出力文字コードがなぜかShift_JISで化けるので
+        export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
         
         # homebrew
         export PATH=/snap/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
-        export HOMEBREW_MAKE_JOBS=3
-        export HOMEBREW_CACHE=~/Library/Caches/Homebrew
+#        export HOMEBREW_MAKE_JOBS=3
+#        export HOMEBREW_CACHE=~/Library/Caches/Homebrew
         
         # command
         dict () { open dict://"$@"; }
+
+#        if type brew >/dev/null 2>&1; then
+#        fi
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+
     ;;
     linux*|cygwin*|msys*)
+        OS=$(lsb_release -si)
         unset LC_ALL
 #        export LC_ALL=ja_JP.UTF-8
         export LANG=en_US.UTF-8

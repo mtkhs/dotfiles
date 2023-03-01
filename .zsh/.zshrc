@@ -152,8 +152,8 @@ case ${OS} in
         zinit ice from"gh-r" as"program" pick"bin/exa"
         zinit light "ogham/exa"
 
-        zinit ice from"gh-r" as"program" pick"*/bin/nvim"
-        zinit light "neovim/neovim"
+#        zinit ice from"gh-r" as"program" pick"*/bin/nvim"
+#        zinit light "neovim/neovim"
 
         ;;
 esac
@@ -431,6 +431,10 @@ fi
 
 if [ ! -s $ZDOTDIR/.zshrc.zwc ] || [ $ZDOTDIR/.zshrc -nt $ZDOTDIR/.zshrc.zwc ]; then
    zcompile $ZDOTDIR/.zshrc
+fi
+
+if [ ! -s $ZDOTDIR/.zlogin.zwc ] || [ $ZDOTDIR/.zlogin -nt $ZDOTDIR/.zlogin.zwc ]; then
+   zcompile $ZDOTDIR/.zlogin
 fi
 
 [ -f $HOME/.zshrc_local ] && source $HOME/.zshrc_local

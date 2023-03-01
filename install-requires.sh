@@ -28,6 +28,9 @@ case ${OSTYPE} in
         ;;
     esac
     ;;
+  darwin*)
+    echo Hello, darwin!
+    ;;
 esac
 
 << COMMENTOUT
