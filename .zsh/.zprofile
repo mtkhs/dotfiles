@@ -49,6 +49,8 @@ case ${OSTYPE} in
 
         export GOPATH=$HOME/go
         export GOBIN=$GOPATH/bin
+        export DENO_INSTALL="$HOME/.deno"
+        export PATH="$DENO_INSTALL/bin:$PATH"
         export PATH=/snap/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
         export EDITOR='vim'
 
