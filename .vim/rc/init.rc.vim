@@ -14,28 +14,12 @@ function! IsMac() abort
       \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
 endfunction
 
-" Setting of the encoding to use for a save and reading.
-" Make it normal in UTF-8 in Unix.
-if has('vim_starting') && &encoding !=# 'utf-8'
-  if IsWindows() && !has('gui_running')
-    set encoding=cp932
-  else
-    set encoding=utf-8
-  endif
-endif
-
-" Build encodings.
-let &fileencodings = join([ 'ucs-bom', 'iso-2022-jp-3', 'utf-8', 'euc-jp', 'cp932' ])
-
-" Setting of terminal encoding.
-if !has('gui_running') && IsWindows()
-  " For system.
-  set termencoding=cp932
-endif
-
 if has('multi_byte_ime')
   set iminsert=0 imsearch=0
 endif
+
+set ttyfast
+set lazyredraw
 
 " Use English interface.
 language message C
@@ -61,6 +45,51 @@ set packpath=
 
 " Change the current working directory automatically
 set autochdir
+
+" Display another buffer when current buffer isn't saved.
+set hidden
+
+" Don't create backup.
+set nowritebackup
+set nobackup
+set noswapfile
+set backupdir-=.
+
+" Don't create undofile.
+set noundofile
+let &g:undodir = &directory
+
+" Disable bell.
+set t_vb=
+set novisualbell
+"set belloff=all
+
+" Disable mouse support
+set mouse-=a
+
+" Enable mouse support
+"set mouse=a
+"if !has('nvim')
+"  set ttymouse=sgr
+"  set clipboard=autoselectml
+"endif
+
+" Set keyword help.
+set keywordprg=:help
+
+" Make directory automatically.
+" --------------------------------------
+" http://vim-users.jp/2011/02/hack202/
+
+autocmd MyAutoCmd BufWritePre *
+      \ call s:mkdir_as_necessary(expand('<afile>:p:h'), v:cmdbang)
+function! s:mkdir_as_necessary(dir, force) abort
+  if !isdirectory(a:dir) && &l:buftype == '' &&
+        \ (a:force || input(printf('"%s" does not exist. Create? [y/N]',
+        \              a:dir)) =~? '^y\%[es]$')
+    call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+  endif
+endfunction
 
 "---------------------------------------------------------------------------
 " Disable default plugins

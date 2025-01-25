@@ -85,51 +85,66 @@ source ~/.zinit/bin/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-#zinit light "zdharma/zui"
-#zinit light "zdharma/zinit-crasis"
-
-#zinit light "chrissicool/zsh-256color"
-
-zinit ice wait"!0" blockf silent
+zinit ice wait"!0" lucid blockf silent
 zinit light "zsh-users/zsh-completions"
 
-zinit ice wait"!0" silent atload"_zsh_autosuggest_start"
+zinit ice wait lucid atload'_zsh_autosuggest_start'
 zinit light "zsh-users/zsh-autosuggestions"
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
-zinit ice wait"!0" silent atinit"zpcompinit; zpcdreplay"
-zinit light "zsh-users/zsh-syntax-highlighting"
-
-zinit ice wait"!0" silent
-zinit light "rhysd/zsh-bundle-exec"
-
-zinit ice from"gh-r" as"program"
+zinit ice wait lucid from"gh-r" as"program"
 zinit light "junegunn/fzf-bin"
 
-zinit ice as"program" make pick"fzy"
-zinit light "jhawthorn/fzy"
-
-zinit ice from"gh-r" as"program" mv"direnv* -> direnv"
+zinit ice wait lucid from"gh-r" as"program" mv"direnv* -> direnv"
 zinit light "direnv/direnv"
 
-zinit ice from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure; make" atpull"%atclone" pick"*/tmux"
+zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure; make" atpull"%atclone" pick"*/tmux"
 zinit light "tmux/tmux"
 
-zinit ice from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
+zinit ice wait lucid from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
 zinit light "jonas/tig"
 
-zinit ice from"gh-r" as"program" pick"*/gitui"
+zinit ice wait lucid from"gh-r" as"program" pick"*/gitui"
 zinit light "extrawurst/gitui"
+
+zinit ice wait lucid from"gh-r" as"program" id-as"gh" has"git" atclone'**/gh completion -s zsh > _gh' atpull'%atclone' pick'**/gh'
+zinit light "cli/cli"
+
+zinit ice wait lucid from"gh-r" as"program" pick"*/bat"
+zinit light "sharkdp/bat"
+
+zinit ice wait lucid from"gh-r" as"program" pick"*/fd"
+zinit light "sharkdp/fd"
+
+zinit ice wait lucid from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg"
+zinit light "BurntSushi/ripgrep"
+
+zinit ice wait lucid from"gh-r" as"program" pick"*/delta"
+zinit light "dandavison/delta"
+
+zinit ice wait lucid from"gh-r" as"program" pick"*/navi"
+zinit light "denisidoro/navi"
+
+zinit ice wait lucid from"gh-r" as"program" pick"*/xh"
+zinit light "ducaale/xh"
+
+zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/dog"
+zinit light "ogham/dog"
+
+zinit ice wait lucid from"gh" as"program" pick"neofetch"
+zinit light "dylanaraps/neofetch"
+
+zinit ice wait lucid from"gh" as"program" pick"prettyping"
+zinit light "denilsonsa/prettyping"
 
 case ${OS} in
     Rasp*)
-        zinit ice from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/hexyl"
+        zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/hexyl"
         zinit light "sharkdp/hexyl"
 
-        zinit ice from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/diskus"
+        zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/diskus"
         zinit light "sharkdp/diskus"
 
-        zinit ice from"gh-r" as"program" bpick"*linux_arm64*" pick"*/peco"
+        zinit ice wait lucid from"gh-r" as"program" bpick"*linux_arm64*" pick"*/peco"
         zinit light "peco/peco"
 
         ;;
@@ -137,73 +152,26 @@ case ${OS} in
         
         ;;
     *)
-        zinit ice from"gh-r" as"program" pick"*/peco"
+        zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
         zinit light "peco/peco"
 
-        zinit ice from"gh-r" as"program" pick"*/ghq"
+        zinit ice wait lucid from"gh-r" as"program" pick"*/ghq"
         zinit light "x-motemen/ghq"
 
-        zinit ice from"gh-r" as"program" pick"*/hexyl"
+        zinit ice wait lucid from"gh-r" as"program" pick"*/hexyl"
         zinit light "sharkdp/hexyl"
 
-        zinit ice from"gh-r" as"program" pick"*/diskus"
+        zinit ice wait lucid from"gh-r" as"program" pick"*/diskus"
         zinit light "sharkdp/diskus"
 
-        zinit ice from"gh-r" as"program" pick"bin/exa"
-        zinit light "ogham/exa"
+        zinit ice wait lucid from"gh-r" as"program" pick"eza"
+        zinit light "eza-community/eza"
 
-#        zinit ice from"gh-r" as"program" pick"*/bin/nvim"
-#        zinit light "neovim/neovim"
+        zinit ice wait lucid from"gh-r" as"program" pick"*/bin/nvim"
+        zinit light "neovim/neovim"
 
         ;;
 esac
-
-zinit ice from"gh-r" as"program" pick"*/bat"
-zinit light "sharkdp/bat"
-
-zinit ice from"gh-r" as"program" pick"*/fd"
-zinit light "sharkdp/fd"
-
-zinit ice from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg"
-zinit light "BurntSushi/ripgrep"
-
-zinit ice from"gh-r" as"program" pick"*/delta"
-zinit light "dandavison/delta"
-
-zinit ice from"gh-r" as"program" pick"*/navi"
-zinit light "denisidoro/navi"
-
-zinit ice from"gh-r" as"program" pick"*/xh"
-zinit light "ducaale/xh"
-
-zinit ice from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/dog"
-zinit light "ogham/dog"
-
-zinit ice from"gh" as"program" pick"neofetch"
-zinit light "dylanaraps/neofetch"
-
-zinit ice from"gh" as"program" pick"prettyping"
-zinit light "denilsonsa/prettyping"
-
-zinit light "mollifier/anyframe"
-bindkey '^x^r' anyframe-widget-execute-history
-bindkey '^x^f' anyframe-widget-insert-filename
-bindkey '^x^k' anyframe-widget-kill
-zstyle ":anyframe:selector:" use peco
-zstyle ":anyframe:selector:peco:" command 'peco --initial-filter IgnoreCase'
-#zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
-
-#zinit ice wait"!0" silent
-#zinit light "b4b4r07/enhancd"
-#export ENHANCD_FILTER=peco
-#export ENHANCD_DISABLE_DOT=1
-#export ENHANCD_DISABLE_HOME=1
-
-#zinit ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' src"zhook.zsh"
-#zinit light "direnv/direnv"
-
-#zinit snippet 'OMZ::plugins/dotenv/dotenv.plugin.zsh'
-#zinit snippet 'OMZ::plugins/git/git.plugin.zsh'
 
 compinit -Cu
 
@@ -348,25 +316,21 @@ setopt hist_expand
 # command:
 #
 
-if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
-    autoload -Uz chpwd_recent_dirs cdr
-    add-zsh-hook chpwd chpwd_recent_dirs
-    zstyle ':completion:*' recent-dirs-insert both
-    zstyle ':chpwd:*' recent-dirs-default true
-    zstyle ':chpwd:*' recent-dirs-max 1000
-    zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
-fi
-
 # mkdir, cd into it
-function mkcd () {
+function mkcd() {
     mkdir -p "$*"
     cd "$*"
+}
+
+# TODO: 
+function mkbk() {
 }
 
 #---------------------------------------------------------------------------
 # peco:
 #
 
+# history
 function peco_history_selection() {
 #    BUFFER="$(history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER" | sed 's/\\n/\n/')"
     BUFFER=$(history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER")
@@ -376,6 +340,7 @@ function peco_history_selection() {
 zle -N peco_history_selection
 bindkey '^R' peco_history_selection
 
+# ghq
 function peco_ghq_look() {
     local ghq_roots="$(git config --path --get-all ghq.root)"
     local selected_dir=$(ghq list --full-path | \
@@ -390,6 +355,16 @@ function peco_ghq_look() {
 }
 zle -N peco_ghq_look
 bindkey '^G' peco_ghq_look
+
+# cdr
+if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
+    autoload -Uz chpwd_recent_dirs cdr
+    add-zsh-hook chpwd chpwd_recent_dirs
+    zstyle ':completion:*' recent-dirs-insert both
+    zstyle ':chpwd:*' recent-dirs-default true
+    zstyle ':chpwd:*' recent-dirs-max 1000
+    zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
+fi
 
 function peco_cdr() {
     local selected_dir="$(cdr -l | sed 's/^[0-9]\+ \+//' | peco --prompt="cdr >" --query "$LBUFFER")"

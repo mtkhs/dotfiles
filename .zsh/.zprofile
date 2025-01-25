@@ -15,6 +15,7 @@ case ${OSTYPE} in
     darwin*)
         unset LC_ALL
         export LANG=en_US.UTF-8
+        export LC_ALL=en_US.UTF-8
 #        export LC_ALL=ja_JP.UTF-8
 #        export LANG=ja_JP.UTF-8
         export EDITOR='vim'
@@ -46,6 +47,7 @@ case ${OSTYPE} in
         unset LC_ALL
 #        export LC_ALL=ja_JP.UTF-8
         export LANG=en_US.UTF-8
+        export LC_ALL=en_US.UTF-8
 
         export GOPATH=$HOME/go
         export GOBIN=$GOPATH/bin
@@ -62,12 +64,8 @@ case ${OSTYPE} in
                 skip_global_compinit=1
             fi
         fi
-        # WSL
-#        if ( which wslfetch > /dev/null 2>&1 ); then
-#            alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'
-#        fi
         
-        if [ "${OS}" != "WLinux" ]; then
+        if [ ! -f /etc/wsl.conf ]; then
             #
             # Attach tmux
             # http://d.hatena.ne.jp/nari_memo/20120129/1327822418

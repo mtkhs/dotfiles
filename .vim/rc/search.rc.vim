@@ -4,8 +4,9 @@
 
 " Ignore the case of normal letters.
 set ignorecase
-" If the search pattern contains upper case characters, override ignorecase
-" option.
+" Ignore case on insert completion.
+set infercase
+" If the search pattern contains upper case characters, override ignorecase option.
 set smartcase
 
 " Enable incremental search.

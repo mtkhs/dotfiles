@@ -19,10 +19,10 @@ case ${OSTYPE} in
         # golang-go # direnv
         # libncurses5-dev # tig
         # libncurses5-dev libevent-dev # tmux
-        sudo apt install -y software-properties-common cargo rustc \
+        sudo apt install -y software-properties-common cargo rustc language-pack-en \
         build-essential autoconf golang-go libncurses5-dev libevent-dev \
         zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev \
-        exa
+        bison # for tmux build
         ;;
       CentOS )
         ;;

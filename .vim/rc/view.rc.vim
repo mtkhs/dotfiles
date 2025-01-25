@@ -51,17 +51,6 @@ endif
 " Disable folding
 set nofoldenable
 
-" Don't create backup.
-set nowritebackup
-set nobackup
-set noswapfile
-set backupdir-=.
-
-" Disable bell.
-set t_vb=
-set novisualbell
-"set belloff=all
-
 " Display candidate supplement.
 set nowildmenu
 set wildmode=list:longest,full
@@ -89,9 +78,6 @@ set noequalalways
 set previewheight=8
 set helpheight=12
 
-set ttyfast
-set lazyredraw
-
 " When a line is long, do not omit it in @.
 set display=lastline
 " Display an invisible letter with hex format.
@@ -111,6 +97,19 @@ function! WidthPart(str, width) abort
 
   return ret
 endfunction
+
+" Highlight parenthesis.
+set showmatch
+
+" Highlight <>.
+set matchpairs+=<:>
+
+" Highlight when CursorMoved.
+set cpoptions-=m
+set matchtime=1
+
+" Enable virtualedit in visual block mode.
+set virtualedit=block
 
 "
 " auto cursorline

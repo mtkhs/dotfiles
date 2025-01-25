@@ -94,6 +94,9 @@ call s:source_rc('view.rc.vim')
 
 call s:source_rc('mappings.rc.vim')
 
+" sudo write
+cmap w!! w !sudo tee > /dev/null %
+
 "---------------------------------------------------------------------------
 " Commands:
 "

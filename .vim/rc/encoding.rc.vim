@@ -1,7 +1,25 @@
 "---------------------------------------------------------------------------
 " Encoding:
 "
-" The automatic recognition of the character code.
+
+" Setting of the encoding to use for a save and reading.
+" Make it normal in UTF-8 in Unix.
+if has('vim_starting') && &encoding !=# 'utf-8'
+  if IsWindows() && !has('gui_running')
+    set encoding=cp932
+  else
+    set encoding=utf-8
+  endif
+endif
+
+" Build encodings.
+let &fileencodings = join([ 'ucs-bom', 'iso-2022-jp-3', 'utf-8', 'euc-jp', 'cp932' ])
+
+" Setting of terminal encoding.
+if !has('gui_running') && IsWindows()
+  " For system.
+  set termencoding=cp932
+endif
 
 " When do not include Japanese, use encoding for fileencoding.
 function! s:ReCheck_FENC() abort
