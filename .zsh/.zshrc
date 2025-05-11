@@ -97,14 +97,14 @@ zinit light "junegunn/fzf-bin"
 zinit ice wait lucid from"gh-r" as"program" mv"direnv* -> direnv"
 zinit light "direnv/direnv"
 
-zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure; make" atpull"%atclone" pick"*/tmux"
+zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux"
 zinit light "tmux/tmux"
 
-zinit ice wait lucid from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
-zinit light "jonas/tig"
+#zinit ice wait lucid from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
+#zinit light "jonas/tig"
 
-zinit ice wait lucid from"gh-r" as"program" pick"*/gitui"
-zinit light "extrawurst/gitui"
+#zinit ice wait lucid from"gh-r" as"program" pick"*/gitui"
+#zinit light "extrawurst/gitui"
 
 zinit ice wait lucid from"gh-r" as"program" id-as"gh" has"git" atclone'**/gh completion -s zsh > _gh' atpull'%atclone' pick'**/gh'
 zinit light "cli/cli"
@@ -164,8 +164,8 @@ case ${OS} in
         zinit ice wait lucid from"gh-r" as"program" pick"*/diskus"
         zinit light "sharkdp/diskus"
 
-        zinit ice wait lucid from"gh-r" as"program" pick"eza"
-        zinit light "eza-community/eza"
+#        zinit ice wait lucid from"gh-r" as"program" pick"eza"
+#        zinit light "eza-community/eza"
 
         zinit ice wait lucid from"gh-r" as"program" pick"*/bin/nvim"
         zinit light "neovim/neovim"
