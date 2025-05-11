@@ -90,6 +90,7 @@ EOF
     cat > $NODENV_ROOT/default-packages << "EOF"
 yarn
 EOF
+    nodenv package-hooks install --all
 
     # goenv
     anyenv install goenv

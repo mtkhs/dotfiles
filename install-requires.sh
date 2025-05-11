@@ -21,7 +21,7 @@ case ${OSTYPE} in
         # libncurses5-dev libevent-dev # tmux
         sudo apt install -y software-properties-common cargo rustc language-pack-en \
         build-essential autoconf golang-go libncurses5-dev libevent-dev \
-        zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev \
+        zlib1g-dev libffi-dev libbz2-dev libreadline-dev unzip libssl-dev libsqlite3-dev \
         bison # for tmux build
         ;;
       CentOS )
