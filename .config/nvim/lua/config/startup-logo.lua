@@ -1,11 +1,12 @@
-require('config.lazy')
-
-require('options')
-require('keymaps')
-
-
+-------------------------------------------------------------------------------
+--
+-- Neovim起動時にロゴをﾋｭﾝﾋｭﾝﾋｭﾝﾋｭﾝﾋｭﾝ!!ﾌﾜﾜ~~ﾝ!!する
+-- https://zenn.dev/vim_jp/articles/de942e6414685e
+-- 
+-------------------------------------------------------------------------------
+---
 -- augroup for this config file
-local augroup = vim.api.nvim_create_augroup('start-logo', {})
+local augroup = vim.api.nvim_create_augroup('startup-logo', {})
 
 -- wrapper function to use internal augroup
 local function create_autocmd(event, opts)
@@ -41,7 +42,8 @@ local function display_logo()
   end, logo_lines)
   local width = math.max(unpack(line_widths))
   local height = #logo_lines + 1
-  local row = 2
+  --local row = 2
+  local row = vim.o.lines / 10
   local col = math.floor((vim.o.columns - width) / 2)
 
   local focusable = false
@@ -58,12 +60,15 @@ local function display_logo()
   }
 
   local win = vim.api.nvim_open_win(buf, focusable, winopts)
+  vim.api.nvim_set_option_value('ambiwidth', 'single', { scope = 'local'})
   vim.api.nvim_set_option_value('winblend', 100, { scope = 'local', win = win })
   -- vim.api.nvim_set_option_value('winblend', 100, { win = win })
   -- vim.api.nvim_set_option_value('bufhidden', 'wipe', { scope = 'local', buf = buf })
   vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
 
   local subcommands = {
+    'expand --movement-speed 0.8',
+    'rain',
     'middleout --center-movement-speed 0.8 --full-movement-speed 0.2',
     'slide --merge --movement-speed 0.8',
     'beams --beam-delay 5 --beam-row-speed-range 20-60 --beam-column-speed-range 8-12',
@@ -75,7 +80,8 @@ local function display_logo()
   local cmd = {
     'sh',
     '-c',
-    'echo -e '
+    -- 'echo -e '
+    'echo '
       .. vim.fn.shellescape(vim.trim(logo))
       .. ' | tte --anchor-canvas s '
       .. subcommand
@@ -89,7 +95,6 @@ local function display_logo()
   end)
   return { buf = buf, win = win }
 end
-
 
 vim.api.nvim_create_autocmd('User', {
   group = augroup,
@@ -112,3 +117,4 @@ vim.api.nvim_create_autocmd('User', {
   end,
   desc = 'Display logo when starter opened'
 })
+

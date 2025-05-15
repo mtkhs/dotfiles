@@ -116,9 +116,9 @@ autocmd BufEnter * call s:ChangeCurrentDirectory()
 " Platform:
 "
 
-if has('nvim')
-  call s:source_rc('neovim.rc.vim')
-endif
+"if has('nvim')
+"  call s:source_rc('neovim.rc.vim')
+"endif
 
 if IsWindows()
   call s:source_rc('windows.rc.vim')
@@ -133,6 +133,11 @@ endif
 "---------------------------------------------------------------------------
 " Syntax On:
 "
+
+autocmd colorscheme * highlight Normal      ctermbg=NONE guibg=NONE
+autocmd colorscheme * highlight NonText     ctermbg=NONE guibg=NONE
+autocmd colorscheme * highlight Folded      ctermbg=NONE guibg=NONE
+autocmd colorscheme * highlight EndOfBuffer ctermbg=NONE guibg=NONE
 
 filetype plugin indent on
 syntax enable

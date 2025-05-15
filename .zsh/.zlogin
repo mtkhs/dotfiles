@@ -8,6 +8,7 @@ alias ....='../../..'
 alias .....='../../../..'
 
 #alias ls='eza --color=always --group-directories-first --group --bytes'
+alias ls='ls --color=always --group-directories-first --group'
 #alias la='eza -halgF --git --color=always --group-directories-first'
 alias l='la'
 alias ll='\ls -n'

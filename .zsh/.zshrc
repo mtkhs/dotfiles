@@ -121,9 +121,6 @@ zinit light "BurntSushi/ripgrep"
 zinit ice wait lucid from"gh-r" as"program" pick"*/delta"
 zinit light "dandavison/delta"
 
-zinit ice wait lucid from"gh-r" as"program" pick"*/navi"
-zinit light "denisidoro/navi"
-
 zinit ice wait lucid from"gh-r" as"program" pick"*/xh"
 zinit light "ducaale/xh"
 
@@ -167,7 +164,7 @@ case ${OS} in
 #        zinit ice wait lucid from"gh-r" as"program" pick"eza"
 #        zinit light "eza-community/eza"
 
-        zinit ice wait lucid from"gh-r" as"program" pick"*/bin/nvim"
+        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x86_64.tar.gz" pick"*/bin/nvim"
         zinit light "neovim/neovim"
 
         ;;

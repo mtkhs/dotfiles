@@ -57,5 +57,4 @@ endif
 set mouse=
 
 " Colorscheme
-colorscheme evening
-
+colorscheme torte
