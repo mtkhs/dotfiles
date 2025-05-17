@@ -7,7 +7,7 @@
 #   <r> <g> <b> range from 0 to 255 inclusive.
 #   The escape sequence ^[0m returns output to default
 
-SEPARATOR=':'
+SEPARATOR=';'
 
 setBackgroundColor()
 {

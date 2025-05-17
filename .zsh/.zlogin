@@ -1,17 +1,16 @@
+#---------------------------------------------------------------------------
+# .zlogin
+#---------------------------------------------------------------------------
 
 if type nvim &> /dev/null; then
-    alias vim='nvim'
+    alias vi='nvim'
 fi
 
 alias ...='../..'
 alias ....='../../..'
 alias .....='../../../..'
 
-#alias ls='eza --color=always --group-directories-first --group --bytes'
 alias ls='ls --color=always --group-directories-first --group'
-#alias la='eza -halgF --git --color=always --group-directories-first'
-alias l='la'
-alias ll='\ls -n'
 
 alias tl='tmux list-sessions'
 

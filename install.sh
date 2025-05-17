@@ -46,64 +46,35 @@ case ${OSTYPE} in
         ;;
 esac
 
-# anyenv
-if [ -d ${HOME}/.anyenv ]; then
-    echo "anyenv is already installed."
-else
-    echo "Install anyenv..."
-    git clone https://github.com/anyenv/anyenv ~/.anyenv
-    export PATH="$HOME/.anyenv/bin:$PATH"
-    yes | anyenv install --init
-    eval "$(anyenv init - --no-rehash)"
-    mkdir -p $(anyenv root)/plugins
-    git clone https://github.com/znz/anyenv-update $(anyenv root)/plugins/anyenv-update
-    git clone https://github.com/znz/anyenv-git $(anyenv root)/plugins/anyenv-git
-
-    # rbenv
-    anyenv install rbenv
-    RBENV_ROOT="$(anyenv root)/envs/rbenv" # $(rbenv root)
-    git clone https://github.com/rbenv/rbenv-default-gems.git $RBENV_ROOT/plugins/rbenv-default-gems
-    cat > $RBENV_ROOT/default-gems << "EOF"
-bundler
-pry
-EOF
-
-    # pyenv
-    anyenv install pyenv
-    PYENV_ROOT="$(anyenv root)/envs/pyenv" # $(pyenv root)
-    git clone https://github.com/massongit/pyenv-pip-update.git $PYENV_ROOT/plugins/pyenv-pip-update
-    git clone https://github.com/jawshooah/pyenv-default-packages.git $PYENV_ROOT/plugins/pyenv-default-packages
-    cat > $PYENV_ROOT/default-packages << "EOF"
-jedi
-httpie
-EOF
-
-    # phpenv
-    anyenv install phpenv
-    PHPENV_ROOT="$(anyenv root)/envs/phpenv" # $(phpenv root)
-
-    # nodenv
-    anyenv install nodenv
-    NODENV_ROOT="$(anyenv root)/envs/nodenv" # $(nodenv root)
-    git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_ROOT/plugins/nodenv-package-rehash
-    git clone https://github.com/nodenv/nodenv-default-packages.git $NODENV_ROOT/plugins/nodenv-default-packages
-    cat > $NODENV_ROOT/default-packages << "EOF"
-yarn
-EOF
-    nodenv package-hooks install --all
-
-    # goenv
-    anyenv install goenv
-    GOENV_ROOT="$(anyenv root)/envs/goenv" # $(goenv root)
-fi
-
 # zsh zinit
 if [ -d ${HOME}/.zinit ]; then
     echo "zinit is already installed."
 else
     echo "Install zinit..."
-    mkdir ~/.zinit
+    mkdir ${HOME}/.zinit
     git clone https://github.com/zdharma-continuum/zinit.git ~/.zinit/bin
+fi
+
+# mise
+if [ -f ${HOME}/.local/bin/mise ]; then
+    echo "mise is already installed."
+else
+    echo "Install mise..."
+    curl https://mise.run | sh
+    mise completion zsh > ${HOME}/.zinit/completions/_mise
+    mise settings add idiomatic_version_file_enable_tools python
+    mise settings add idiomatic_version_file_enable_tools node
+
+    LATEST_PYTHON=`mise latest python`
+    mise install python@${LATEST_PYTHON}
+    mise use python@${LATEST_PYTHON} --global
+
+    pip install --upgrade pip
+    pip install terminaltexteffects
+
+    LATEST_NODE=`mise latest node`
+    mise install node@${LATEST_NODE}
+    mise use node@${LATEST_NODE} --global
 fi
 
 # tmux tpm
@@ -111,7 +82,6 @@ if [ -d ${HOME}/.tmux/plugins ]; then
     echo "tpm is already installed."
 else
     echo "Install tpm..."
-    mkdir -p ~/.tmux
     mkdir -p ~/.tmux/plugins
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     echo "Install tpm plugins..."

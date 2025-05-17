@@ -100,49 +100,43 @@ zinit light "direnv/direnv"
 zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux"
 zinit light "tmux/tmux"
 
-#zinit ice wait lucid from"gh-r" as"program" bpick"tig-*.tar.gz" atclone"cd tig-*/; ./configure; make" atpull"%atclone" pick"*/src/tig"
-#zinit light "jonas/tig"
+#zinit ice wait lucid from"gh-r" as"program" id-as"gh" has"git" atclone'**/gh completion -s zsh > _gh' atpull'%atclone' pick'**/gh'
+#zinit light "cli/cli"
 
-#zinit ice wait lucid from"gh-r" as"program" pick"*/gitui"
-#zinit light "extrawurst/gitui"
+# cat
+#zinit ice wait lucid from"gh-r" as"program" pick"*/bat"
+#zinit light "sharkdp/bat"
 
-zinit ice wait lucid from"gh-r" as"program" id-as"gh" has"git" atclone'**/gh completion -s zsh > _gh' atpull'%atclone' pick'**/gh'
-zinit light "cli/cli"
+# find
+#zinit ice wait lucid from"gh-r" as"program" pick"*/fd"
+#zinit light "sharkdp/fd"
 
-zinit ice wait lucid from"gh-r" as"program" pick"*/bat"
-zinit light "sharkdp/bat"
-
-zinit ice wait lucid from"gh-r" as"program" pick"*/fd"
-zinit light "sharkdp/fd"
-
+# grep
 zinit ice wait lucid from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg"
 zinit light "BurntSushi/ripgrep"
 
+# diff
 zinit ice wait lucid from"gh-r" as"program" pick"*/delta"
 zinit light "dandavison/delta"
 
-zinit ice wait lucid from"gh-r" as"program" pick"*/xh"
-zinit light "ducaale/xh"
+# curl
+#zinit ice wait lucid from"gh-r" as"program" pick"*/xh"
+#zinit light "ducaale/xh"
 
-zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/dog"
-zinit light "ogham/dog"
-
-zinit ice wait lucid from"gh" as"program" pick"neofetch"
-zinit light "dylanaraps/neofetch"
-
-zinit ice wait lucid from"gh" as"program" pick"prettyping"
-zinit light "denilsonsa/prettyping"
+# dig
+#zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/dog"
+#zinit light "ogham/dog"
 
 case ${OS} in
     Rasp*)
+        zinit ice wait lucid from"gh-r" as"program" bpick"*linux_arm64*" pick"*/peco"
+        zinit light "peco/peco"
+
         zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/hexyl"
         zinit light "sharkdp/hexyl"
 
         zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/diskus"
         zinit light "sharkdp/diskus"
-
-        zinit ice wait lucid from"gh-r" as"program" bpick"*linux_arm64*" pick"*/peco"
-        zinit light "peco/peco"
 
         ;;
     Manjaro*)
@@ -152,21 +146,23 @@ case ${OS} in
         zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
         zinit light "peco/peco"
 
-        zinit ice wait lucid from"gh-r" as"program" pick"*/ghq"
-        zinit light "x-motemen/ghq"
-
         zinit ice wait lucid from"gh-r" as"program" pick"*/hexyl"
         zinit light "sharkdp/hexyl"
 
         zinit ice wait lucid from"gh-r" as"program" pick"*/diskus"
         zinit light "sharkdp/diskus"
 
-#        zinit ice wait lucid from"gh-r" as"program" pick"eza"
-#        zinit light "eza-community/eza"
+        #zinit ice wait lucid from"gh-r" as"program" pick"*/ghq"
+        #zinit light "x-motemen/ghq"
 
-        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x86_64.tar.gz" pick"*/bin/nvim"
+        # ls
+        zinit ice wait lucid from"gh-r" as"program" pick"eza" atload"alias ls='eza --bytes --group-directories-first --group'"
+        zinit light "eza-community/eza"
+        
+        # vi
+        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
         zinit light "neovim/neovim"
-
+        
         ;;
 esac
 

@@ -89,10 +89,14 @@ case ${OSTYPE} in
     ;;
 esac
 
-if [[ -d "$HOME/.anyenv" ]]; then
-    export PATH="$HOME/.anyenv/bin:$PATH"
-    eval "$(anyenv init - --no-rehash zsh)"
+if [[ -f "$HOME/.local/bin/mise" ]]; then
+    eval "$(mise activate zsh)"
 fi
+
+#if [[ -d "$HOME/.anyenv" ]]; then
+#    export PATH="$HOME/.anyenv/bin:$PATH"
+#    eval "$(anyenv init - --no-rehash zsh)"
+#fi
 
 if type direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
