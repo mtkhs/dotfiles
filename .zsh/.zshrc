@@ -91,11 +91,14 @@ zinit light "zsh-users/zsh-completions"
 zinit ice wait lucid atload'_zsh_autosuggest_start'
 zinit light "zsh-users/zsh-autosuggestions"
 
+zinit ice lucid
+zinit load "romkatv/zsh-defer"
+
 zinit ice wait lucid from"gh-r" as"program"
 zinit light "junegunn/fzf-bin"
 
-zinit ice wait lucid from"gh-r" as"program" mv"direnv* -> direnv"
-zinit light "direnv/direnv"
+#zinit ice wait lucid from"gh-r" as"program" mv"direnv* -> direnv"
+#zinit light "direnv/direnv"
 
 zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux"
 zinit light "tmux/tmux"
@@ -166,7 +169,7 @@ case ${OS} in
         ;;
 esac
 
-compinit -Cu
+zsh-defer compinit -Cu
 
 #---------------------------------------------------------------------------
 # completion:
