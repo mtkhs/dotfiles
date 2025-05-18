@@ -61,6 +61,7 @@ if [ -f ${HOME}/.local/bin/mise ]; then
 else
     echo "Install mise..."
     curl https://mise.run | sh
+
     mise completion zsh > ${HOME}/.zinit/completions/_mise
     mise settings add idiomatic_version_file_enable_tools python
     mise settings add idiomatic_version_file_enable_tools node
@@ -69,12 +70,13 @@ else
     mise install python@${LATEST_PYTHON}
     mise use python@${LATEST_PYTHON} --global
 
-    pip install --upgrade pip
-    pip install terminaltexteffects
-
     LATEST_NODE=`mise latest node`
     mise install node@${LATEST_NODE}
     mise use node@${LATEST_NODE} --global
+
+    eval "$(mise activate bash)"
+    pip install --upgrade pip
+    pip install terminaltexteffects
 fi
 
 # tmux tpm

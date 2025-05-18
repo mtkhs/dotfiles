@@ -130,30 +130,26 @@ zinit light "dandavison/delta"
 #zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/dog"
 #zinit light "ogham/dog"
 
-case ${OS} in
+case ${OSTYPE} in
     Rasp*)
         zinit ice wait lucid from"gh-r" as"program" bpick"*linux_arm64*" pick"*/peco"
         zinit light "peco/peco"
-
-        zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/hexyl"
-        zinit light "sharkdp/hexyl"
-
-        zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/diskus"
-        zinit light "sharkdp/diskus"
 
         ;;
     Manjaro*)
         
         ;;
-    *)
+    darwin*)
         zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
         zinit light "peco/peco"
 
-        zinit ice wait lucid from"gh-r" as"program" pick"*/hexyl"
-        zinit light "sharkdp/hexyl"
+        zinit ice wait lucid from"gh-r" as"program" bpick"*macos-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
+        zinit light "neovim/neovim"
 
-        zinit ice wait lucid from"gh-r" as"program" pick"*/diskus"
-        zinit light "sharkdp/diskus"
+        ;;
+    linux*)
+        zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
+        zinit light "peco/peco"
 
         #zinit ice wait lucid from"gh-r" as"program" pick"*/ghq"
         #zinit light "x-motemen/ghq"

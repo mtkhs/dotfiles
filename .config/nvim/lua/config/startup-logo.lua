@@ -43,7 +43,7 @@ local function display_logo()
   local width = math.max(unpack(line_widths))
   local height = #logo_lines + 1
   --local row = 2
-  local row = vim.o.lines / 10
+  local row = vim.o.lines / 10 - 2
   local col = math.floor((vim.o.columns - width) / 2)
 
   local focusable = false

@@ -10,7 +10,6 @@ alias ...='../..'
 alias ....='../../..'
 alias .....='../../../..'
 
-alias ls='ls --color=always --group-directories-first --group'
 
 alias tl='tmux list-sessions'
 
@@ -22,14 +21,14 @@ alias sudo='sudo -E '
 
 case ${OSTYPE} in
     darwin*)
-#        alias ls='LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx ls -G'
-#        alias vim='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+        if type gls &> /dev/null; then
+            alias ls='gls --color=always --group-directories-first --group'
+        fi
         ;;
     linux*)
-#        alias ls='ls -F --color=auto --show-control-char'
+        alias ls='ls --color=always --group-directories-first --group'
         ;;
 esac
-
 
 [ -f $HOME/.zlogin_local ] && source $HOME/.zlogin_local
 
