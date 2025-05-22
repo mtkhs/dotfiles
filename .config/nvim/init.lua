@@ -1,3 +1,4 @@
+
 -- augroup for this config file
 local augroup = vim.api.nvim_create_augroup('init.lua', {})
 
@@ -8,12 +9,12 @@ local function create_autocmd(event, opts)
   }, opts))
 end
 
-require('config.filetype')
-require('config.filetype-shebang')
-require('config.lazy')
-require('config.startup-logo')
 require('options')
 require('keymaps')
 
--- vim.cmd([[colorscheme tokyonight]])
+require('config.lazy')
+require('config.filetype')
+require('config.filetype-shebang')
+require('config.startup-logo')
+require('config.lsp')
 

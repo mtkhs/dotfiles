@@ -111,8 +111,8 @@ zinit light "tmux/tmux"
 #zinit light "sharkdp/bat"
 
 # find
-#zinit ice wait lucid from"gh-r" as"program" pick"*/fd"
-#zinit light "sharkdp/fd"
+zinit ice wait lucid from"gh-r" as"program" pick"*/fd"
+zinit light "sharkdp/fd"
 
 # grep
 zinit ice wait lucid from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg"
@@ -150,6 +150,9 @@ case ${OSTYPE} in
     linux*)
         zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
         zinit light "peco/peco"
+        # du
+        #zinit ice wait lucid from"gh-r" as"program" pick"*/diskus"
+        #zinit light "sharkdp/diskus"
 
         #zinit ice wait lucid from"gh-r" as"program" pick"*/ghq"
         #zinit light "x-motemen/ghq"
@@ -161,6 +164,15 @@ case ${OSTYPE} in
         # vi
         zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
         zinit light "neovim/neovim"
+
+        # lua-language-server
+        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x64.tar.gz" pick"*/lua-language-server"
+        zinit light "LuaLS/lua-language-server"
+
+        # tree-sitter
+        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x64.gz" mv"tree-sitter* -> tree-sitter"
+        zinit light "tree-sitter/tree-sitter"
+
         
         ;;
 esac
@@ -371,6 +383,18 @@ bindkey '^E' peco_cdr
 #---------------------------------------------------------------------------
 # fzf:
 #
+
+function fzf_history_search() {
+    local selected_command
+    selected_command=$(history -n 1 | tac | awk '!a[$0]++' | fzf --height 40% --layout=reverse --border --inline-info)
+    if [ -n "$selected_command" ]; then
+        BUFFER=$selected_command
+        CURSOR=$#BUFFER
+        zle reset-prompt
+    fi
+}
+zle -N fzf_history_search
+#bindkey '^R' fzf_history_search
 
 function fzf_cdr(){
     local selected_dir=$(cdr -l | awk '{ print $2 }' | \
