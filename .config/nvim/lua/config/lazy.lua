@@ -47,8 +47,19 @@ require("lazy").setup({
       lazy = "💤 ",
     },
   },
+  defaults = {
+    lazy = false,
+  },
   -- automatically check for plugin updates
-  checker = { enabled = true },
+  checker = {
+    enabled = false,
+    notify = true,
+  },
+  change_detection = {
+    -- automatically check for config file changes and reload the ui
+    enabled = true,
+    notify = true, -- get a notification when changes are found
+  },
   performance = {
     cache = {
       enabled = true,

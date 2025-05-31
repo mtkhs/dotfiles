@@ -30,8 +30,6 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.vimrc       $HOME/.vimrc
         ln -s -T $DOTFILES/.config/bat  $HOME/.config/bat
         ln -s -T $DOTFILES/.config/nvim $HOME/.config/nvim
-#        ln -s -T $HOME/.vim            $HOME/.config/nvim
-#        ln -s    $HOME/.vimrc          $HOME/.config/nvim/init.vim
         ln -s    $DOTFILES/.tmux.conf   $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig   $HOME/.gitconfig
         ln -s    $DOTFILES/.tigrc       $HOME/.tigrc
@@ -40,9 +38,6 @@ case ${OSTYPE} in
         ln -s -T $DOTFILES/.bundle      $HOME/.bundle
         ln -s    $DOTFILES/.hgrc        $HOME/.hgrc
         ln -s    $DOTFILES/.latexmkrc   $HOME/.latexmkrc
-#        ln -s    $DOTFILES/.rubocop.yml $HOME/.rubocop.yml
-#        ln -s    $DOTFILES/.pylintrc $HOME/.pylintrc
-#        ln -s    $DOTFILES/.eslintrc.js $HOME/.eslintrc.js
         ;;
 esac
 
@@ -91,14 +86,14 @@ else
 fi
 
 # vim dein
-if [ -d ${HOME}/.cache/dein ]; then
-    echo "dein is already installed."
-else
-    echo "Install dein..."
-    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ${HOME}/dein-installer.sh
-    sh ${HOME}/dein-installer.sh ~/.cache/dein
-    rm -f ${HOME}/dein-installer.sh
-fi
+#if [ -d ${HOME}/.cache/dein ]; then
+#    echo "dein is already installed."
+#else
+#    echo "Install dein..."
+#    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ${HOME}/dein-installer.sh
+#    sh ${HOME}/dein-installer.sh ~/.cache/dein
+#    rm -f ${HOME}/dein-installer.sh
+#fi
 
 # chsh
 ZSH=`which zsh`
