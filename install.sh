@@ -1,7 +1,6 @@
 #!/bin/bash
 
 DOTFILES="$HOME/dotfiles"
-
 cd $DOTFILES
 
 mkdir -p $HOME/.config/
@@ -84,16 +83,6 @@ else
     echo "Install tpm plugins..."
     ${HOME}/.tmux/plugins/tpm/bin/install_plugins
 fi
-
-# vim dein
-#if [ -d ${HOME}/.cache/dein ]; then
-#    echo "dein is already installed."
-#else
-#    echo "Install dein..."
-#    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > ${HOME}/dein-installer.sh
-#    sh ${HOME}/dein-installer.sh ~/.cache/dein
-#    rm -f ${HOME}/dein-installer.sh
-#fi
 
 # chsh
 ZSH=`which zsh`

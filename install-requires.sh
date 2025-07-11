@@ -1,18 +1,11 @@
 #!/bin/bash
 
-OS=$(lsb_release -si)
-ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
-VER=$(lsb_release -sr)
-
-#echo $OSTYPE
-#echo $OS
-#echo $ARCH
-#echo $VER
+source ./XX_common.bash
 
 echo "Install dependencies"
 case ${OSTYPE} in
   linux*)
-    case $OS in
+    case $OS_NAME in
       Debian | Ubuntu | Raspbian )
         sudo apt update
         # Ubuntu 18.04
@@ -29,29 +22,10 @@ case ${OSTYPE} in
     esac
     ;;
   darwin*)
-    echo Hello, darwin!
+    echo "Hello, darwin!"
+    ;;
+  *)
+    echo "Unexpected system! Nothing to do!"
     ;;
 esac
-
-<< COMMENTOUT
-if builtin command -v fzy > /dev/null ; then
-  echo "fzy is already installed."
-else
-  echo "Install fzy"
-  case ${OSTYPE} in
-    linux*)
-      case $OS in
-        Debian | Ubuntu | Raspbian )
-            wget -P /tmp https://github.com/jhawthorn/fzy/releases/download/1.0/fzy-1.0.tar.gz
-            tar xzvf /tmp/fzy-1.0.tar.gz -C /tmp
-            cd /tmp/fzy-1.0
-            make
-            sudo make install
-          ;;
-        CentOS )
-      esac
-      ;;
-  esac
-fi
-COMMENTOUT
 

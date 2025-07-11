@@ -5,6 +5,8 @@
 # ~/.vimrc -> ~/.config/nvim/init.vim
 .vim/init.vim
 
+.config/nvim/lazy-lock.json
+
 .zsh/.zcompdump
 .zsh/.ZPLUG_SUDO_PASSWORD
 .zsh/.zcompcache/
