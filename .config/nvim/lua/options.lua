@@ -37,8 +37,8 @@ vim.opt.showmatch = true -- 対応する括弧を表示する
 -- indent
 vim.opt.autoindent = true -- 自動インデントを有効に
 vim.opt.smartindent = true -- インデントをスマートに
-vim.opt.shiftwidth = 4 -- シフト幅を2に
-vim.opt.tabstop = 4 -- タブ幅を2に
+vim.opt.shiftwidth = 2 -- シフト幅を2に
+vim.opt.tabstop = 2 -- タブ幅を2に
 vim.opt.expandtab = true -- タブ文字をスペース文字に
 -- list
 vim.opt.list = true -- 特殊文字を表示する

@@ -1,4 +1,6 @@
 return {
-  "nvim-telescope/telescope-file-browser.nvim",
+  "nvim-telescope/telescope-ui-select.nvim",
   dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  config = function()
+  end,
 }
