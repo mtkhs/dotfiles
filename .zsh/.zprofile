@@ -43,17 +43,17 @@ case ${OSTYPE} in
 
     ;;
     linux*|cygwin*|msys*)
-        OS=$(lsb_release -si)
         unset LC_ALL
 #        export LC_ALL=ja_JP.UTF-8
         export LANG=en_US.UTF-8
         export LC_ALL=en_US.UTF-8
 
-        export GOPATH=$HOME/go
-        export GOBIN=$GOPATH/bin
-        export DENO_INSTALL="$HOME/.deno"
-        export PATH="$DENO_INSTALL/bin:$PATH"
-        export PATH=/snap/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
+        #export GOPATH=$HOME/go
+        #export GOBIN=$GOPATH/bin
+        #export DENO_INSTALL="$HOME/.deno"
+        #export PATH="$DENO_INSTALL/bin:$PATH"
+        #export PATH=/snap/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
+        export PATH=$HOME/.local/bin:$PATH
         export EDITOR='vim'
 
         if [ -e /etc/os-release ]; then

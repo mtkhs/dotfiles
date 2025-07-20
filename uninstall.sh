@@ -12,7 +12,10 @@ rm -f ~/.vimrc
 rm -f ~/.viminfo
 rm -f ~/.vim
 
-rm -rf ~/.anyenv
+mise implode -y
+#mise uninstall python
+#mise uninstall node
+#rm -rf ~/.cache/mise
 
 rm -f ~/.zshenv
 rm -f ~/.zsh
