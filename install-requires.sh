@@ -20,7 +20,7 @@ case ${OSTYPE} in
             CentOS )
                 ;;
             'Amazon Linux' )
-                sudo dnf install -y util-linux-user libevent sqlite-devel gnupg2 --allowerasing
+                sudo dnf install -y util-linux-user libevent-devel sqlite-devel gnupg2 --allowerasing
                 sudo dnf groupinstall -y "Development Tools"
                 ;;
         esac
