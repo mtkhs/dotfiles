@@ -3,6 +3,7 @@
 source ~/.zsh/.zshrc
 
 #anyenv update
+mise self-update
 
 zinit self-update
 source ~/.zsh/.zshrc

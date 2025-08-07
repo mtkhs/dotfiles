@@ -16,6 +16,7 @@ vim.opt.pumblend = 0 -- ポップアップメニューの不透明度
 vim.opt.showtabline = 2 -- タブラインを表示
 vim.opt.wildmenu = true -- 補完候補をメニューで表示する
 vim.opt.wildmode = {"longest", "full"} -- 補完モードを設定する
+vim.opt.mouse = '' -- マウス無効化
 
 --
 -- os
