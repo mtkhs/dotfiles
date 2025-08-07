@@ -33,9 +33,9 @@ config.font_size = 13.0
 ----------------------------------------------------------------------------------
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     config.default_domain = 'WSL:Ubuntu'
-    --
+    ----------------------------------------
     -- 起動時にウィンドウ最大化
-    --
+    ----------------------------------------
     wezterm.on('gui-startup', function(cmd)
         local _, _, window = mux.spawn_window(cmd or {})
         window:gui_window():maximize()
@@ -81,45 +81,51 @@ config.hide_tab_bar_if_only_one_tab = true
 ----------------------------------------------------------------------------------
 config.disable_default_key_bindings = true
 config.keys = {
-    --
+    ----------------------------------------
+    -- WezTerm
+    ----------------------------------------
+    -- コマンドパレット
+    { key = 'p', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
+
+    ----------------------------------------
     -- タブ操作
-    --
-    {
-        key = 't',
-        mods = 'SUPER',
-        action = act.SpawnCommandInNewTab {
-            domain = { DomainName = 'WSL:Ubuntu' },
-            cwd    = '~',
-        },
-    },
-    {
-        key = 'w',
-        mods = 'SUPER',
-        action = act.CloseCurrentTab { confirm = true },
-    },
-    {
-        key = 'Tab',
-        mods = 'SUPER',
-        action = act.ActivateTabRelative(1)
-    },
-    {
-        key = 'Tab',
-        mods = 'SHIFT|SUPER',
-        action = act.ActivateTabRelative(-1)
-    },
-    --
+    ----------------------------------------
+    -- 新規タブ
+    { key = 't', mods = 'SUPER', action = act.SpawnCommandInNewTab { domain = { DomainName = 'WSL:Ubuntu' }, cwd = '~' } },
+    -- { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab { confirm = true } },
+    -- タブを切り替え
+    { key = 'Tab', mods = 'SUPER', action = act.ActivateTabRelative(1) },
+    { key = 'Tab', mods = 'SHIFT|SUPER', action = act.ActivateTabRelative(-1) },
+    
+    ----------------------------------------
+    -- ペイン操作
+    ----------------------------------------
+    -- ペインを水平方向に開く
+    { key = "-", mods = "SUPER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" }, cwd = '~' }) },
+    -- ペインを縦方向に開く
+    { key = "\\", mods = "SUPER", action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" }, cwd = '~' }) },
+    -- ペインを閉じる
+    { key = "w", mods = "SHIFT|CTRL", action = wezterm.action({ CloseCurrentPane = { confirm = true } }) },
+    -- ペインを切り替え
+    { key = "q", mods = "SUPER", action = wezterm.action({ ActivatePaneDirection = "Next" }) },
+    { key = "q", mods = "SHIFT|SUPER", action = wezterm.action({ ActivatePaneDirection = "Prev" }) },
+    -- hjklでPANEを移動する
+    { key = "h", mods = "SHIFT|CTRL", action = wezterm.action({ ActivatePaneDirection = "Left" }) },
+    { key = "l", mods = "SHIFT|CTRL", action = wezterm.action({ ActivatePaneDirection = "Right" }) },
+    { key = "k", mods = "SHIFT|CTRL", action = wezterm.action({ ActivatePaneDirection = "Up" }) },
+    { key = "j", mods = "SHIFT|CTRL", action = wezterm.action({ ActivatePaneDirection = "Down" }) },
+
+    ----------------------------------------
+    -- ターミナル
+    ----------------------------------------
     -- Ctrl+Backspaceで単語削除
-    --
-    {
-        key = "Backspace",
-        mods = "CTRL",
-        action = act.SendKey { key = "w", mods = "CTRL" },
-    },
-    { key = 'p', mods = 'SUPER', action = act.ActivateCommandPalette },
-    { key = ';', mods = 'CTRL', action = act.IncreaseFontSize },
-    { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
-    { key = '0', mods = 'CTRL', action = act.ResetFontSize },
+    { key = "Backspace", mods = "CTRL", action = act.SendKey { key = "w", mods = "CTRL" } },
+    -- クリップボード貼り付け
     { key = 'Insert', mods = 'SHIFT', action = act.PasteFrom( 'Clipboard' ) },
+    -- フォントサイズ
+    -- { key = ';', mods = 'CTRL', action = act.IncreaseFontSize },
+    -- { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
+    -- { key = '0', mods = 'CTRL', action = act.ResetFontSize },
 }
 
 ----------------------------------------------------------------------------------
@@ -128,17 +134,17 @@ config.keys = {
 --
 ----------------------------------------------------------------------------------
 config.mouse_bindings = {
-    --
+    ----------------------------------------
     -- テキスト選択でコピー
-    --
+    ----------------------------------------
     {
       event = { Up = { streak = 1, button = 'Left' } },
       mods = 'NONE',
       action = act.CopyTo( 'ClipboardAndPrimarySelection' ),
     },
-    --
+    ----------------------------------------
     -- 右クリックでペースト
-    --
+    ----------------------------------------
     {
       event = { Down = { streak = 1, button = 'Right' } },
       mods = 'NONE',
