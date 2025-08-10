@@ -68,10 +68,10 @@ local function display_logo()
 
   local subcommands = {
     'expand --movement-speed 0.8',
-    'rain',
     'middleout --center-movement-speed 0.8 --full-movement-speed 0.2',
     'slide --merge --movement-speed 0.8',
     'beams --beam-delay 5 --beam-row-speed-range 20-60 --beam-column-speed-range 8-12',
+    'sweep',
   }
   -- random pick subcommand
   math.randomseed(os.time())
