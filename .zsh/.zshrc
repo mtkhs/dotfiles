@@ -100,11 +100,17 @@ zinit light "junegunn/fzf-bin"
 #zinit ice wait lucid from"gh-r" as"program" mv"direnv* -> direnv"
 #zinit light "direnv/direnv"
 
+# tmux
 zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux"
 zinit light "tmux/tmux"
 
-#zinit ice wait lucid from"gh-r" as"program" id-as"gh" has"git" atclone'**/gh completion -s zsh > _gh' atpull'%atclone' pick'**/gh'
-#zinit light "cli/cli"
+# gh
+zinit ice wait lucid from"gh-r" as"program" id-as"gh" has"git" atclone'**/gh completion -s zsh > _gh' atpull'%atclone' pick'**/gh'
+zinit light "cli/cli"
+
+# lazygit
+zinit ice wait lucid from"gh-r" as"program"
+zinit light "jesseduffield/lazygit"
 
 # cat
 #zinit ice wait lucid from"gh-r" as"program" pick"*/bat"
@@ -154,8 +160,9 @@ case ${OSTYPE} in
         #zinit ice wait lucid from"gh-r" as"program" pick"*/diskus"
         #zinit light "sharkdp/diskus"
 
-        #zinit ice wait lucid from"gh-r" as"program" pick"*/ghq"
-        #zinit light "x-motemen/ghq"
+        # ghq
+        zinit ice wait lucid from"gh-r" as"program" pick"*/ghq"
+        zinit light "x-motemen/ghq"
 
         # ls
         zinit ice wait lucid from"gh-r" as"program" pick"eza" atload"alias ls='eza --bytes --group-directories-first --group'"

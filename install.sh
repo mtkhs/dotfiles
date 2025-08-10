@@ -15,11 +15,6 @@ case ${OSTYPE} in
         ln -s -h $DOTFILES/.config/nvim $HOME/.config/nvim
         ln -s    $DOTFILES/.tmux.conf   $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig   $HOME/.gitconfig
-        ln -s    $DOTFILES/.tigrc       $HOME/.tigrc
-        ln -s    $DOTFILES/.gemrc       $HOME/.gemrc
-        ln -s    $DOTFILES/.railsrc     $HOME/.railsrc
-        ln -s -h $DOTFILES/.bundle      $HOME/.bundle
-        ln -s    $DOTFILES/.hgrc        $HOME/.hgrc
         ln -s    $DOTFILES/.latexmkrc   $HOME/.latexmkrc
         ;;
     linux*)
@@ -31,11 +26,6 @@ case ${OSTYPE} in
         ln -s -T $DOTFILES/.config/nvim $HOME/.config/nvim
         ln -s    $DOTFILES/.tmux.conf   $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig   $HOME/.gitconfig
-        ln -s    $DOTFILES/.tigrc       $HOME/.tigrc
-        ln -s    $DOTFILES/.gemrc       $HOME/.gemrc
-        ln -s    $DOTFILES/.railsrc     $HOME/.railsrc
-        ln -s -T $DOTFILES/.bundle      $HOME/.bundle
-        ln -s    $DOTFILES/.hgrc        $HOME/.hgrc
         ln -s    $DOTFILES/.latexmkrc   $HOME/.latexmkrc
         ;;
 esac
@@ -60,13 +50,17 @@ else
     mise settings add idiomatic_version_file_enable_tools python
     mise settings add idiomatic_version_file_enable_tools node
 
-    LATEST_PYTHON=`mise latest python`
-    mise install python@${LATEST_PYTHON}
-    mise use python@${LATEST_PYTHON} --global
+    #LATEST_PYTHON=`mise latest python`
+    #mise install python@${LATEST_PYTHON}
+    #mise use python@${LATEST_PYTHON} --global
 
-    LATEST_NODE=`mise latest node`
-    mise install node@${LATEST_NODE}
-    mise use node@${LATEST_NODE} --global
+    #LATEST_NODE=`mise latest node`
+    #mise install node@${LATEST_NODE}
+    #mise use node@${LATEST_NODE} --global
+
+    mise use -g node@latest
+    mise use -g python@latest
+    mise use -g uv@latest
 
     eval "$(mise activate bash)"
     pip install --upgrade pip

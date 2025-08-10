@@ -15,7 +15,8 @@ case ${OSTYPE} in
                 sudo apt install -y software-properties-common cargo rustc language-pack-en \
                     build-essential autoconf golang-go libncurses5-dev libevent-dev \
                     zlib1g-dev libffi-dev libbz2-dev libreadline-dev unzip libssl-dev libsqlite3-dev \
-                    bison # for tmux build
+                    bison \
+                    fonts-liberation fonts-noto-cjk fonts-ipafont-gothic fonts-ipafont-mincho
                 ;;
             CentOS )
                 ;;

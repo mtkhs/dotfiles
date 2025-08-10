@@ -1,12 +1,24 @@
-.vim/.neobundle/
-.vim/neobundle.vim
+# Claude Code: 個人設定のみ無視、チーム設定は管理対象
+.claude/settings.local.json
+.claude/hooks/local/
+.claude/commands/local/
+.claude/logs/
+.claude/*.log
+.claude/audit-*.log
 
+# 以下はGit管理対象（明示的コメント）
+# .claude/settings.json      ← チーム標準設定
+# .claude/CLAUDE.md          ← プロジェクト規律  
+# .claude/commands/          ← チーム共有コマンド
+# .claude/hooks/             ← チーム共有Hook
+
+# vi
 # ~/.vim/ -> ~/.config/nvim/
 # ~/.vimrc -> ~/.config/nvim/init.vim
 .vim/init.vim
-
 .config/nvim/lazy-lock.json
 
+# zsh
 .zsh/.zcompdump
 .zsh/.ZPLUG_SUDO_PASSWORD
 .zsh/.zcompcache/

@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [
+      "List(*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(ghq:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(pwd:*)",
+      "Bash(cd:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(mv:*)",
+      "Bash(cp:*)",
+      "Bash(npm:*)",
+      "Bash(jq:*)",
+      "Bash(curl:*)",
+      "Bash(echo:*)",
+      "Bash(cargo:*)",
+      "Read(**)",
+      "Edit(~/projects/**)",
+      "Fetch(https://*)",
+      "WebFetch(domain:*)"
+    ],
+    "deny": [
+      "Bash(sudo:*)",
+      "Bash(rm -rf:*)",
+      "Read(id_rsa)",
+      "Read(id_ed25519)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm remove:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -n --arg reason 'Use Bash(gemini --prompt \"WebSearch: <query>\") instead.' '{decision: \"block\", reason: $reason}'"
+          }
+        ]
+      }
+    ]
+  }
+}
