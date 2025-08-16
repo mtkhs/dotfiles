@@ -1,175 +1,191 @@
-"---------------------------------------------------------------------------
-" .vimrc
-"---------------------------------------------------------------------------
-
-" TODO: use legacy .vimrc if vim version <= 7.4
-
-"---------------------------------------------------------------------------
-" Initialize:
 "
-
+" Basic
+"
 if &compatible
   set nocompatible
 endif
 
-function! s:source_rc(path, ...) abort
-  let use_global = get(a:000, 0, !has('vim_starting'))
-  let abspath = resolve(expand('~/.vim/rc/' . a:path))
-  if !use_global
-    execute 'source' fnameescape(abspath)
-    return
-  endif
-
-  " substitute all 'set' to 'setglobal'
-"  let content = map(readfile(abspath),
-"        \ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")')
-  " create tempfile and source the tempfile
-"  let tempfile = tempname()
-"  try
-"    call writefile(content, tempfile)
-"    execute 'source' fnameescape(tempfile)
-"  finally
-"    if filereadable(tempfile)
-"      call delete(tempfile)
-"    endif
-"  endtry
-endfunction
-
-syntax off
-filetype plugin indent off
-
-augroup MyAutoCmd
-  autocmd!
-augroup END
-
-if has('vim_starting')
-  call s:source_rc('init.rc.vim')
+set encoding=utf-8
+set fileencoding=&encoding
+set fileencodings=usc-bom,utf-8,iso-2022-jp,cp932,euc-jp,sjis,default,latin
+set fileformats=unix
+set fileformats=unix,dos,mac
+if exists('&ambiwidth')
+  set ambiwidth=double
 endif
 
-call s:source_rc('dein.rc.vim')
+language message C
 
-"if has('vim_starting') && !empty(argv())
-"  call vimrc#on_filetype()
-"endif
+set autochdir
+set hidden
+set noundofile
+set nowritebackup
+set nobackup
+set noswapfile
+set backupdir-=.
 
-"if !has('vim_starting')
-"  call dein#call_hook('source')
-"  call dein#call_hook('post_source')
+set t_vb=
+set novisualbell
 
-"  syntax enable
-"  filetype plugin indent on
-"endif
-
-"---------------------------------------------------------------------------
-" Encoding:
 "
-
-call s:source_rc('encoding.rc.vim')
-
-"---------------------------------------------------------------------------
-" Search:
+" Search
 "
+set ignorecase
+set infercase
+set smartcase
+set incsearch
+set wrapscan
 
-call s:source_rc('search.rc.vim')
-
-"---------------------------------------------------------------------------
-" Edit:
 "
-
-call s:source_rc('edit.rc.vim')
-
-"---------------------------------------------------------------------------
-" View:
+" Edit
 "
+set smarttab
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set shiftround
 
-call s:source_rc('view.rc.vim')
+set indentexpr=
+set autoindent smartindent
+set modeline
 
-"---------------------------------------------------------------------------
-" FileType:
+set backspace=indent,eol,start
+set showmatch
+set cpoptions-=m
+set matchtime=1
+
+set matchpairs+=<:>
+set virtualedit=block
+
 "
-
-"---------------------------------------------------------------------------
-" Mappings:
+" View
 "
+set number
+set list
+set listchars=tab:>-,trail:-
+set laststatus=2
+set cmdheight=2
+set noshowcmd
 
-call s:source_rc('mappings.rc.vim')
+let &g:statusline="%{winnr('$')>1?'['.winnr().'/'.winnr('$')"
+      \ . ".(winnr('#')==winnr()?'#':'').']':''}\ "
+      \ . "%{(&previewwindow?'[preview] ':'').expand('%:t')}"
+      \ . "\ %=%{(winnr('$')==1 || winnr('#')!=winnr()) ?
+      \ '['.(&filetype!=''?&filetype.',':'')"
+      \ . ".(&fenc!=''?&fenc:&enc).','.&ff.']' : ''}"
+      \ . "%m%{printf('%'.(len(line('$'))+2).'d/%d',line('.'),line('$'))}"
 
-" sudo write
+set showtabline=2
+
+set linebreak
+set showbreak=\
+set breakat=\ \>;:,!?
+
+set whichwrap+=h,l,<,>,[,],b,s,~
+if exists('+breakindent')
+  set breakindent
+  set wrap
+else
+  set nowrap
+endif
+
+set nofoldenable
+
+set nowildmenu
+set wildmode=list:longest,full
+set history=1000
+set showfulltag
+set nostartofline
+set splitbelow
+set splitright
+set winwidth=30
+set winheight=1
+set cmdwinheight=5
+set noequalalways
+
+set keywordprg=:help
+set previewheight=8
+set helpheight=12
+
+set ttyfast
+set lazyredraw
+
+set display=lastline
+
+" auto-cursorline
+let s:cl_disabled = 0
+let s:cl_cursor = 1
+let s:cl_win = 2
+let s:cl_status = s:cl_disabled
+function! s:auto_cursorline(e)
+  if a:e ==# 'WinEnter'
+    setlocal cursorline
+    let s:cl_status = s:cl_win
+  elseif a:e ==# 'WinLeave'
+    setlocal nocursorline
+  elseif a:e ==# 'CursorMoved'
+    if s:cl_status == s:cl_disabled
+      return
+    elseif s:cl_status == s:cl_win
+      let s:cl_status = s:cl_cursor
+    else
+      setlocal nocursorline
+      let s:cl_status = s:cl_disabled
+    endif
+  elseif a:e ==# 'CursorHold'
+    setlocal cursorline
+    let s:cl_status = s:cl_cursor
+  endif
+endfunction
+
+augroup auto-cursorline
+  autocmd!
+  autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
+  autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
+  autocmd WinEnter * call s:auto_cursorline('WinEnter')
+  autocmd WinLeave * call s:auto_cursorline('WinLeave')
+augroup END
+
+"
+" Mappings
+"
+xnoremap <TAB>  >
+xnoremap <S-TAB>  <
+nnoremap Q  q
+nnoremap ZZ  <Nop>
+
+nnoremap <ESC><ESC> :nohlsearch<CR><ESC>
+xnoremap s :s//g<Left><Left>
+
+nmap <F2> <ESC>:bp<CR>
+nmap <F3> <ESC>:bn<CR>
+nmap <C-S-Tab> <ESC>:bp<CR>
+nmap <C-Tab> <ESC>:bn<CR>
+
+"
+" Command
+"
 cmap w!! w !sudo tee > /dev/null %
 
-"---------------------------------------------------------------------------
-" Commands:
 "
-
-"autocmd MyAutoCmd BufEnter * silent! lcd %:p:h
-"autocmd MyAutoCmd BufEnter * execute ":lcd " . expand("%:p:h")
-
-function! s:ChangeCurrentDirectory()
-  let l:dir = expand("%:p:h")
-  if isdirectory(fnamemodify(l:dir, ":p"))
-    execute printf('lcd `=%s`', string(fnamemodify(l:dir, ":p")))
-  endif
-endfunction
-autocmd BufEnter * call s:ChangeCurrentDirectory()
-
-"---------------------------------------------------------------------------
-" Platform:
+" Unix
 "
+set shell=sh
+let $PATH = expand('~/bin').':/usr/local/bin/:'.$PATH
+set mouse=
 
-"if has('nvim')
-"  call s:source_rc('neovim.rc.vim')
-"endif
-
-if IsWindows()
-  call s:source_rc('windows.rc.vim')
-else
-  call s:source_rc('unix.rc.vim')
+if exists('+termguicolors')
+  set termguicolors
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-if !has('nvim') && has('gui_running')
-  call s:source_rc('gui.rc.vim')
-endif
+colorscheme evening
 
-"---------------------------------------------------------------------------
-" Syntax On:
 "
-
-autocmd colorscheme * highlight Normal      ctermbg=NONE guibg=NONE
-autocmd colorscheme * highlight NonText     ctermbg=NONE guibg=NONE
-autocmd colorscheme * highlight Folded      ctermbg=NONE guibg=NONE
-autocmd colorscheme * highlight EndOfBuffer ctermbg=NONE guibg=NONE
-
+" Syntax
+"
 filetype plugin indent on
 syntax enable
-
-"---------------------------------------------------------------------------
-" Others:
-"
-
-" If true Vim master, use English help file.
-set helplang& helplang=ja,en
-
-" Default home directory.
-let t:cwd = getcwd()
-
-set secure
-
-" colorscheme_transparent
-"if !has('gui_running')
-"  augroup colorscheme_transparent
-"    autocmd!
-"    autocmd VimEnter,ColorScheme * highlight Normal ctermbg=none
-"    autocmd VimEnter,ColorScheme * highlight LineNr ctermbg=none
-"    autocmd VimEnter,ColorScheme * highlight SignColumn ctermbg=none
-"    autocmd VimEnter,ColorScheme * highlight VertSplit ctermbg=none
-"    autocmd VimEnter,ColorScheme * highlight NonText ctermbg=none
-"    autocmd VimEnter,ColorScheme * highlight Identifier ctermbg=none
-"  augroup END
-"endif
-
-augroup SkeletonAu
-  autocmd!
-  autocmd BufNewFile *.html 0r $HOME/.vim/template/skel.html
-  autocmd BufNewFile *.rb 0r $HOME/.vim/template/skel.rb
-augroup END
 
