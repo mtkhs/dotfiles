@@ -2,7 +2,7 @@
 # .zprofile
 #---------------------------------------------------------------------------
 
-ARCH=$(uname -m | sed 's/x86_\|aarch//;s/i[3-6]86/32/')
+#ARCH=$(uname -m | sed 's/x86_\|aarch//;s/i[3-6]86/32/')
 #VER=$(lsb_release -sr)
 
 umask 002
@@ -16,8 +16,6 @@ case ${OSTYPE} in
         unset LC_ALL
         export LANG=en_US.UTF-8
         export LC_ALL=en_US.UTF-8
-#        export LC_ALL=ja_JP.UTF-8
-#        export LANG=ja_JP.UTF-8
         export EDITOR='vim'
         export PAGER='lv'
         
@@ -44,9 +42,9 @@ case ${OSTYPE} in
     ;;
     linux*|cygwin*|msys*)
         unset LC_ALL
-#        export LC_ALL=ja_JP.UTF-8
         export LANG=en_US.UTF-8
         export LC_ALL=en_US.UTF-8
+        export EDITOR='vim'
 
         #export GOPATH=$HOME/go
         #export GOBIN=$GOPATH/bin
@@ -54,7 +52,6 @@ case ${OSTYPE} in
         #export PATH="$DENO_INSTALL/bin:$PATH"
         #export PATH=/snap/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/sbin:/sbin:$GOBIN:$PATH
         export PATH=$HOME/.local/bin:$PATH
-        export EDITOR='vim'
 
         if [ -e /etc/os-release ]; then
             DISTRIBUTION_NAME=`cat /etc/os-release | awk -F'["]' 'NR==1{print $2}' | awk '{print $1}'`
@@ -92,11 +89,6 @@ esac
 if [[ -f "$HOME/.local/bin/mise" ]]; then
     eval "$(mise activate zsh)"
 fi
-
-#if [[ -d "$HOME/.anyenv" ]]; then
-#    export PATH="$HOME/.anyenv/bin:$PATH"
-#    eval "$(anyenv init - --no-rehash zsh)"
-#fi
 
 if type direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"

@@ -26,7 +26,6 @@ case ${OSTYPE} in
         ln -s -T $DOTFILES/.config/nvim $HOME/.config/nvim
         ln -s    $DOTFILES/.tmux.conf   $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig   $HOME/.gitconfig
-        ln -s    $DOTFILES/.latexmkrc   $HOME/.latexmkrc
         ;;
 esac
 

@@ -3,6 +3,40 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
+  config = function()
+    require("nvim-tree").setup({
+      -- open_on_setup_file = true
+      sort_by = 'extension',
+    
+      view = {
+        width = '20%',
+        side = 'left',
+        signcolumn = 'no',
+      },
+    
+      renderer = {
+        highlight_git = true,
+        highlight_opened_files = 'name',
+        icons = {
+          glyphs = {
+            git = {
+              unstaged = '!', renamed = '»', untracked = '?', deleted = '✘',
+              staged = '✓', unmerged = '', ignored = '◌',
+            },
+          },
+        },
+      },
+    
+      actions = {
+        expand_all = {
+          max_folder_discovery = 100,
+          exclude = { '.git', 'target', 'build' },
+        },
+      },
+    
+      on_attach = 'default'
+    })
+  end,
   keys = {
     { "<C-n>", function()
         local view = require('nvim-tree.view')
@@ -20,11 +54,6 @@ return {
       end,
       desc = "Smart toggle NvimTree" }
   },
-  config = function()
-    require("nvim-tree").setup({
-      -- open_on_setup_file = true
-    })
-  end,
   init = function()
     vim.cmd("autocmd VimEnter * hi NvimTreeNormal guibg=NONE" )
     vim.cmd("autocmd VimEnter * hi NvimTreeNormalNC guibg=NONE" )

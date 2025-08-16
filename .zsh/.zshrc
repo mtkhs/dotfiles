@@ -101,7 +101,7 @@ zinit light "junegunn/fzf-bin"
 #zinit light "direnv/direnv"
 
 # tmux
-zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux"
+zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux" atload"alias tl='tmux list-sessions'"
 zinit light "tmux/tmux"
 
 # gh
@@ -109,7 +109,7 @@ zinit ice wait lucid from"gh-r" as"program" id-as"gh" has"git" atclone'**/gh com
 zinit light "cli/cli"
 
 # lazygit
-zinit ice wait lucid from"gh-r" as"program"
+zinit ice wait lucid from"gh-r" as"program" has"git"
 zinit light "jesseduffield/lazygit"
 
 # cat
@@ -165,7 +165,7 @@ case ${OSTYPE} in
         zinit light "x-motemen/ghq"
 
         # ls
-        zinit ice wait lucid from"gh-r" as"program" pick"eza" atload"alias ls='eza --bytes --group-directories-first --group'"
+        zinit ice wait lucid from"gh-r" as"program" pick"eza" atload"export EZA_ICON_SPACING=2; alias ls='eza --git --bytes --group --group-directories-first --time-style=long-iso --icons'"
         zinit light "eza-community/eza"
         
         # vi

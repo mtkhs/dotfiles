@@ -1,5 +1,6 @@
 return {
   "echasnovski/mini.starter",
+  dependencies = { "echasnovski/mini.sessions" },
   config = function()
     local pad = string.rep(" ", 0)
     local new_section = function(name, action, section)
@@ -9,13 +10,14 @@ return {
     local config = {
       evaluate_single = true,
       items = {
-        starter.sections.recent_files(10, false),
+        starter.sections.sessions(),
+        starter.sections.recent_files(9, false),
         starter.sections.telescope(),
         starter.sections.builtin_actions(),
       },
       content_hooks = {
         starter.gen_hook.adding_bullet(pad .. "░ ", false),
-        starter.gen_hook.indexing('all', { 'Builtin actions' }),
+        starter.gen_hook.indexing('all', { 'Sessions', 'Builtin actions' }),
         starter.gen_hook.aligning("center", "center"),
       },
     }

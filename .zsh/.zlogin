@@ -6,16 +6,23 @@ if type nvim &> /dev/null; then
     alias vi='nvim'
 fi
 
+if type tmux &> /dev/null; then
+    alias tl='tmux list-sessions'
+fi
+
+if type git &> /dev/null; then
+    alias gb="git branch"
+    alias gd="git diff"
+    alias gs="git status"
+fi
+
+if type eza &> /dev/null; then
+    export EZA_ICON_SPACING=2; alias ls='eza --git --bytes --group --group-directories-first --time-style=long-iso --icons'
+fi
+
 alias ...='../..'
 alias ....='../../..'
 alias .....='../../../..'
-
-
-alias tl='tmux list-sessions'
-
-alias gb="git branch"
-alias gd="git diff"
-alias gs="git status"
 
 alias sudo='sudo -E '
 
