@@ -13,6 +13,7 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.vimrc       $HOME/.vimrc
         ln -s -h $DOTFILES/.config/bat  $HOME/.config/bat
         ln -s -h $DOTFILES/.config/nvim $HOME/.config/nvim
+        ln -s -h $DOTFILES/.config/mise $HOME/.config/mise
         ln -s    $DOTFILES/.tmux.conf   $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig   $HOME/.gitconfig
         ln -s    $DOTFILES/.latexmkrc   $HOME/.latexmkrc
@@ -24,6 +25,7 @@ case ${OSTYPE} in
         ln -s    $DOTFILES/.vimrc       $HOME/.vimrc
         ln -s -T $DOTFILES/.config/bat  $HOME/.config/bat
         ln -s -T $DOTFILES/.config/nvim $HOME/.config/nvim
+        ln -s -T $DOTFILES/.config/mise $HOME/.config/mise
         ln -s    $DOTFILES/.tmux.conf   $HOME/.tmux.conf
         ln -s    $DOTFILES/.gitconfig   $HOME/.gitconfig
         ;;
