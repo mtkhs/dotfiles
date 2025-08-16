@@ -9,7 +9,6 @@ case ${OSTYPE} in
     darwin*)
         ln -s -h $DOTFILES/.zsh         $HOME/.zsh
         ln -s    $DOTFILES/.zshenv      $HOME/.zshenv
-        ln -s -h $DOTFILES/.vim         $HOME/.vim
         ln -s    $DOTFILES/.vimrc       $HOME/.vimrc
         ln -s -h $DOTFILES/.config/bat  $HOME/.config/bat
         ln -s -h $DOTFILES/.config/nvim $HOME/.config/nvim
@@ -21,7 +20,6 @@ case ${OSTYPE} in
     linux*)
         ln -s -T $DOTFILES/.zsh         $HOME/.zsh
         ln -s    $DOTFILES/.zshenv      $HOME/.zshenv
-        ln -s -T $DOTFILES/.vim         $HOME/.vim
         ln -s    $DOTFILES/.vimrc       $HOME/.vimrc
         ln -s -T $DOTFILES/.config/bat  $HOME/.config/bat
         ln -s -T $DOTFILES/.config/nvim $HOME/.config/nvim

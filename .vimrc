@@ -101,10 +101,9 @@ endif
 
 set nofoldenable
 
-"set nowildmenu
-"set wildmode=list:longest,full
 set wildmenu
-set wildmode=longest:full,full
+"set wildmode=list:longest,full
+set wildmode=full
 set history=1000
 set showfulltag
 set nostartofline
@@ -124,11 +123,37 @@ set lazyredraw
 
 set display=lastline
 
-augroup CursorLine
-  autocmd!
-  autocmd WinEnter * setlocal cursorline
-  autocmd WinLeave * setlocal nocursorline
-augroup END
+" auto-cursorline
+let s:cl_disabled = 0
+let s:cl_cursor = 1
+let s:cl_win = 2
+let s:cl_status = s:cl_disabled
+function! s:auto_cursorline(e)
+  if a:e ==# 'WinEnter'
+    setlocal cursorline
+    let s:cl_status = s:cl_win
+  elseif a:e ==# 'WinLeave'
+    setlocal nocursorline
+  elseif a:e ==# 'CursorMoved'
+    if s:cl_status == s:cl_disabled
+      return
+    elseif s:cl_status == s:cl_win
+      let s:cl_status = s:cl_cursor
+    else
+      setlocal nocursorline
+      let s:cl_status = s:cl_disabled
+    endif
+  elseif a:e ==# 'CursorHold'
+    setlocal cursorline
+    let s:cl_status = s:cl_cursor
+  endif
+endfunction
+
+augroup auto-cursorline
+autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
+autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
+autocmd WinEnter * call s:auto_cursorline('WinEnter')
+autocmd WinLeave * call s:auto_cursorline('WinLeave')
 
 "
 " Mappings
@@ -164,7 +189,43 @@ if exists('+termguicolors')
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-colorscheme evening
+"
+" colorscheme
+"
+set background=dark
+
+function! SetTransparentBG()
+  highlight Normal ctermbg=NONE guibg=NONE
+  highlight NonText ctermbg=NONE guibg=NONE  
+  highlight LineNr ctermbg=NONE guibg=NONE
+  highlight EndOfBuffer ctermbg=NONE guibg=NONE
+  highlight Folded ctermbg=NONE guibg=NONE
+endfunction
+
+" TokyoNight Moon
+function! SetTokyoNight()
+  call SetTransparentBG()
+  highlight Normal ctermfg=189 guifg=#c8d3f5
+  highlight Comment ctermfg=102 guifg=#636da6 cterm=italic gui=italic
+  highlight String ctermfg=114 guifg=#c3e88d
+  highlight Number ctermfg=215 guifg=#ff966c
+  highlight Keyword ctermfg=140 guifg=#c099ff cterm=bold gui=bold
+  highlight Statement ctermfg=140 guifg=#c099ff cterm=bold gui=bold
+  highlight Function ctermfg=110 guifg=#82aaff cterm=bold gui=bold
+  highlight Type ctermfg=117 guifg=#86e1fc cterm=bold gui=bold
+  highlight Constant ctermfg=215 guifg=#ff966c
+  highlight Special ctermfg=117 guifg=#86e1fc
+  highlight Error ctermfg=203 guifg=#ff757f cterm=bold gui=bold
+  highlight Todo ctermfg=176 guifg=#fca7ea cterm=bold gui=bold
+  highlight Visual ctermfg=NONE ctermbg=240 guifg=NONE guibg=#2d3f76
+  highlight Search ctermfg=235 ctermbg=221 guifg=#222436 guibg=#ffc777
+  highlight CursorLineNr ctermfg=110 guifg=#82aaff cterm=bold gui=bold
+  highlight LineNr ctermfg=102 guifg=#636da6
+  highlight StatusLine ctermfg=189 ctermbg=240 guifg=#c8d3f5 guibg=#2f334d cterm=bold gui=bold
+endfunction
+command! TokyoNight call SetTokyoNight() | echo "Applied: TokyoNight"
+
+call SetTokyoNight()
 
 "
 " Syntax
