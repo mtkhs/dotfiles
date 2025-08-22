@@ -1,6 +1,8 @@
 [wsl2]
 memory=8GB
 swap=2GB
-localhostForwarding=true
 kernelCommandLine=ipv6.disable=1
+firewall=false
+networkingMode=mirrored
+#localhostForwarding=true
 dnsTunneling=false

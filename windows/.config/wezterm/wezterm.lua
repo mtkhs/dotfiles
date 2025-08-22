@@ -5,6 +5,13 @@ local act = wezterm.action
 
 ----------------------------------------------------------------------------------
 --
+-- Functions
+--
+----------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------
+--
 -- Basic
 --
 ----------------------------------------------------------------------------------
@@ -44,7 +51,7 @@ elseif wezterm.target_triple == 'x86_64-apple-darwin' then
     config.default_prog = { 'zsh' }
 end
 
-config.window_decorations = 'RESIZE|INTEGRATED_BUTTONS'
+config.window_decorations = 'INTEGRATED_BUTTONS'
 config.window_background_opacity = 0.80
 config.macos_window_background_blur = 10
 config.window_background_gradient = {
@@ -92,28 +99,29 @@ config.keys = {
     ----------------------------------------
     -- 新規タブ
     { key = 't', mods = 'SUPER', action = act.SpawnCommandInNewTab { domain = { DomainName = 'WSL:Ubuntu' }, cwd = '~' } },
-    -- { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab { confirm = true } },
     -- タブを切り替え
     { key = 'Tab', mods = 'SUPER', action = act.ActivateTabRelative(1) },
     { key = 'Tab', mods = 'SHIFT|SUPER', action = act.ActivateTabRelative(-1) },
+    -- タブを閉じる
+    { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab{ confirm = true } },
     
     ----------------------------------------
     -- ペイン操作
     ----------------------------------------
     -- ペインを水平方向に開く
-    { key = "-", mods = "SUPER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" }, cwd = '~' }) },
+    { key = "-", mods = "SUPER", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
     -- ペインを縦方向に開く
-    { key = "\\", mods = "SUPER", action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" }, cwd = '~' }) },
+    { key = "\\", mods = "SUPER", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
     -- ペインを閉じる
-    { key = "w", mods = "SHIFT|CTRL", action = wezterm.action({ CloseCurrentPane = { confirm = true } }) },
+    { key = "w", mods = "SHIFT|CTRL", action = act({ CloseCurrentPane = { confirm = true } }) },
     -- ペインを切り替え
-    { key = "q", mods = "SUPER", action = wezterm.action({ ActivatePaneDirection = "Next" }) },
-    { key = "q", mods = "SHIFT|SUPER", action = wezterm.action({ ActivatePaneDirection = "Prev" }) },
+    { key = "q", mods = "SUPER", action = act({ ActivatePaneDirection = "Next" }) },
+    { key = "q", mods = "SHIFT|SUPER", action = act({ ActivatePaneDirection = "Prev" }) },
     -- hjklでPANEを移動する
-    { key = "h", mods = "SHIFT|CTRL", action = wezterm.action({ ActivatePaneDirection = "Left" }) },
-    { key = "l", mods = "SHIFT|CTRL", action = wezterm.action({ ActivatePaneDirection = "Right" }) },
-    { key = "k", mods = "SHIFT|CTRL", action = wezterm.action({ ActivatePaneDirection = "Up" }) },
-    { key = "j", mods = "SHIFT|CTRL", action = wezterm.action({ ActivatePaneDirection = "Down" }) },
+    { key = "h", mods = "SHIFT|CTRL", action = act({ ActivatePaneDirection = "Left" }) },
+    { key = "l", mods = "SHIFT|CTRL", action = act({ ActivatePaneDirection = "Right" }) },
+    { key = "k", mods = "SHIFT|CTRL", action = act({ ActivatePaneDirection = "Up" }) },
+    { key = "j", mods = "SHIFT|CTRL", action = act({ ActivatePaneDirection = "Down" }) },
 
     ----------------------------------------
     -- ターミナル
