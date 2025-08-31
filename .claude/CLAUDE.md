@@ -22,7 +22,7 @@ The following commands MUST be executed automatically at the beginning of each s
 ```bash
 # 1. Check existing knowledge
 mcp__serena__check_onboarding_performed
- mcp__serena__list_memories
+mcp__serena__list_memories
 
 # 2. Project structure scan
 mcp__serena__list_dir({ relative_path: ".", recursive: false })
