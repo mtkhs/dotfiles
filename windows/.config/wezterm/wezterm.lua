@@ -77,7 +77,7 @@ config.color_scheme = color_scheme
 ----------------------------------------------------------------------------------
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 -- config.show_new_tab_button_in_tab_bar = false
 -- config.tab_max_width = 5
 
@@ -109,19 +109,19 @@ config.keys = {
     -- ペイン操作
     ----------------------------------------
     -- ペインを水平方向に開く
-    { key = "-", mods = "SUPER", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+    { key = "-", mods = "SUPER", action = act.SplitVertical { domain = "CurrentPaneDomain", cwd = '~' } },
     -- ペインを縦方向に開く
-    { key = "\\", mods = "SUPER", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+    { key = "\\", mods = "SUPER", action = act.SplitHorizontal { domain = "CurrentPaneDomain", cwd = '~' } },
     -- ペインを閉じる
-    { key = "w", mods = "SHIFT|CTRL", action = act({ CloseCurrentPane = { confirm = true } }) },
+    { key = "w", mods = "SHIFT|CTRL", action = act.CloseCurrentPane { confirm = true } },
     -- ペインを切り替え
-    { key = "q", mods = "SUPER", action = act({ ActivatePaneDirection = "Next" }) },
-    { key = "q", mods = "SHIFT|SUPER", action = act({ ActivatePaneDirection = "Prev" }) },
-    -- hjklでPANEを移動する
-    { key = "h", mods = "SHIFT|CTRL", action = act({ ActivatePaneDirection = "Left" }) },
-    { key = "l", mods = "SHIFT|CTRL", action = act({ ActivatePaneDirection = "Right" }) },
-    { key = "k", mods = "SHIFT|CTRL", action = act({ ActivatePaneDirection = "Up" }) },
-    { key = "j", mods = "SHIFT|CTRL", action = act({ ActivatePaneDirection = "Down" }) },
+    { key = "q", mods = "SUPER", action = act.ActivatePaneDirection "Next" },
+    { key = "q", mods = "SHIFT|SUPER", action = act.ActivatePaneDirection "Prev" },
+    -- ペインサイズを変更
+    { key = "h", mods = "SHIFT|SUPER", action = act.AdjustPaneSize { 'Left', 5 } },
+    { key = "l", mods = "SHIFT|SUPER", action = act.AdjustPaneSize { 'Right', 5 } },
+    { key = "k", mods = "SHIFT|SUPER", action = act.AdjustPaneSize { 'Up', 5 } },
+    { key = "j", mods = "SHIFT|SUPER", action = act.AdjustPaneSize { 'Down', 5 } },
 
     ----------------------------------------
     -- ターミナル
@@ -134,6 +134,11 @@ config.keys = {
     -- { key = ';', mods = 'CTRL', action = act.IncreaseFontSize },
     -- { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
     -- { key = '0', mods = 'CTRL', action = act.ResetFontSize },
+    {
+        key = "F",
+        mods = "CTRL|SHIFT",
+        action = wezterm.action.Search({ CaseInSensitiveString = "" }),
+    },
 }
 
 ----------------------------------------------------------------------------------
@@ -158,6 +163,26 @@ config.mouse_bindings = {
       mods = 'NONE',
       action = act.PasteFrom( 'Clipboard' ),
     },
+    ----------------------------------------
+    -- Ctrl+ClickでURLオープン
+    ----------------------------------------
+    {
+        event = { Up = { streak = 1, button = "Left" } },
+        mods = "CTRL",
+        action = act.OpenLinkAtMouseCursor,
+    },
+    -- 誤動作回避
+    {
+        event = { Down = { streak = 1, button = "Left" } },
+        mods = "CTRL",
+        action = act.Nop,
+    },
 }
+
+----------------------------------------------------------------------------------
+--
+-- Plugins
+--
+----------------------------------------------------------------------------------
 
 return config
