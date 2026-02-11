@@ -51,6 +51,7 @@ elseif wezterm.target_triple == 'x86_64-apple-darwin' then
     config.default_prog = { 'zsh' }
 end
 
+config.window_close_confirmation = 'AlwaysPrompt'
 config.window_decorations = 'INTEGRATED_BUTTONS'
 config.window_background_opacity = 0.80
 config.macos_window_background_blur = 10
@@ -83,6 +84,40 @@ config.hide_tab_bar_if_only_one_tab = false
 
 ----------------------------------------------------------------------------------
 --
+-- Launcher Menu
+--
+----------------------------------------------------------------------------------
+config.launch_menu = {
+    {
+        label = 'WSL Ubuntu',
+        args = { },
+        domain = { DomainName = 'WSL:Ubuntu' },
+        cwd = '~'
+    },
+    {
+        label = 'PowerShell 7',
+        args = { 'pwsh.exe', '-NoLogo' },
+        domain = { DomainName = 'local' },
+    },
+--    {
+--        label = 'PowerShell',
+--        args = { 'powershell.exe', '-NoLogo' },
+--        domain = { DomainName = 'local' },
+--    },
+--    {
+--        label = 'Command Prompt',
+--        args = { 'cmd.exe' },
+--        domain = { DomainName = 'local' },
+--    },
+--    {
+--        label = 'Git Bash',
+--        args = { 'C:\\Program Files\\Git\\bin\\bash.exe' },
+--        domain = { DomainName = 'local' },
+--    },
+}
+
+----------------------------------------------------------------------------------
+--
 -- Keys
 --
 ----------------------------------------------------------------------------------
@@ -93,12 +128,19 @@ config.keys = {
     ----------------------------------------
     -- コマンドパレット
     { key = 'p', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
+    -- ランチャーメニュー表示
+    { key = 'l', mods = 'SHIFT|CTRL', action = act.ShowLauncher },
+    -- 設定ファイルを開く
+    { key = ',', mods = 'CTRL', action = wezterm.action_callback(function(window, pane)
+        wezterm.open_with(wezterm.config_file)
+    end)},
 
     ----------------------------------------
     -- タブ操作
     ----------------------------------------
     -- 新規タブ
-    { key = 't', mods = 'SUPER', action = act.SpawnCommandInNewTab { domain = { DomainName = 'WSL:Ubuntu' }, cwd = '~' } },
+    -- { key = 't', mods = 'SUPER', action = act.SpawnCommandInNewTab { domain = { DomainName = 'WSL:Ubuntu' }, cwd = '~' } },
+    { key = 't', mods = 'SUPER', action = act.ShowLauncherArgs { flags = 'LAUNCH_MENU_ITEMS' }, },
     -- タブを切り替え
     { key = 'Tab', mods = 'SUPER', action = act.ActivateTabRelative(1) },
     { key = 'Tab', mods = 'SHIFT|SUPER', action = act.ActivateTabRelative(-1) },
@@ -109,7 +151,7 @@ config.keys = {
     -- ペイン操作
     ----------------------------------------
     -- ペインを水平方向に開く
-    { key = "-", mods = "SUPER", action = act.SplitVertical { domain = "CurrentPaneDomain", cwd = '~' } },
+    { key = "^", mods = "SUPER", action = act.SplitVertical { domain = "CurrentPaneDomain", cwd = '~' } },
     -- ペインを縦方向に開く
     { key = "\\", mods = "SUPER", action = act.SplitHorizontal { domain = "CurrentPaneDomain", cwd = '~' } },
     -- ペインを閉じる

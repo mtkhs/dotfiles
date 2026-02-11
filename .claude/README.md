@@ -44,5 +44,5 @@ claude mcp add -s user playwright -- npx -y @playwright/mcp@latest
 ### Gemini CLI
 
 ```
-npm install -g @google/gemini-clinpm install -g @google/gemini-cli
+npm install -g @google/gemini-cli
 ```
