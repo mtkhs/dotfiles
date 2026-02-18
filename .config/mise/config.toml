@@ -1,5 +1,6 @@
 [tools]
 node = "latest"
+pnpm = "latest"
 python = "latest"
 uv = "latest"
 

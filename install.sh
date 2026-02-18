@@ -58,6 +58,7 @@ else
     #mise use node@${LATEST_NODE} --global
 
     mise use -g node@latest
+    mise use -g pnpm@latest
     mise use -g python@latest
     mise use -g uv@latest
 

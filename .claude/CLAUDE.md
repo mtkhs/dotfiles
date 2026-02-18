@@ -1,39 +1,117 @@
-# Guidelines
+# グローバル設定
 
-This document defines the project's rules, objectives, and progress management methods. Please proceed with the project according to the following content.
+このドキュメントは、Claude Codeのグローバル設定のエントリーポイントである。
 
-## Top-Level Rules
+## 前提条件
 
-- To maximize efficiency, **if you need to execute multiple independent processes, invoke those tools concurrently, not sequentially**.
-- **You must think exclusively in English**. However, you are required to **respond in Japanese**.
-- To understand how to use a library, **always use the Contex7 MCP** to retrieve the latest information.
+以下のMCPサーバーとCLIツールのセットアップが必要である。
 
-## Programming Rules
+### 必須MCP
+- **Serena MCP**: コード解析
+- **Context7 MCP**: ライブラリ情報
+- **Memory MCP**: 知識管理
+- **Gemini MCP**: 壁打ち先（デフォルト）
 
-- Avoid hard-coding values unless absolutely necessary.
-- Do not use `any` or `unknown` types in TypeScript.
-- You must not use a TypeScript `class` unless it is absolutely necessary (e.g., extending the `Error` class for custom error handling that requires `instanceof` checks).
+### 必須CLI
+- **gemini-cli**: Web検索
+- **agent-browser**: ブラウザ操作（基本）
 
-## MANDATORY: Project Structure Discovery Protocol
+### 推奨MCP
+- **Codex MCP**: 壁打ち先（深い推論）
+- **Playwright MCP**: ブラウザ制御（高度）
 
-### Auto-execution at Session Start
-The following commands MUST be executed automatically at the beginning of each session:
+**注**: 未セットアップの場合、セッション開始時に自動的にインストール方法を提案する。詳細は `SESSION_INIT.md` を参照。
+
+## 設定ファイル構成
+
+**ルールファイル** (`~/.claude/rules/` - 自動読み込み):
+- `core-rules.md` - 会話の基本原則
+- `coding-rules.md` - プログラミング実装ルール
+- `documentation-rules.md` - ドキュメント作成の原則
+- `session-journal.md` - 進捗記録と作業履歴
+- `session-init.md` - セッション初期化手順
+- `token-efficiency.md` - トークン効率化
+
+**その他**:
+- **言語別ルール**: `~/.claude/languages/*.md`
+- **カスタムエージェント**: `~/.claude/agents/*.md`
+- **カスタムコマンド**: `~/.claude/commands/*.md`
+
+## 最重要ルール
+
+以下のルールは**必ず**守ること。
+
+1. **思考言語**: 英語で思考し、日本語で応答すること
+
+## モデル選択ガイドライン
+
+タスクの性質に応じて適切なモデルを使用する。
+
+- **Opus**: 要件定義、アーキテクチャ設計、複雑な問題解決
+- **Sonnet**: 実装、リファクタリング、テスト作成（デフォルト）
+- **Haiku**: 簡単な調査、ファイル検索、軽量タスク
+
+**注**: 現状、自動切り替えはできないため、Plan モードや Task ツールで明示的に指定する。
+
+## 情報収集の方法
+
+### Web検索
+
+Web検索が必要な場合、**必ずGemini CLIを使用する**。組み込みの`web_search`ツールは使用禁止である。
 
 ```bash
-# 1. Check existing knowledge
-mcp__serena__check_onboarding_performed
-mcp__serena__list_memories
+gemini --prompt 'WebSearch: <検索クエリ>'
+```
 
-# 2. Project structure scan
-mcp__serena__list_dir({ relative_path: ".", recursive: false })
-mcp__serena__get_symbols_overview({ relative_path: "src" })
+### ライブラリ・フレームワークの情報取得
 
-# 3. Configuration files
-mcp__serena__find_file({ file_mask: "package.json", relative_path: "." })
-mcp__serena__find_file({ file_mask: "*.config.*", relative_path: "." })
-```end
+**Context7 MCP**を使用して最新情報の取得を試みる。
 
-### Serena Tool Priority
-1. **For symbol/function search**: Always try `find_symbol` first
-2. **For text/string search**: Use `search_for_pattern`
-3. **For multiple replacements**: Use `replace_regex` when changing 3+ similar patterns
+### コード解析
+
+**Serena MCP**を使用する。以下の優先順位でツールを使用する。
+
+1. **シンボル/関数検索**: 常に `find_symbol` を最初に試す
+2. **テキスト/文字列検索**: `search_for_pattern` を使用
+
+## 壁打ちの活用
+
+### 役割分担（および壁打ち先の使い分け）
+
+**Claude Code（実行者）**:
+- タスク分解・実装・リファクタリング・ファイル操作を担う
+- ステップバイステップで段階的に進めることを基本とする
+- 不確実な判断や技術的検証が必要な場合、壁打ち先に相談する
+
+**Gemini MCP（壁打ち先）**:
+- **得意分野**: Web検索、最新情報、技術調査
+- **デフォルトの壁打ち先として使用**
+
+**Codex MCP（壁打ち先）**:
+- **得意分野**: 深い推論、複雑な分析
+- **Geminiで解決できない難しい問題に使用**
+
+### 壁打ちをする状況（自動判定ルール）
+
+以下のいずれかに該当する場合、Gemini MCPを使用する：
+
+1. **実装前の設計レビュー**: 考慮漏れ・見落としのチェック、複数案から最適解を選択
+2. **技術的制約や不明点の確認**: 実装可能性の判断、APIの使い方の調査
+3. **最新情報の確認**: ライブラリのバージョン、破壊的変更、ベストプラクティス
+4. **エラー解析**: 原因不明のエラー、スタックトレースの解析
+5. **実装後のコードレビュー**: パフォーマンス改善、セキュリティチェック、品質向上
+
+**重要**: Plan modeではBashツールが利用不可のため、Gemini MCPを優先的に使用すること。
+
+## ブラウザ操作ツールの使い分け
+
+### agent-browser（基本）
+
+- 基本的なブラウザ操作（ページを開く、クリック、入力）
+- トークン効率が良い
+- **デフォルトのブラウザ操作ツールとして使用**
+
+### Playwright MCP
+
+- スクリーンショット取得、ネットワーク監視、複雑なページ遷移のデバッグ
+- **agent-browserでできない操作に使用**

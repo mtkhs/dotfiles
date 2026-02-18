@@ -2,27 +2,47 @@
   "permissions": {
     "allow": [
       "List(*)",
+      "Read(**)",
+      "Fetch(https://*)",
+      "WebFetch(domain:*)",
+      "Skill(gemini-search)",
       "Bash(git:*)",
       "Bash(gh:*)",
       "Bash(ghq:*)",
-      "Bash(ls:*)",
-      "Bash(cat:*)",
       "Bash(pwd:*)",
       "Bash(cd:*)",
-      "Bash(find:*)",
-      "Bash(grep:*)",
-      "Bash(rg:*)",
       "Bash(mv:*)",
       "Bash(cp:*)",
-      "Bash(npm:*)",
+      "Bash(rg:*)",
       "Bash(jq:*)",
-      "Bash(curl:*)",
+      "Bash(wc:*)",
       "Bash(echo:*)",
+      "Bash(npm:*)",
+      "Bash(pnpm:*)",
+      "Bash(yarn:*)",
+      "Bash(pip:*)",
+      "Bash(uv:*)",
       "Bash(cargo:*)",
-      "Read(**)",
-      "Edit(~/projects/**)",
-      "Fetch(https://*)",
-      "WebFetch(domain:*)"
+      "Bash(make:*)",
+      "Bash(cmake:*)",
+      "Bash(docker:*)",
+      "Bash(python:*)",
+      "Bash(mise:*)",
+      "Bash(curl:*)",
+      "Bash(gemini:*)",
+      "Bash(codex:*)",
+      "Bash(agent-browser:*)",
+      "Bash(uvx:*)",
+      "Bash(claude mcp remove:*)",
+      "Bash(claude mcp add:*)",
+      "Bash(claude mcp list:*)",
+      "Bash(tree:*)",
+      "Bash(which:*)",
+      "Bash(fd:*)",
+      "Bash(touch:*)",
+      "Bash(env:*)",
+      "Bash(chmod:*)",
+      "Bash(timeout:*)"
     ],
     "deny": [
       "Bash(sudo:*)",
@@ -45,5 +65,6 @@
         ]
       }
     ]
-  }
+  },
+  "model": "sonnet"
 }
