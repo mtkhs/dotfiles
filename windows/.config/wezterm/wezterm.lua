@@ -164,6 +164,10 @@ config.keys = {
     { key = "l", mods = "SHIFT|SUPER", action = act.AdjustPaneSize { 'Right', 5 } },
     { key = "k", mods = "SHIFT|SUPER", action = act.AdjustPaneSize { 'Up', 5 } },
     { key = "j", mods = "SHIFT|SUPER", action = act.AdjustPaneSize { 'Down', 5 } },
+    { key = "LeftArrow", mods = "ALT", action = act.AdjustPaneSize { 'Left', 5 } },
+    { key = "RightArrow", mods = "ALT", action = act.AdjustPaneSize { 'Right', 5 } },
+    { key = "UpArrow", mods = "ALT", action = act.AdjustPaneSize { 'Up', 5 } },
+    { key = "DownArrow", mods = "ALT", action = act.AdjustPaneSize { 'Down', 5 } },
 
     ----------------------------------------
     -- ターミナル
