@@ -29,6 +29,9 @@ case ${OSTYPE} in
         ;;
 esac
 
+# Claude
+cp -rf $DOTFILES/.claude $HOME/.claude
+
 # zsh zinit
 if [ -d ${HOME}/.zinit ]; then
     echo "zinit is already installed."
