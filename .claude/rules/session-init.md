@@ -4,13 +4,7 @@
 
 ## 必須MCPの確認
 
-セッション開始時に、以下のコマンドで必須MCPの接続状態を確認する：
-
-```bash
-claude mcp list
-```
-
-以下のMCPが接続されていることを確認。各MCPの詳細は `CLAUDE.md` を参照。
+セッション開始時に、以下のMCPが接続されていることを確認する。
 
 **初期化が必要なMCPは、接続確認後に初期化を実行すること。**
 
@@ -74,13 +68,15 @@ pnpm add -g agent-browser
 
 ## プロジェクト構造の自動把握
 
-セッション開始時、Serena MCPが利用可能な場合、以下の手順で**必ずプロジェクト構造を把握する**。
+セッション開始時、以下の手順でSerenaの利用可否を自動判定してからプロジェクト構造を把握する。
+
+まず `mcp__serena__check_onboarding_performed` を呼ぶ。
+「No active project」が返った場合は `mcp__serena__activate_project` を試みる。
+「No source files found」が返った場合はSerenaをスキップし、以降の手順は不要。
+それ以外は以下の手順を続ける。
 
 ### 1. 既存知識の確認
 
-まず、Serena Memoryに保存された既存知識を確認する：
-
-- `mcp__serena__check_onboarding_performed` でオンボーディング状況を確認
 - `mcp__serena__list_memories` で記憶されている情報を取得
 
 ### 2. プロジェクト構造のスキャン

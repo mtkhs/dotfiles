@@ -20,7 +20,7 @@
 - **Codex MCP**: 壁打ち先（深い推論）
 - **Playwright MCP**: ブラウザ制御（高度）
 
-**注**: 未セットアップの場合、セッション開始時に自動的にインストール方法を提案する。詳細は `SESSION_INIT.md` を参照。
+**注**: 未セットアップの場合、セッション開始時に自動的にインストール方法を提案する。詳細は `rules/session-init.md` を参照。
 
 ## 設定ファイル構成
 
@@ -28,7 +28,7 @@
 - `core-rules.md` - 会話の基本原則
 - `coding-rules.md` - プログラミング実装ルール
 - `documentation-rules.md` - ドキュメント作成の原則
-- `session-journal.md` - 進捗記録と作業履歴
+- `session-continue.md` - セッション継続管理
 - `session-init.md` - セッション初期化手順
 - `token-efficiency.md` - トークン効率化
 
