@@ -17,6 +17,8 @@
       "Bash(jq:*)",
       "Bash(wc:*)",
       "Bash(echo:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
       "Bash(npm:*)",
       "Bash(pnpm:*)",
       "Bash(yarn:*)",
@@ -27,6 +29,9 @@
       "Bash(cmake:*)",
       "Bash(docker:*)",
       "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(source:*)",
+      "Bash(pkill:*)",
       "Bash(mise:*)",
       "Bash(curl:*)",
       "Bash(gemini:*)",
@@ -42,7 +47,14 @@
       "Bash(touch:*)",
       "Bash(env:*)",
       "Bash(chmod:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "mcp__serena__list_dir",
+      "mcp__serena__activate_project",
+      "mcp__serena__get_symbols_overview",
+      "mcp__serena__check_onboarding_performed",
+      "mcp__serena__find_symbol",
+      "mcp__serena__insert_before_symbol",
+      "mcp__serena__list_memories"
     ],
     "deny": [
       "Bash(sudo:*)",
@@ -65,6 +77,10 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+  "type": "command",
+  "command": "npx him0/claude-code-statusline"
   },
   "model": "sonnet"
 }
