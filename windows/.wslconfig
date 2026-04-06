@@ -1,8 +1,5 @@
 [wsl2]
-memory=8GB
-swap=2GB
-kernelCommandLine=ipv6.disable=1
-firewall=false
-networkingMode=mirrored
-#localhostForwarding=true
-dnsTunneling=false
+memory=12GB
+swap=4GB
+localhostForwarding=true
+defaultVhdSize=171798691840
