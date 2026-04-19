@@ -9,7 +9,7 @@ umask 002
 
 export LV="-c -l"
 export LESS="-R"
-export FZF_DEFAULT_OPTS="--no-sort --exact --cycle --multi --ansi --reverse --border --sync --bind=ctrl-t:toggle --bind=ctrl-k:kill-line --bind=?:toggle-preview --bind=down:preview-down --bind=up:preview-up"
+#export FZF_DEFAULT_OPTS="--no-sort --exact --cycle --multi --ansi --reverse --border --sync --bind=ctrl-t:toggle --bind=ctrl-k:kill-line --bind=?:toggle-preview --bind=down:preview-down --bind=up:preview-up"
 
 case ${OSTYPE} in
     darwin*)
@@ -93,6 +93,10 @@ fi
 if type direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
+
+#if type zoxide >/dev/null 2>&1; then
+#    eval "$(zoxide init zsh --cmd cd)"
+#fi
 
 # for docker-compose
 export UID=${UID}

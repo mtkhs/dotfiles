@@ -12,11 +12,17 @@ case ${OSTYPE} in
                 # golang-go # direnv
                 # libncurses5-dev # tig
                 # libncurses5-dev libevent-dev # tmux
-                sudo apt install -y software-properties-common cargo rustc language-pack-en \
-                    build-essential autoconf golang-go libncurses5-dev libevent-dev \
-                    zlib1g-dev libffi-dev libbz2-dev libreadline-dev unzip libssl-dev libsqlite3-dev \
+                sudo apt install -y software-properties-common language-pack-en build-essential unzip
+                sudo apt install -y autoconf golang-go libncurses5-dev libevent-dev libclang-dev \
+                    zlib1g-dev libffi-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev \
                     bison \
-                    fonts-liberation fonts-noto-cjk fonts-ipafont-gothic fonts-ipafont-mincho
+                    fonts-liberation fonts-noto-cjk fonts-ipafont-gothic fonts-ipafont-mincho \
+                    luarocks
+
+                # cargo
+                #curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+                #
+                #cargo install tree-sitter-cli
                 ;;
             CentOS )
                 ;;

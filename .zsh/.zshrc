@@ -136,6 +136,10 @@ zinit light "dandavison/delta"
 #zinit ice wait lucid from"gh" as"program" atclone"cargo build --release" atpull"%atclone" pick"target/release/dog"
 #zinit light "ogham/dog"
 
+# zoxide
+#zinit ice wait lucid from"gh-r" as"command" mv"zoxide -> zoxide" atclone"./zoxide init zsh > init.zsh" atpull"%atclone" src"init.zsh" nocompile'!'
+#zinit light "ajeetdsouza/zoxide"
+
 case ${OSTYPE} in
     Rasp*)
         zinit ice wait lucid from"gh-r" as"program" bpick"*linux_arm64*" pick"*/peco"
@@ -161,7 +165,7 @@ case ${OSTYPE} in
         #zinit light "sharkdp/diskus"
 
         # ghq
-        zinit ice wait lucid from"gh-r" as"program" pick"*/ghq"
+        zinit ice wait lucid from"gh-r" as"program" bpick"ghq_linux_amd64.zip" pick"*/ghq"
         zinit light "x-motemen/ghq"
 
         # ls
@@ -349,7 +353,7 @@ function peco_history_selection() {
     zle reset-prompt
 }
 zle -N peco_history_selection
-bindkey '^R' peco_history_selection
+#bindkey '^R' peco_history_selection
 
 # ghq
 function peco_ghq_look() {
@@ -392,15 +396,23 @@ bindkey '^E' peco_cdr
 #
 
 function fzf_history_search() {
-    local selected_command
-    selected_command=$(history -n 1 | tac | awk '!a[$0]++' | fzf --height 40% --layout=reverse --border --inline-info)
-    if [ -n "$selected_command" ]; then
-        BUFFER=$selected_command
-        CURSOR=$#BUFFER
-        zle reset-prompt
-    fi
+    BUFFER=$(history -n -r 1 | awk '!a[$0]++' | fzf --query "$LBUFFER" --reverse --border --inline-info)
+    CURSOR=$#BUFFER
+    zle reset-prompt
 }
 zle -N fzf_history_search
+bindkey '^r' fzf_history_search
+
+#function fzf_history_search() {
+#    local selected_command
+#    selected_command=$(history -n 1 | tac | awk '!a[$0]++' | fzf --height 40% --layout=reverse --border --inline-info)
+#    if [ -n "$selected_command" ]; then
+#        BUFFER=$selected_command
+#        CURSOR=$#BUFFER
+#        zle reset-prompt
+#    fi
+#}
+#zle -N fzf_history_search
 #bindkey '^R' fzf_history_search
 
 function fzf_cdr(){

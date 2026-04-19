@@ -1,9 +1,18 @@
 [tools]
+cargo = "latest"
 node = "latest"
+pipx = "latest"
+"pipx:terminaltexteffects" = "latest"
 pnpm = "latest"
 python = "latest"
 uv = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["python", "node"]
+
+[settings.python]
+compile = true
+
+[settings.pipx]
+uvx = true
 

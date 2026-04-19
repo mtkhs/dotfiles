@@ -79,7 +79,10 @@ else
     mise use -g node@latest
     mise use -g pnpm@latest
     mise use -g python@latest
+    mise use -g cargo@latest
     mise use -g uv@latest
+    mise use -g pipx@latest
+    mise use -g pipx:terminaltexteffects@latest
 
     eval "$(mise activate bash)"
     pip install --upgrade pip

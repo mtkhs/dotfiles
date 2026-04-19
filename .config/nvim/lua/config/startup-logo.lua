@@ -62,8 +62,6 @@ local function display_logo()
   local win = vim.api.nvim_open_win(buf, focusable, winopts)
   vim.api.nvim_set_option_value('ambiwidth', 'single', { scope = 'local'})
   vim.api.nvim_set_option_value('winblend', 100, { scope = 'local', win = win })
-  -- vim.api.nvim_set_option_value('winblend', 100, { win = win })
-  -- vim.api.nvim_set_option_value('bufhidden', 'wipe', { scope = 'local', buf = buf })
   vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
 
   local subcommands = {
@@ -90,11 +88,13 @@ local function display_logo()
   vim.api.nvim_buf_call(buf, function()
     vim.fn.jobstart(cmd, {
       term = true,
-      on_exit = function() end,
+      -- on_exit = function() end,
     })
   end)
   return { buf = buf, win = win }
 end
+
+vim.api.nvim_clear_autocmds({ group = 'nvim.terminal', event = 'TermClose' })
 
 vim.api.nvim_create_autocmd('User', {
   group = augroup,
