@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ./envs.bash
+DOTFILES="$HOME/dotfiles"
+source "${DOTFILES}/envs.bash"
 
 echo "Install dependencies"
 case ${OSTYPE} in
