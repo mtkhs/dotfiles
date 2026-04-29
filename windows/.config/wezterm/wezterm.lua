@@ -16,7 +16,6 @@ local act = wezterm.action
 --
 ----------------------------------------------------------------------------------
 config.automatically_reload_config = true
-config.window_close_confirmation = 'NeverPrompt'
 config.default_cursor_style = 'BlinkingBar'
 config.use_ime = true
 
