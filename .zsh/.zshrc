@@ -113,8 +113,8 @@ zinit ice wait lucid from"gh-r" as"program" has"git"
 zinit light "jesseduffield/lazygit"
 
 # cat
-#zinit ice wait lucid from"gh-r" as"program" pick"*/bat"
-#zinit light "sharkdp/bat"
+zinit ice wait lucid from"gh-r" as"program" pick"*/bat"
+zinit light "sharkdp/bat"
 
 # find
 zinit ice wait lucid from"gh-r" as"program" pick"*/fd"
