@@ -101,7 +101,7 @@ zinit light "junegunn/fzf-bin"
 #zinit light "direnv/direnv"
 
 # tmux
-zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux"
+zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux" atload"alias tl='tmux list-sessions'"
 zinit light "tmux/tmux"
 
 # gh
@@ -113,7 +113,7 @@ zinit ice wait lucid from"gh-r" as"program" has"git"
 zinit light "jesseduffield/lazygit"
 
 # cat
-zinit ice wait lucid from"gh-r" as"program" pick"*/bat"
+zinit ice wait lucid from"gh-r" as"program" pick"*/bat" atload"alias cat='bat'"
 zinit light "sharkdp/bat"
 
 # find
@@ -121,7 +121,7 @@ zinit ice wait lucid from"gh-r" as"program" pick"*/fd"
 zinit light "sharkdp/fd"
 
 # grep
-zinit ice wait lucid from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg"
+zinit ice wait lucid from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg" atload"alias grep='rg'"
 zinit light "BurntSushi/ripgrep"
 
 # diff
@@ -153,7 +153,7 @@ case ${OSTYPE} in
         zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
         zinit light "peco/peco"
 
-        zinit ice wait lucid from"gh-r" as"program" bpick"*macos-x86_64.tar.gz" pick"*/bin/nvim"
+        zinit ice wait lucid from"gh-r" as"program" bpick"*macos-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
         zinit light "neovim/neovim"
 
         ;;
@@ -169,11 +169,11 @@ case ${OSTYPE} in
         zinit light "x-motemen/ghq"
 
         # ls
-        zinit ice wait lucid from"gh-r" as"program" pick"eza"
+        zinit ice wait lucid from"gh-r" as"program" pick"eza" atload"export EZA_ICON_SPACING=2; alias ls='eza --git --bytes --group --group-directories-first --time-style=long-iso --icons'"
         zinit light "eza-community/eza"
-        
+
         # vi
-        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x86_64.tar.gz" pick"*/bin/nvim"
+        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
         zinit light "neovim/neovim"
 
         # lua-language-server
