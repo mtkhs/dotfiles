@@ -50,6 +50,7 @@ New-Symlink "$DOTFILES\windows\.config\wezterm\wezterm.lua"    "$env:USERPROFILE
 # --------------------------------------------------
 Write-Host ""
 Write-Host "[Shared configs]"
+Remove-Item -Path "$env:USERPROFILE\.gitconfig"
 New-Symlink "$DOTFILES\.gitconfig"                             "$env:USERPROFILE\.gitconfig"
 
 # --------------------------------------------------

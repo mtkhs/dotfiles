@@ -52,7 +52,7 @@ elseif wezterm.target_triple == 'x86_64-apple-darwin' then
 end
 
 config.window_close_confirmation = 'AlwaysPrompt'
-config.window_decorations = 'INTEGRATED_BUTTONS'
+config.window_decorations = 'RESIZE'
 config.window_background_opacity = 0.80
 config.macos_window_background_blur = 10
 config.window_background_gradient = {
@@ -66,10 +66,13 @@ config.window_frame = {
 }
 config.enable_scroll_bar = true
 config.colors = {
-    tab_bar = { inactive_tab_edge = 'none' },
+    tab_bar = {
+        inactive_tab_edge = 'none'
+    },
 }
-local color_scheme = 'Tokyo Night Storm (Gogh)'
-config.color_scheme = color_scheme
+
+-- local color_scheme = 'Tokyo Night Storm (Gogh)'
+-- config.color_scheme = color_scheme
 
 ----------------------------------------------------------------------------------
 --
@@ -77,10 +80,37 @@ config.color_scheme = color_scheme
 --
 ----------------------------------------------------------------------------------
 config.enable_tab_bar = true
-config.use_fancy_tab_bar = false
+config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = false
--- config.show_new_tab_button_in_tab_bar = false
+config.show_new_tab_button_in_tab_bar = false
+config.show_close_tab_button_in_tabs = false
 -- config.tab_max_width = 5
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+    local background = "#5c6d74"
+    local foreground = "#FFFFFF"
+    local edge_background = "none"
+    if tab.is_active then
+        background = "#ae8b2d"
+        foreground = "#FFFFFF"
+    end
+
+    local edge_foreground = background
+    local solid_left_arrow = wezterm.nerdfonts.ple_lower_right_triangle
+    local solid_right_arrow = wezterm.nerdfonts.ple_upper_left_triangle
+    local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
+    return {
+        { Background = { Color = edge_background } },
+        { Foreground = { Color = edge_foreground } },
+        { Text = solid_left_arrow },
+        { Background = { Color = background } },
+        { Foreground = { Color = foreground } },
+        { Text = title },
+        { Background = { Color = edge_background } },
+        { Foreground = { Color = edge_foreground } },
+        { Text = solid_right_arrow },
+    }
+end)
 
 ----------------------------------------------------------------------------------
 --
