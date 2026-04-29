@@ -101,7 +101,7 @@ zinit light "junegunn/fzf-bin"
 #zinit light "direnv/direnv"
 
 # tmux
-zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux" atload"alias tl='tmux list-sessions'"
+zinit ice wait lucid from"gh-r" as"program" bpick"tmux-*.tar.gz" atclone"cd tmux*/; ./configure --enable-utf8proc; make" atpull"%atclone" pick"*/tmux"
 zinit light "tmux/tmux"
 
 # gh
@@ -153,7 +153,7 @@ case ${OSTYPE} in
         zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
         zinit light "peco/peco"
 
-        zinit ice wait lucid from"gh-r" as"program" bpick"*macos-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
+        zinit ice wait lucid from"gh-r" as"program" bpick"*macos-x86_64.tar.gz" pick"*/bin/nvim"
         zinit light "neovim/neovim"
 
         ;;
@@ -169,11 +169,11 @@ case ${OSTYPE} in
         zinit light "x-motemen/ghq"
 
         # ls
-        zinit ice wait lucid from"gh-r" as"program" pick"eza" atload"export EZA_ICON_SPACING=2; alias ls='eza --git --bytes --group --group-directories-first --time-style=long-iso --icons'"
+        zinit ice wait lucid from"gh-r" as"program" pick"eza"
         zinit light "eza-community/eza"
         
         # vi
-        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
+        zinit ice wait lucid from"gh-r" as"program" bpick"*linux-x86_64.tar.gz" pick"*/bin/nvim"
         zinit light "neovim/neovim"
 
         # lua-language-server
