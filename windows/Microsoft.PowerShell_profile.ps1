@@ -1,17 +1,12 @@
+[System.Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
+[System.Console]::InputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
 $env:LANG = "en_US.UTF-8"
+$env:LESSCHARSET = "utf-8"
+$env:PYTHONUTF8 = "1"
+$env:PYTHONIOENCODING = "utf-8"
 
-$coreutils = @("rm", "cp", "mv")
-foreach ($cmd in $coreutils) {
-  if (Test-Path "alias:$cmd") {
-    Remove-Item "alias:$cmd" -Force
-  }
-
-  $functionName = $cmd
-  $functionBody = {
-    coreutils $MyInvocation.MyCommand.Name @args
-  }.GetNewClosure()
-
-  Set-Item "function:$functionName" $functionBody
+function which($cmdname) {
+	Get-Command $cmdname -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Definition
 }
 
 Set-Alias ls eza
