@@ -52,6 +52,7 @@ Write-Host ""
 Write-Host "[Shared configs]"
 Remove-Item -Path "$env:USERPROFILE\.gitconfig"
 New-Symlink "$DOTFILES\.gitconfig"                             "$env:USERPROFILE\.gitconfig"
+New-Symlink "$DOTFILES\.config\nvim"                           "$env:USERPROFILE\AppData\Local\nvim"
 
 # --------------------------------------------------
 # PowerShell profile

@@ -13,3 +13,13 @@ Set-Alias ls eza
 Set-Alias cat bat
 Set-Alias grep rg
 Set-Alias vi nvim
+
+Set-PSReadLineKeyHandler -Chord Ctrl+r -ScriptBlock {
+	$command = Get-Content (Get-PSReadlineOption).HistorySavePath | tac | awk '!a[$0]++' | fzf --reverse --border --inline-info
+
+	if (!$command) {
+	  return
+	}
+
+	[Microsoft.PowerShell.PSConsoleReadLine]::Insert($command)
+}
