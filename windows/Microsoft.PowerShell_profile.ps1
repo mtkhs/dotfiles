@@ -9,8 +9,8 @@ function which($cmdname) {
 	Get-Command $cmdname -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Definition
 }
 
-Set-Alias ls eza
-Set-Alias cat bat
+Set-Alias ls eza -Option AllScope -Force
+Set-Alias cat bat -Option AllScope -Force
 Set-Alias grep rg
 Set-Alias vi nvim
 
