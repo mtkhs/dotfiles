@@ -40,6 +40,20 @@ claude mcp add gemini-cli -s user -- npx -y gemini-mcp-tool
 
 **注**: いずれかが未セットアップの場合、ユーザーに通知してインストール方法を提案する。
 
+## 必須プラグイン
+
+### superpowers（@obra）
+
+設計・計画・実装ワークフロー（brainstorming, writing-plans, subagent-driven-development, test-driven-development, executing-plans 等）を提供する。
+
+- **確認**: `~/.claude/plugins/known_marketplaces.json` に `superpowers-marketplace` があるか
+- **インストール**（Claude Code セッション内で実行）:
+```
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
+/reload-plugins
+```
+
 ## 必須CLIの確認
 
 セッション開始時に、`which` コマンドで必須CLIの存在を確認する。各CLIの詳細は `CLAUDE.md` を参照。
