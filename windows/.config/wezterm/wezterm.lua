@@ -52,7 +52,7 @@ end
 
 config.window_close_confirmation = 'AlwaysPrompt'
 config.window_decorations = 'RESIZE'
-config.window_background_opacity = 0.80
+config.window_background_opacity = 0.8
 config.macos_window_background_blur = 10
 config.window_background_gradient = {
     colors = { '#000000' },

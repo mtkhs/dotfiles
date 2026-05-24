@@ -1,12 +1,14 @@
 {
   "permissions": {
+    "defaultMode": "bypassPermissions",
     "allow": [
       "List(*)",
-      "Read(**)",
-      "Write(**)",
+      "Read(*)",
+      "Write(*)",
       "Fetch(https://*)",
       "WebFetch(domain:*)",
-      "Skill(gemini-search)",
+      "WebSearch",
+      "Skill(*)",
       "Bash(pwsh:*)",
       "Bash(git:*)",
       "Bash(gh:*)",
@@ -40,10 +42,13 @@
       "Bash(pkill:*)",
       "Bash(mise:*)",
       "Bash(curl:*)",
+      "Bash(find:*)",
       "Bash(gemini:*)",
       "Bash(codex:*)",
       "Bash(agent-browser:*)",
       "Bash(uvx:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
       "Bash(claude mcp remove:*)",
       "Bash(claude mcp add:*)",
       "Bash(claude mcp list:*)",
@@ -54,6 +59,24 @@
       "Bash(env:*)",
       "Bash(chmod:*)",
       "Bash(timeout:*)",
+      "Bash(rustup:*)",
+      "Bash(xargs:*)",
+      "Bash(awk:*)",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(Get-Process *)",
+      "PowerShell(New-Item *)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell(Stop-Process *)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Get-Content *)",
+      "PowerShell(cargo *)",
+      "PowerShell(python *)",
+      "PowerShell(python3 *)",
+      "PowerShell(git *)",
+      "PowerShell(node *)",
+      "PowerShell(npx *)",
+      "PowerShell(xargs *)",
       "mcp__serena__list_dir",
       "mcp__serena__activate_project",
       "mcp__serena__get_symbols_overview",
@@ -77,8 +100,8 @@
     ]
   },
   "statusLine": {
-  "type": "command",
-  "command": "npx him0/claude-code-statusline"
+    "type": "command",
+    "command": "npx him0/claude-code-statusline"
   },
-  "model": "sonnet"
+  "skipDangerousModePermissionPrompt": true
 }
