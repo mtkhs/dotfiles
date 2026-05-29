@@ -60,11 +60,9 @@ function _dotfiles_check_async() {
         cd "$_dotfiles_dir" || exit
         git fetch origin --quiet 2>/dev/null || exit
 
-        local local_head=$(git rev-parse HEAD)
-        local remote_head=$(git rev-parse origin/master)
+        local behind=$(git rev-list HEAD..origin/master --count)
 
-        if [[ "$local_head" != "$remote_head" ]]; then
-            local behind=$(git rev-list HEAD..origin/master --count)
+        if (( behind > 0 )); then
             echo "\e[33m[dotfiles]\e[0m ${behind} commit(s) behind origin/master. Run \e[36mgit pull\e[0m in $_dotfiles_dir" \
                 > "$_dotfiles_check_result"
         fi
