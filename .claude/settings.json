@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions",
     "allow": [
       "List(*)",
       "Read(*)",
@@ -84,24 +83,26 @@
       "mcp__serena__find_symbol",
       "mcp__serena__insert_before_symbol",
       "mcp__serena__list_memories"
-    ]
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "WebSearch",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "jq -n --arg reason 'Use Bash(gemini --prompt \"WebSearch: <query>\") instead.' '{decision: \"block\", reason: $reason}'"
-          }
-        ]
-      }
-    ]
+    ],
+    "defaultMode": "bypassPermissions"
   },
   "statusLine": {
     "type": "command",
     "command": "npx him0/claude-code-statusline"
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "agentPushNotifEnabled": true,
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"Now: %s\"}}\\n' \"$(date '+%Y-%m-%d %H:%M:%S %a')\"",
+            "shell": "bash"
+          }
+        ]
+      }
+    ]
+  }
 }

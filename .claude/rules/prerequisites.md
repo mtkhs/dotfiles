@@ -1,10 +1,25 @@
-# セッション初期化手順
+# 前提依存
 
-このドキュメントは、セッション開始時に実行すべき手順を定義する。
+このドキュメントは、Claude Code の前提依存（必須 MCP / CLI / プラグイン）について、何が要るか・どう入れるか・いつ使うかをまとめる。いずれもセッション開始時に自動実行せず、必要になった時点でオンデマンドに確認・是正する。
 
-## 必須MCPの確認
+## 実行モデル
 
-セッション開始時に、以下のMCPが接続されていることを確認する。
+前提依存（MCP/CLI/プラグイン）の存在確認は**自動では行わない**。以前は `SessionStart` フック（`session-prereq-check.ps1`）が毎セッション fail-fast でチェックしていたが、欠落を検知しても是正は Claude の読み取りに依存する中途半端な構成だったため **2026-06-01 に廃止**した。各ツールは実際に使う段で必要になるので、その時点で欠落に気づき、本ドキュメントのインストール手順で是正する。
+
+| 層 | 内容 | 実行機構 | タイミング |
+|---|---|---|---|
+| **① 前提依存** | 必須 MCP / CLI / プラグインの存在確認と是正 | Claude が、各ツールを使う段で利用可否を判定し欠落を是正 | **オンデマンド（必要時）** |
+| **② Serena 起動** | `check_onboarding_performed` → `activate_project` | Claude が MCP 呼び出し | **コード作業に入る時（遅延）** |
+| **③ プロジェクト把握** | memories / 構造 / シンボル概要 / 設定ファイル | Claude が MCP 呼び出し | **必要になった時（遅延・段階取得）** |
+
+**重要**:
+- ①は事前に一括チェックしない。各 skill/ツールが実際に必要になった時点で利用可否を判定し、欠落していれば本ドキュメントの該当インストール手順を案内する（実行は是正のみ、不可逆操作の承認ルールに従う）。
+- ②③を**毎セッション無条件に走らせない**こと。特にシンボル概要は高価で、`token-efficiency.md`（最初から全ファイルを読まない／段階取得）と矛盾する。コード作業が実際に必要になった時だけ実行する。
+- 以降の「必須MCP/CLI/プラグイン」節は、欠落に気づいた際の**インストール・是正リファレンス**として読む。
+
+## 必須MCP（インストール是正リファレンス）
+
+以下が `claude mcp list` に出ない場合、下記でインストールする。
 
 **初期化が必要なMCPは、接続確認後に初期化を実行すること。**
 
@@ -21,14 +36,6 @@ claude mcp add serena -s user -- uvx --from git+https://github.com/oraios/serena
 - **インストール**:
 ```bash
 claude mcp add context7 -s user -- npx -y @upstash/context7-mcp@latest
-```
-
-### Memory MCP
-
-- **初期化**: `mcp__memory__read_graph` を実行して既存知識を確認
-- **インストール**:
-```bash
-claude mcp add memory -s user -- npx -y @modelcontextprotocol/server-memory
 ```
 
 ### Gemini MCP
@@ -51,12 +58,15 @@ claude mcp add gemini-cli -s user -- npx -y gemini-mcp-tool
 ```
 /plugin marketplace add obra/superpowers-marketplace
 /plugin install superpowers@superpowers-marketplace
-/reload-plugins
 ```
 
-## 必須CLIの確認
+インストール後 `/reload-plugins` で `superpowers:*` 系の skill が有効化される。
 
-セッション開始時に、`which` コマンドで必須CLIの存在を確認する。各CLIの詳細は `CLAUDE.md` を参照。
+**重要**: グローバル `~/.claude/skills/` に `brainstorming` `writing-plans` 等の同名スキルが残っていれば、superpowers と重複するので削除すること（`structured-thinking` 等のカスタムは残す）。
+
+## 必須CLI（インストール是正リファレンス）
+
+`gemini` / `agent-browser` が無い場合、下記でインストールする。各CLIの詳細は `CLAUDE.md` を参照。
 
 ### gemini-cli
 
@@ -80,9 +90,9 @@ pnpm add -g agent-browser
 
 **注**: いずれかが未インストールの場合、ユーザーに通知してインストール方法を提案する。
 
-## プロジェクト構造の自動把握
+## ②③ Serena 起動・プロジェクト把握（遅延実行）
 
-セッション開始時、以下の手順でSerenaの利用可否を自動判定してからプロジェクト構造を把握する。
+**毎セッションでは走らせない。** コード解析・実装などで実際に必要になった時に、以下の手順で Serena の利用可否を判定してからプロジェクト構造を把握する。高価なシンボル概要（手順3）は特に、対象が定まってから段階的に取得する。
 
 まず `mcp__serena__check_onboarding_performed` を呼ぶ。
 「No active project」が返った場合は `mcp__serena__activate_project` を試みる。

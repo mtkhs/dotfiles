@@ -9,7 +9,6 @@
 ### 必須MCP
 - **Serena MCP**: コード解析
 - **Context7 MCP**: ライブラリ情報
-- **Memory MCP**: 知識管理
 - **Gemini MCP**: 壁打ち先（デフォルト）
 
 ### 必須CLI
@@ -20,19 +19,21 @@
 - **Codex MCP**: 壁打ち先（深い推論）
 - **Playwright MCP**: ブラウザ制御（高度）
 
-**注**: 未セットアップの場合、セッション開始時に自動的にインストール方法を提案する。詳細は `rules/session-init.md` を参照。
+**注**: 未セットアップの依存は、実際に必要になった段でインストール方法を提案する。詳細は `rules/prerequisites.md` を参照。
 
-## 設定ファイル構成
+## ルールファイルの読み込み
 
-**ルールファイル** (`~/.claude/rules/` - 自動読み込み):
-- `core-rules.md` - 会話の基本原則
-- `coding-rules.md` - プログラミング実装ルール
-- `documentation-rules.md` - ドキュメント作成の原則
-- `session-continue.md` - セッション継続管理
-- `session-init.md` - セッション初期化手順
-- `token-efficiency.md` - トークン効率化
+以下を `@import` で読み込む（記述するだけでは読まれないため、必ず @ で繋ぐこと）。
 
-**その他**:
+@rules/core-rules.md
+@rules/coding-rules.md
+@rules/architecture-rules.md
+@rules/documentation-rules.md
+@rules/ui-rules.md
+@rules/token-efficiency.md
+@rules/prerequisites.md
+
+**その他**（必要時に参照）:
 - **言語別ルール**: `~/.claude/languages/*.md`
 - **カスタムエージェント**: `~/.claude/agents/*.md`
 - **カスタムコマンド**: `~/.claude/commands/*.md`
@@ -57,10 +58,10 @@
 
 ### Web検索
 
-Web検索が必要な場合、**必ずGemini CLIを使用する**。組み込みの`web_search`ツールは使用禁止である。
+組み込みの WebSearch に加え、Gemini CLI 経由の検索も任意で使える。
 
 ```bash
-gemini --prompt 'WebSearch: <検索クエリ>'
+gemini --skip-trust --prompt 'WebSearch: <検索クエリ>'
 ```
 
 ### ライブラリ・フレームワークの情報取得
