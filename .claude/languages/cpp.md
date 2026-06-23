@@ -50,7 +50,6 @@ project/
 
 - スマートポインタ（`std::unique_ptr`, `std::shared_ptr`）を優先する
 - `new`/`delete` を直接使う場合は、対応を必ず確認する
-- メモリリークを防ぐ
 - ポインタチェックには `nullptr` を使用する
 
 ### エラー処理

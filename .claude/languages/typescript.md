@@ -1,9 +1,5 @@
 # TypeScript ルール
 
-## 開発環境
-
-プロジェクトごとに適切なツールを選択する。
-
 ## 型安全性
 
 ### 禁止事項
@@ -33,7 +29,7 @@ packages/
 
 プロジェクトごとに適切な構造を採用する。以下は参考例：
 
-### Frontend (React/Next.js)
+#### Frontend (React/Next.js)
 
 ```
 src/
@@ -46,7 +42,7 @@ src/
 └── app/              # Next.js App Router
 ```
 
-### Backend (Node.js)
+#### Backend (Node.js)
 
 ```
 src/

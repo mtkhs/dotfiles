@@ -17,18 +17,6 @@ project/
 
 ## コーディング規約
 
-### フォーマット
-
-- 括弧の内側にスペースを入れる
-  ```python
-  def function_name( arg1, arg2 ):
-      result = some_func( arg1, arg2 )
-  ```
-- キーワード引数の `=` 前後にスペースを入れる
-  ```python
-  func( keyword = value )
-  ```
-
 ### 型ヒント
 
 - 関数の引数と戻り値には型ヒントを付ける
@@ -71,4 +59,3 @@ project/
 ### クラス設計
 
 - プロパティには `@property` デコレータを使用する
-- 継承を活用し、適切な抽象化を行う
