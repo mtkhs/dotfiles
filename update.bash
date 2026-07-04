@@ -5,7 +5,7 @@ DOTFILES="$HOME/dotfiles"
 source ~/.zsh/.zshrc
 
 # Claude
-cp -rf $DOTFILES/.claude $HOME/
+cp -rf "$DOTFILES/.claude/." "$HOME/.claude/"
 
 # mise
 mise self-update

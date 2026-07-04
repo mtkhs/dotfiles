@@ -46,7 +46,8 @@ if [ -d "$HOME/.claude" ]; then
 else
     echo "  [COPY] .claude -> $HOME/.claude"
 fi
-cp -rf "$DOTFILES/.claude" "$HOME/.claude"
+mkdir -p "$HOME/.claude"
+cp -rf "$DOTFILES/.claude/." "$HOME/.claude/"
 
 # --------------------------------------------------
 # zinit
@@ -71,7 +72,9 @@ if [ -f "$HOME/.local/bin/mise" ]; then
 else
     echo "  [INSTALL] mise..."
     curl https://mise.run | sh
+    export PATH="$HOME/.local/bin:$PATH"
 
+    mkdir -p "$HOME/.zinit/completions"
     mise completion zsh > "$HOME/.zinit/completions/_mise"
     mise settings add idiomatic_version_file_enable_tools python
     mise settings add idiomatic_version_file_enable_tools node
@@ -84,9 +87,9 @@ else
     mise use -g pipx@latest
     mise use -g pipx:terminaltexteffects@latest
 
-    eval "$(mise activate bash)"
+    # mise activate はプロンプトフック前提でスクリプト内では効かないため shims を使う
+    export PATH="$HOME/.local/share/mise/shims:$PATH"
     pip install --upgrade pip
-    pip install terminaltexteffects
 fi
 
 # --------------------------------------------------

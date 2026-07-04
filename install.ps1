@@ -50,7 +50,7 @@ New-Symlink "$DOTFILES\windows\.config\wezterm\wezterm.lua"    "$env:USERPROFILE
 # --------------------------------------------------
 Write-Host ""
 Write-Host "[Shared configs]"
-Remove-Item -Path "$env:USERPROFILE\.gitconfig"
+Remove-Item -Path "$env:USERPROFILE\.gitconfig" -Force -ErrorAction SilentlyContinue
 New-Symlink "$DOTFILES\.gitconfig"                             "$env:USERPROFILE\.gitconfig"
 New-Symlink "$DOTFILES\.config\nvim"                           "$env:USERPROFILE\AppData\Local\nvim"
 
@@ -80,7 +80,8 @@ if (Test-Path $claudeDest) {
 } else {
     Write-Host "  [COPY] .claude -> $claudeDest"
 }
-Copy-Item -Path "$DOTFILES\.claude" -Destination $claudeDest -Recurse -Force
+New-Item -ItemType Directory -Path $claudeDest -Force | Out-Null
+Copy-Item -Path "$DOTFILES\.claude\*" -Destination $claudeDest -Recurse -Force
 
 Write-Host ""
 Write-Host "=== Done ==="
