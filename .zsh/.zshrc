@@ -389,7 +389,7 @@ function peco_cdr() {
     fi
 }
 zle -N peco_cdr
-bindkey '^E' peco_cdr
+#bindkey '^E' peco_cdr
 
 #---------------------------------------------------------------------------
 # fzf:
@@ -416,8 +416,7 @@ bindkey '^r' fzf_history_search
 #bindkey '^R' fzf_history_search
 
 function fzf_cdr(){
-    local selected_dir=$(cdr -l | awk '{ print $2 }' | \
-      fzf --preview 'f() { sh -c "ls -hFGl $1" }; f {}')
+    local selected_dir=$(cdr -l | awk '{ print $2 }' | fzf --reverse --border --inline-info --preview 'f() { sh -c "ls -hFGl $1" }; f {}')
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
@@ -425,7 +424,7 @@ function fzf_cdr(){
     zle clear-screen
 }
 zle -N fzf_cdr
-#bindkey '^E' fzf_cdr
+bindkey '^E' fzf_cdr
 
 #---------------------------------------------------------------------------
 # zcompile:
