@@ -346,7 +346,7 @@ bindkey '^r' fzf_history_search
 
 # ghq リポジトリへ移動（.git の更新時刻が新しい順に表示）
 function fzf_ghq() {
-    local ghq_roots="$(git config --path --get-all ghq.root)"
+    local ghq_roots="$(ghq root --all)"
     local selected_dir=$(ghq list --full-path | \
         xargs -I{} ls -dl --time-style=+%s {}/.git | sed 's/.*\([0-9]\{10\}\)/\1/' | sort -nr | \
         sed "s,.*\(${ghq_roots/$'\n'/\|}\)/,," | \
