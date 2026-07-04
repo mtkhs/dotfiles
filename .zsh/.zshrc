@@ -95,7 +95,7 @@ zinit ice lucid
 zinit load "romkatv/zsh-defer"
 
 zinit ice wait lucid from"gh-r" as"program"
-zinit light "junegunn/fzf-bin"
+zinit light "junegunn/fzf"
 
 #zinit ice wait lucid from"gh-r" as"program" mv"direnv* -> direnv"
 #zinit light "direnv/direnv"
@@ -142,24 +142,17 @@ zinit light "dandavison/delta"
 
 case ${OSTYPE} in
     Rasp*)
-        zinit ice wait lucid from"gh-r" as"program" bpick"*linux_arm64*" pick"*/peco"
-        zinit light "peco/peco"
 
         ;;
     Manjaro*)
         
         ;;
     darwin*)
-        zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
-        zinit light "peco/peco"
-
         zinit ice wait lucid from"gh-r" as"program" bpick"*macos-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
         zinit light "neovim/neovim"
 
         ;;
     linux*)
-        zinit ice wait lucid from"gh-r" as"program" pick"*/peco"
-        zinit light "peco/peco"
         # du
         #zinit ice wait lucid from"gh-r" as"program" pick"*/diskus"
         #zinit light "sharkdp/diskus"
@@ -314,8 +307,6 @@ setopt hist_ignore_dups
 setopt hist_ignore_space
 # 余分な空白は詰める
 setopt hist_reduce_blanks
-# zsh の開始/ 終了時刻をヒストリファイルに記録
-setopt extended_history
 # シェルを横断して.zsh_historyに記録
 setopt inc_append_history
 # ヒストリを共有
@@ -342,56 +333,6 @@ function mkbk() {
 }
 
 #---------------------------------------------------------------------------
-# peco:
-#
-
-# history
-function peco_history_selection() {
-#    BUFFER="$(history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER" | sed 's/\\n/\n/')"
-    BUFFER=$(history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle reset-prompt
-}
-zle -N peco_history_selection
-#bindkey '^R' peco_history_selection
-
-# ghq
-function peco_ghq_look() {
-    local ghq_roots="$(git config --path --get-all ghq.root)"
-    local selected_dir=$(ghq list --full-path | \
-        xargs -I{} ls -dl --time-style=+%s {}/.git | sed 's/.*\([0-9]\{10\}\)/\1/' | sort -nr | \
-        sed "s,.*\(${ghq_roots/$'\n'/\|}\)/,," | \
-        sed 's/\/.git//' | \
-        peco --prompt="cd-ghq >" --query "$LBUFFER")
-    if [ -n "$selected_dir" ]; then
-        BUFFER="cd $(ghq list --full-path | grep --color=never -E "/$selected_dir$")"
-        zle accept-line
-    fi
-}
-zle -N peco_ghq_look
-bindkey '^G' peco_ghq_look
-
-# cdr
-if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
-    autoload -Uz chpwd_recent_dirs cdr
-    add-zsh-hook chpwd chpwd_recent_dirs
-    zstyle ':completion:*' recent-dirs-insert both
-    zstyle ':chpwd:*' recent-dirs-default true
-    zstyle ':chpwd:*' recent-dirs-max 1000
-    zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
-fi
-
-function peco_cdr() {
-    local selected_dir="$(cdr -l | sed 's/^[0-9]\+ \+//' | peco --prompt="cdr >" --query "$LBUFFER")"
-    if [ -n "$selected_dir" ]; then
-        BUFFER="cd ${selected_dir}"
-        zle accept-line
-    fi
-}
-zle -N peco_cdr
-#bindkey '^E' peco_cdr
-
-#---------------------------------------------------------------------------
 # fzf:
 #
 
@@ -403,17 +344,31 @@ function fzf_history_search() {
 zle -N fzf_history_search
 bindkey '^r' fzf_history_search
 
-#function fzf_history_search() {
-#    local selected_command
-#    selected_command=$(history -n 1 | tac | awk '!a[$0]++' | fzf --height 40% --layout=reverse --border --inline-info)
-#    if [ -n "$selected_command" ]; then
-#        BUFFER=$selected_command
-#        CURSOR=$#BUFFER
-#        zle reset-prompt
-#    fi
-#}
-#zle -N fzf_history_search
-#bindkey '^R' fzf_history_search
+# ghq リポジトリへ移動（.git の更新時刻が新しい順に表示）
+function fzf_ghq() {
+    local ghq_roots="$(git config --path --get-all ghq.root)"
+    local selected_dir=$(ghq list --full-path | \
+        xargs -I{} ls -dl --time-style=+%s {}/.git | sed 's/.*\([0-9]\{10\}\)/\1/' | sort -nr | \
+        sed "s,.*\(${ghq_roots/$'\n'/\|}\)/,," | \
+        sed 's/\/.git//' | \
+        fzf --prompt="cd-ghq >" --reverse --border --inline-info --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd $(ghq list --full-path | grep --color=never -E "/$selected_dir$")"
+        zle accept-line
+    fi
+}
+zle -N fzf_ghq
+bindkey '^G' fzf_ghq
+
+# cdr（fzf_cdr が使う移動履歴の記録を有効化）
+if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
+    autoload -Uz chpwd_recent_dirs cdr
+    add-zsh-hook chpwd chpwd_recent_dirs
+    zstyle ':completion:*' recent-dirs-insert both
+    zstyle ':chpwd:*' recent-dirs-default true
+    zstyle ':chpwd:*' recent-dirs-max 1000
+    zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
+fi
 
 function fzf_cdr(){
     local selected_dir=$(cdr -l | awk '{ print $2 }' | fzf --reverse --border --inline-info --preview 'f() { sh -c "ls -hFGl $1" }; f {}')
