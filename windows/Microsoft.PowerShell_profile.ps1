@@ -9,7 +9,9 @@ function which($cmdname) {
 	Get-Command $cmdname -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Definition
 }
 
-Set-Alias ls eza -Option AllScope -Force
+$env:EZA_ICON_SPACING = "2"
+function Invoke-Eza { eza --git --bytes --group-directories-first --time-style=long-iso --icons=auto @args }
+Set-Alias ls Invoke-Eza -Option AllScope -Force
 Set-Alias cat bat -Option AllScope -Force
 Set-Alias grep rg
 Set-Alias diff delta -Option AllScope -Force

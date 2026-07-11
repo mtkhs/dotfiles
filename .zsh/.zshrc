@@ -156,7 +156,7 @@ case ${OSTYPE} in
         zinit light "x-motemen/ghq"
 
         # ls
-        zinit ice wait lucid from"gh-r" as"program" pick"eza" atload"export EZA_ICON_SPACING=2; alias ls='eza --git --bytes --group --group-directories-first --time-style=long-iso --icons'"
+        zinit ice wait lucid from"gh-r" as"program" pick"eza" atload"export EZA_ICON_SPACING=2; alias ls='eza --git --bytes --group --group-directories-first --time-style=long-iso --icons=auto'"
         zinit light "eza-community/eza"
 
         # vi
