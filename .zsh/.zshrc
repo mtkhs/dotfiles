@@ -121,7 +121,7 @@ zinit ice wait lucid from"gh-r" as"program" pick"*/fd"
 zinit light "sharkdp/fd"
 
 # grep
-zinit ice wait lucid from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg" atload"alias grep='rg'"
+zinit ice wait lucid from"gh-r" as"program" mv"ripgrep* -> rg" pick"rg/rg"
 zinit light "BurntSushi/ripgrep"
 
 # diff
