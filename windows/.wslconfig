@@ -2,4 +2,5 @@
 memory=12GB
 swap=4GB
 localhostForwarding=true
+dnsTunneling=true
 defaultVhdSize=171798691840
