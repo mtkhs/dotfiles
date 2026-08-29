@@ -1,0 +1,91 @@
+#!/bin/bash
+# pre-commit - syntax-check staged files before they enter a commit.
+#
+# Enabled per clone by install.bash / install.ps1:
+#   git config --local core.hooksPath .githooks
+#
+# Staged content is checked (git show :path), not the working tree, so a commit
+# never records a file that fails to parse. A checker that is unavailable on the
+# platform is reported as skipped rather than passing silently.
+
+set -uo pipefail
+
+status=0
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+# pwsh is absent from PATH under WSL; fall back to the Windows install so that
+# .ps1 edits made from Linux are still checked.
+find_pwsh() {
+    command -v pwsh 2>/dev/null && return 0
+    local p
+    for p in /mnt/c/Program\ Files/PowerShell/*/pwsh.exe; do
+        [ -x "$p" ] && { echo "$p"; return 0; }
+    done
+    return 1
+}
+PWSH="$(find_pwsh || true)"
+
+fail() {
+    echo "  [NG] $1"
+    [ -n "${2:-}" ] && printf '%s\n' "$2" | sed 's/^/       /'
+    status=1
+}
+
+check() {   # check <path> <staged-copy> <command...>
+    local path="$1" staged="$2"; shift 2
+    local out
+    if ! out="$("$@" 2>&1)"; then
+        fail "$path" "$(printf '%s' "$out" | sed "s|$staged|$path|g")"
+    fi
+}
+
+# The staged copy lives on the Linux filesystem, which the Windows pwsh cannot
+# open by path, so the source is piped in on stdin instead.
+check_ps1() {
+    local path="$1" staged="$2"
+    if [ -z "$PWSH" ]; then
+        echo "  [SKIP] $path (pwsh not found)"
+        return
+    fi
+    local out
+    if ! out="$("$PWSH" -NoProfile -Command '
+        if ($PSStyle) { $PSStyle.OutputRendering = "PlainText" }
+        $src = [Console]::In.ReadToEnd()
+        $errors = $null
+        [System.Management.Automation.Language.Parser]::ParseInput($src, [ref]$null, [ref]$errors) | Out-Null
+        if ($errors) { $errors | ForEach-Object { $_.ToString() }; exit 1 }' < "$staged" 2>&1)"; then
+        fail "$path" "$(printf '%s' "$out" | tr -d '\r')"
+    fi
+}
+
+while IFS= read -r path; do
+    [ -n "$path" ] || continue
+    staged="$tmp/$(printf '%s' "$path" | tr '/' '_')"
+    git show ":$path" > "$staged" 2>/dev/null || continue
+
+    case "$path" in
+        *.bash|.githooks/*)
+            check "$path" "$staged" bash -n "$staged" ;;
+        .zsh/.z*|.zshenv)
+            if command -v zsh >/dev/null 2>&1; then
+                check "$path" "$staged" zsh -n "$staged"
+            else
+                echo "  [SKIP] $path (zsh not found)"
+            fi ;;
+        *.ps1)
+            check_ps1 "$path" "$staged" ;;
+        *.json)
+            check "$path" "$staged" python3 -c 'import json, sys
+try:
+    json.load(open(sys.argv[1]))
+except json.JSONDecodeError as e:
+    sys.exit(str(e))' "$staged" ;;
+    esac
+done < <(git diff --cached --name-only --diff-filter=ACM)
+
+if [ "$status" -ne 0 ]; then
+    echo ""
+    echo "pre-commit: syntax check failed. Fix the files above, or bypass with --no-verify."
+fi
+exit "$status"

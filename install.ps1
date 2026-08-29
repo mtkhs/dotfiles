@@ -66,6 +66,14 @@ if (Test-Path $psProfileSource) {
 }
 
 # --------------------------------------------------
+# git hooks
+# --------------------------------------------------
+Write-Host ""
+Write-Host "[git hooks]"
+& git -C $DOTFILES config --local core.hooksPath .githooks
+Write-Host "  [SET] core.hooksPath -> .githooks"
+
+# --------------------------------------------------
 # Claude
 # --------------------------------------------------
 Write-Host ""

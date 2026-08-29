@@ -38,6 +38,14 @@ make_link "$DOTFILES/.tmux.conf"    "$HOME/.tmux.conf"
 make_link "$DOTFILES/.gitconfig"    "$HOME/.gitconfig"
 
 # --------------------------------------------------
+# git hooks
+# --------------------------------------------------
+echo ""
+echo "[git hooks]"
+git config --local core.hooksPath .githooks
+echo "  [SET] core.hooksPath -> .githooks"
+
+# --------------------------------------------------
 # Claude
 # --------------------------------------------------
 echo ""
