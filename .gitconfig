@@ -45,9 +45,6 @@ path = ~/.gitconfig_local
 [pager]
 log = false
 
-[credential]
-helper = store
-
 [init]
 defaultBranch = main
 
