@@ -76,6 +76,10 @@ while IFS= read -r path; do
         *.ps1)
             check_ps1 "$path" "$staged" ;;
         *.json)
+            if ! command -v python3 >/dev/null 2>&1; then
+                echo "  [SKIP] $path (python3 not found)"
+                continue
+            fi
             check "$path" "$staged" python3 -c 'import json, sys
 try:
     json.load(open(sys.argv[1]))
