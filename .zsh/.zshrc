@@ -141,12 +141,6 @@ zinit light "dandavison/delta"
 #zinit light "ajeetdsouza/zoxide"
 
 case ${OSTYPE} in
-    Rasp*)
-
-        ;;
-    Manjaro*)
-        
-        ;;
     darwin*)
         zinit ice wait lucid from"gh-r" as"program" bpick"*macos-x86_64.tar.gz" pick"*/bin/nvim" atload"alias vi='nvim'"
         zinit light "neovim/neovim"
