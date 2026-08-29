@@ -3,8 +3,6 @@ name = Motoi TAKAHASHI
 email = openmoyo@gmail.com
 
 [core]
-excludesfile = ~/.gitignore
-attributesfile = ~/.gitattributes
 autocrlf = false
 editor = nvim
 pager = delta
