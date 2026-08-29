@@ -40,6 +40,11 @@ $ManagedFiles = @("CLAUDE.md", "settings.json")
 $ExcludeFilePatterns = @("settings.local.json", "*.log", "audit-*.log")
 $ExcludeDirNames     = @("local")   # commands/local, hooks/local, ...
 
+# Machine-specific keys. Claude Code reads these only from ~/.claude/settings.json
+# (settings.local.json is ignored for them), so they cannot be separated by file.
+# They are dropped on the way back instead, which keeps them out of the repo.
+$MachineSpecificKeys = @("tui", "model", "autoMode")
+
 # --- Pre-flight -----------------------------------------------------------
 if (-not (Test-Path $SRC))             { throw "Source not found: $SRC" }
 if (-not (Test-Path "$DOTFILES\.git")) { throw "Not a git repo: $DOTFILES (need git to review/revert)" }
@@ -91,6 +96,25 @@ function Sync-One([string]$srcFile, [string]$dstFile, [string]$label) {
     }
 }
 
+# settings.json is special-cased: machine-specific keys are dropped before it is
+# written back. Output is 2-space JSON with LF endings, byte-identical to what
+# pullback-dot-claude.bash writes, so the two platforms never fight over format.
+function Sync-SettingsJson([string]$srcFile, [string]$dstFile, [string]$label) {
+    if (-not (Test-Path $srcFile)) { Sync-One $srcFile $dstFile $label; return }
+
+    $obj = Get-Content -Raw $srcFile | ConvertFrom-Json
+    foreach ($k in $MachineSpecificKeys) { $obj.PSObject.Properties.Remove($k) }
+    $srcText = (($obj | ConvertTo-Json -Depth 100) -replace "`r`n", "`n") + "`n"
+
+    $dstText = if (Test-Path $dstFile) { [System.IO.File]::ReadAllText($dstFile) } else { $null }
+    if ($dstText -eq $srcText) { return }
+
+    $kind = if ($null -ne $dstText) { "mod" } else { "new" }
+    $script:counts[$kind]++
+    Write-Host ("  [{0}] {1} (machine-specific keys dropped: {2})" -f $kind.ToUpper(), $label, ($MachineSpecificKeys -join ", "))
+    if ($script:applied) { [System.IO.File]::WriteAllText($dstFile, $srcText) }
+}
+
 # --- Run ------------------------------------------------------------------
 Write-Host "=== pull-back ~/.claude -> dotfiles/.claude ===" -ForegroundColor Cyan
 if ($DryRun) { Write-Host "(dry-run: no files will be changed)" -ForegroundColor Yellow }
@@ -108,7 +132,9 @@ foreach ($d in $ManagedDirs) {
 
 # Managed top-level files.
 foreach ($f in $ManagedFiles) {
-    Sync-One (Join-Path $SRC $f) (Join-Path $DST $f) $f
+    $s = Join-Path $SRC $f
+    $t = Join-Path $DST $f
+    if ($f -eq "settings.json") { Sync-SettingsJson $s $t $f } else { Sync-One $s $t $f }
 }
 
 # Tidy: drop directories left empty by deletions (git tracks files, not dirs).

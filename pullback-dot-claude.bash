@@ -32,6 +32,11 @@ DST="$DOTFILES/.claude"      # destination (git-tracked)
 MANAGED_DIRS=(agents commands languages rules skills)
 MANAGED_FILES=(CLAUDE.md settings.json)
 
+# Machine-specific keys. Claude Code reads these only from ~/.claude/settings.json
+# (settings.local.json is ignored for them), so they cannot be separated by file.
+# They are dropped on the way back instead, which keeps them out of the repo.
+MACHINE_SPECIFIC_KEYS=(tui model autoMode)
+
 # --- Pre-flight -----------------------------------------------------------
 if [ ! -d "$SRC" ]; then
     echo "Source not found: $SRC" >&2
@@ -39,6 +44,10 @@ if [ ! -d "$SRC" ]; then
 fi
 if [ ! -d "$DOTFILES/.git" ]; then
     echo "Not a git repo: $DOTFILES (need git to review/revert)" >&2
+    exit 1
+fi
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "python3 not found on PATH (needed to drop machine-specific keys from settings.json)" >&2
     exit 1
 fi
 mkdir -p "$DST"
@@ -104,6 +113,52 @@ sync_one() {
     fi
 }
 
+# settings.json is special-cased: machine-specific keys are dropped before it is
+# written back. Output is 2-space JSON with LF endings, byte-identical to what
+# pullback-dot-claude.ps1 writes, so the two platforms never fight over format.
+sync_settings_json() {
+    local src_file="$1"
+    local dst_file="$2"
+    local label="$3"
+
+    if [ ! -f "$src_file" ]; then
+        sync_one "$src_file" "$dst_file" "$label"
+        return 0
+    fi
+
+    local stripped
+    stripped="$(mktemp)"
+    python3 -c '
+import json, sys
+src, out, keys = sys.argv[1], sys.argv[2], sys.argv[3:]
+d = json.load(open(src))
+for k in keys:
+    d.pop(k, None)
+with open(out, "w", newline="\n") as f:
+    f.write(json.dumps(d, indent=2, ensure_ascii=False) + "\n")
+' "$src_file" "$stripped" "${MACHINE_SPECIFIC_KEYS[@]}"
+
+    if same_content "$stripped" "$dst_file"; then
+        rm -f "$stripped"
+        return 0
+    fi
+
+    local kind
+    if [ -f "$dst_file" ]; then
+        kind="MOD"
+        count_mod=$((count_mod + 1))
+    else
+        kind="NEW"
+        count_new=$((count_new + 1))
+    fi
+    echo "  [$kind] $label (machine-specific keys dropped: ${MACHINE_SPECIFIC_KEYS[*]})"
+    if [ "$DRY_RUN" -eq 0 ]; then
+        mkdir -p "$(dirname "$dst_file")"
+        cp -f "$stripped" "$dst_file"
+    fi
+    rm -f "$stripped"
+}
+
 # --- Run ------------------------------------------------------------------
 echo "=== pull-back ~/.claude -> dotfiles/.claude ==="
 if [ "$DRY_RUN" -eq 1 ]; then
@@ -122,7 +177,11 @@ done
 
 # Managed top-level files.
 for f in "${MANAGED_FILES[@]}"; do
-    sync_one "$SRC/$f" "$DST/$f" "$f"
+    if [ "$f" = "settings.json" ]; then
+        sync_settings_json "$SRC/$f" "$DST/$f" "$f"
+    else
+        sync_one "$SRC/$f" "$DST/$f" "$f"
+    fi
 done
 
 # Tidy: drop directories left empty by deletions (git tracks files, not dirs).
