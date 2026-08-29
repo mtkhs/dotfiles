@@ -26,12 +26,7 @@ function New-Symlink {
         New-Item -ItemType Directory -Path $parentDir -Force | Out-Null
     }
 
-    $targetItem = Get-Item $Target -Force
-    if ($targetItem.PSIsContainer) {
-        New-Item -ItemType SymbolicLink -Path $Link -Target $Target | Out-Null
-    } else {
-        New-Item -ItemType SymbolicLink -Path $Link -Target $Target | Out-Null
-    }
+    New-Item -ItemType SymbolicLink -Path $Link -Target $Target | Out-Null
     Write-Host "  [LINK] $Link -> $Target"
 }
 
