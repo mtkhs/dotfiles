@@ -322,8 +322,9 @@ function mkcd() {
     cd "$*"
 }
 
-# TODO: 
+# copy a file or directory alongside itself, stamped with the current time
 function mkbk() {
+    cp -RLp "$1" "$1.$(date +%Y%m%d-%H%M%S).bak"
 }
 
 #---------------------------------------------------------------------------
