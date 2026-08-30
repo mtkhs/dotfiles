@@ -2,6 +2,7 @@
 
 rm -f ~/.config/nvim
 rm -f ~/.config/bat
+rm -f ~/.config/git
 rm -f ~/.config/mise
 
 rm -f ~/.vimrc
