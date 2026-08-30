@@ -85,16 +85,30 @@ local function display_logo()
       .. subcommand
       .. ' --final-gradient-direction diagonal',
   }
+  -- tte の終了時、Neovim 既定の TermClose が '[Process exited]' をロゴに重ねて
+  -- 描画するので、このバッファに限ってその extmark を消す。
+  local exitmsg_ns = vim.api.nvim_create_namespace('nvim.terminal.exitmsg')
+  vim.api.nvim_create_autocmd('TermClose', {
+    group = augroup,
+    buffer = buf,
+    once = true,
+    callback = function()
+      vim.schedule(function()
+        if vim.api.nvim_buf_is_valid(buf) then
+          vim.api.nvim_buf_clear_namespace(buf, exitmsg_ns, 0, -1)
+        end
+      end)
+    end,
+    desc = 'Hide the terminal exit message over the logo',
+  })
+
   vim.api.nvim_buf_call(buf, function()
     vim.fn.jobstart(cmd, {
       term = true,
-      -- on_exit = function() end,
     })
   end)
   return { buf = buf, win = win }
 end
-
-vim.api.nvim_clear_autocmds({ group = 'nvim.terminal', event = 'TermClose' })
 
 vim.api.nvim_create_autocmd('User', {
   group = augroup,
