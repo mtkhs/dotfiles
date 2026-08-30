@@ -69,8 +69,3 @@ vim.opt.whichwrap = 'b,s,h,l,<,>,[,],~'
 -- completion
 vim.opt.completeopt = 'fuzzy,menu,menuone,noselect' -- 補完時の挙動
 
---
--- performance
---
-vim.opt.lazyredraw = true -- スクロール時の再描画の頻度を減らす
-
