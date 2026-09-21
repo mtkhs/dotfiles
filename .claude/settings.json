@@ -102,8 +102,19 @@
     "type": "command",
     "command": "npx him0/claude-code-statusline"
   },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
+  },
+  "viewMode": "focus",
+  "advisorModel": "fable",
   "skipDangerousModePermissionPrompt": true,
   "agentPushNotifEnabled": true,
-  "advisorModel": "fable",
-  "viewMode": "focus"
+  "enabledPlugins": {
+    "ponytail@ponytail": true
+  }
 }
