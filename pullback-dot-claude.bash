@@ -226,8 +226,10 @@ sync_one() {
 }
 
 # settings.json is special-cased: machine-specific keys are dropped before it is
-# written back. Output is 2-space JSON with LF endings, byte-identical to what
-# pullback-dot-claude.ps1 writes, so the two platforms never fight over format.
+# written back. Claude Code rewrites the file in whatever key order it likes, so
+# the keys are sorted here and only real edits show up as a diff. Output is
+# 2-space JSON with LF endings, byte-identical to what pullback-dot-claude.ps1
+# writes, so the two platforms never fight over format.
 sync_settings_json() {
     local src_file="$1"
     local dst_file="$2"
@@ -248,7 +250,7 @@ d = json.load(open(src))
 for k in keys:
     d.pop(k, None)
 with open(out, 'w', newline='\n') as f:
-    f.write(json.dumps(d, indent=2, ensure_ascii=False) + '\n')
+    f.write(json.dumps(d, indent=2, ensure_ascii=False, sort_keys=True) + '\n')
 " "$src_file" "$stripped" "${MACHINE_SPECIFIC_KEYS[@]}"
 
     if same_content "$stripped" "$dst_file"; then

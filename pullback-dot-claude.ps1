@@ -149,9 +149,38 @@ function Sync-One([string]$srcFile, [string]$dstFile, [string]$label) {
     }
 }
 
+# Order object keys by code point, matching what Python's sort_keys=True does in
+# pullback-dot-claude.bash, so both ports keep writing the same bytes.
+function Sort-JsonKeys($value) {
+    if ($value -is [System.Management.Automation.PSCustomObject]) {
+        $names = [string[]]@($value.PSObject.Properties.Name)
+        [Array]::Sort($names, [System.StringComparer]::Ordinal)
+
+        $ordered = [ordered]@{}
+        foreach ($name in $names) {
+            $ordered[$name] = Sort-JsonKeys $value.$name
+        }
+
+        return [PSCustomObject]$ordered
+    }
+
+    if ($value -is [System.Collections.IList]) {
+        $items = [System.Collections.ArrayList]::new()
+        foreach ($item in $value) {
+            [void]$items.Add((Sort-JsonKeys $item))
+        }
+
+        return , $items.ToArray()
+    }
+
+    return $value
+}
+
 # settings.json is special-cased: machine-specific keys are dropped before it is
-# written back. Output is 2-space JSON with LF endings, byte-identical to what
-# pullback-dot-claude.bash writes, so the two platforms never fight over format.
+# written back. Claude Code rewrites the file in whatever key order it likes, so
+# the keys are sorted here and only real edits show up as a diff. Output is
+# 2-space JSON with LF endings, byte-identical to what pullback-dot-claude.bash
+# writes, so the two platforms never fight over format.
 function Sync-SettingsJson([string]$srcFile, [string]$dstFile, [string]$label) {
     if (-not (Test-Path $srcFile)) {
         Sync-One $srcFile $dstFile $label
@@ -162,7 +191,7 @@ function Sync-SettingsJson([string]$srcFile, [string]$dstFile, [string]$label) {
     foreach ($key in $MachineSpecificKeys) {
         $obj.PSObject.Properties.Remove($key)
     }
-    $srcText = (($obj | ConvertTo-Json -Depth 100) -replace "`r`n", "`n") + "`n"
+    $srcText = ((Sort-JsonKeys $obj | ConvertTo-Json -Depth 100) -replace "`r`n", "`n") + "`n"
 
     $dstText = if (Test-Path $dstFile) { [System.IO.File]::ReadAllText($dstFile) } else { $null }
     if ($dstText -eq $srcText) {

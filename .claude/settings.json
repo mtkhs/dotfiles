@@ -1,4 +1,30 @@
 {
+  "advisorModel": "fable",
+  "agentPushNotifEnabled": true,
+  "enabledPlugins": {
+    "ponytail@ponytail": true
+  },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "repo": "DietrichGebert/ponytail",
+        "source": "github"
+      }
+    }
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "printf '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"Now: %s\"}}\\n' \"$(date '+%Y-%m-%d %H:%M:%S %a')\"",
+            "shell": "bash",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "allow": [
       "List(*)",
@@ -85,36 +111,10 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"Now: %s\"}}\\n' \"$(date '+%Y-%m-%d %H:%M:%S %a')\"",
-            "shell": "bash"
-          }
-        ]
-      }
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "npx him0/claude-code-statusline"
-  },
-  "extraKnownMarketplaces": {
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    }
-  },
-  "viewMode": "focus",
-  "advisorModel": "fable",
   "skipDangerousModePermissionPrompt": true,
-  "agentPushNotifEnabled": true,
-  "enabledPlugins": {
-    "ponytail@ponytail": true
-  }
+  "statusLine": {
+    "command": "npx him0/claude-code-statusline",
+    "type": "command"
+  },
+  "viewMode": "focus"
 }
