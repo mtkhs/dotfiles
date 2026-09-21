@@ -17,7 +17,9 @@
 ### 推奨MCP
 - **Playwright MCP**: ブラウザ制御（高度）
 
-**注**: 未セットアップの依存は、実際に必要になった段でインストール方法を提案する。詳細は `rules/prerequisites.md` を参照。
+**注**: 依存の存在確認は事前に一括で行わない。実際に使う段で欠落に気づき、その場で是正する（実行は是正のみ、不可逆操作の承認ルールに従う）。
+
+コマンドは `install-requires.bash`（Linux / mac）と `install-requires.ps1`（Windows）が**唯一の出典**。1つだけ欠けている場合は該当行だけを実行する。**コマンドをドキュメント側に写さないこと**——写した側は実行されないので、ズレても気づけない。
 
 ## ルールファイルの読み込み
 
@@ -28,7 +30,6 @@
 @rules/architecture-rules.md
 @rules/naming-rules.md
 @rules/output-rules.md
-@rules/prerequisites.md
 
 **その他**（必要時に参照）:
 - **言語別ルール**: `~/.claude/languages/*.md`
@@ -72,6 +73,8 @@ gemini --skip-trust --prompt 'WebSearch: <検索クエリ>'
 
 1. **シンボル/関数検索**: 常に `find_symbol` を最初に試す
 2. **テキスト/文字列検索**: `search_for_pattern` を使用
+
+起動（`check_onboarding_performed` → `activate_project`）は**コード作業に入る時**に行う。毎セッション無条件に走らせない。`check_onboarding_performed` が「No source files found」を返したらコードベースが無いのでスキップする。memories / 構造 / シンボル概要の取得も必要になった時だけ。特にシンボル概要は高価で、段階取得の原則（`rules/conduct-rules.md`）に反する。
 
 ## 壁打ち（多視点レビュー）の活用
 
