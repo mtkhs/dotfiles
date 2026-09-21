@@ -40,4 +40,3 @@ case ${OSTYPE} in
         echo "Unexpected system! Nothing to do!"
         ;;
 esac
-

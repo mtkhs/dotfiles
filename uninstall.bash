@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 rm -f ~/.config/nvim
 rm -f ~/.config/bat
