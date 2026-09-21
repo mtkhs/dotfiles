@@ -4,87 +4,170 @@
 # Enabled per clone by install.bash / install.ps1:
 #   git config --local core.hooksPath .githooks
 #
-# Staged content is checked (git show :path), not the working tree, so a commit
-# never records a file that fails to parse. A checker that is unavailable on the
-# platform is reported as skipped rather than passing silently.
+# Staged content is piped to each checker (git show :path), not the working
+# tree, so a commit never records a file that fails to parse. A checker that is
+# unavailable on the platform is reported as skipped rather than passing
+# silently.
 
 set -uo pipefail
 
 status=0
-tmp="$(mktemp -d)"
-trap 'rm -rf "$tmp"' EXIT
+
+# --- Reporting ------------------------------------------------------------
+
+report_failure() {
+    local path="$1"
+    local details="$2"
+
+    echo "  [FAIL] $path"
+    if [ -n "$details" ]; then
+        printf '%s\n' "$details" | sed 's/^/         /'
+    fi
+
+    status=1
+}
+
+report_skip() {
+    local path="$1"
+    local reason="$2"
+
+    echo "  [SKIP] $path ($reason)"
+}
+
+# --- Locating the checkers ------------------------------------------------
 
 # pwsh is absent from PATH under WSL; fall back to the Windows install so that
 # .ps1 edits made from Linux are still checked.
 find_pwsh() {
-    command -v pwsh 2>/dev/null && return 0
-    local p
-    for p in /mnt/c/Program\ Files/PowerShell/*/pwsh.exe; do
-        [ -x "$p" ] && { echo "$p"; return 0; }
+    local found
+    found="$(command -v pwsh 2>/dev/null)"
+    if [ -n "$found" ]; then
+        echo "$found"
+        return 0
+    fi
+
+    local candidate
+    for candidate in /mnt/c/Program\ Files/PowerShell/*/pwsh.exe; do
+        if [ -x "$candidate" ]; then
+            echo "$candidate"
+            return 0
+        fi
     done
+
     return 1
 }
+
+# Python is named python3 on Unix and python on Windows.
+find_python() {
+    local name
+    local found
+
+    for name in python3 python; do
+        found="$(command -v "$name" 2>/dev/null)"
+        if [ -n "$found" ]; then
+            echo "$found"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
 PWSH="$(find_pwsh || true)"
+PYTHON="$(find_python || true)"
 
-fail() {
-    echo "  [NG] $1"
-    [ -n "${2:-}" ] && printf '%s\n' "$2" | sed 's/^/       /'
-    status=1
-}
+# --- Parser scripts -------------------------------------------------------
 
-check() {   # check <path> <staged-copy> <command...>
-    local path="$1" staged="$2"; shift 2
-    local out
-    if ! out="$("$@" 2>&1)"; then
-        fail "$path" "$(printf '%s' "$out" | sed "s|$staged|$path|g")"
+PWSH_PARSE='
+if ($PSStyle) { $PSStyle.OutputRendering = "PlainText" }
+$source = [Console]::In.ReadToEnd()
+$errors = $null
+[System.Management.Automation.Language.Parser]::ParseInput($source, [ref]$null, [ref]$errors) | Out-Null
+if ($errors) {
+    $errors | ForEach-Object { $_.ToString() }
+    exit 1
+}'
+
+PYTHON_PARSE='
+import json
+import sys
+
+try:
+    json.load(sys.stdin)
+except json.JSONDecodeError as error:
+    sys.exit(str(error))'
+
+# --- Checking -------------------------------------------------------------
+
+# Feed one file's staged content to a checker on stdin.
+check() {
+    local path="$1"
+    shift
+
+    local output
+    if output="$(git show ":$path" | "$@" 2>&1)"; then
+        return 0
     fi
+
+    report_failure "$path" "$(printf '%s' "$output" | tr -d '\r')"
+    return 1
 }
 
-# The staged copy lives on the Linux filesystem, which the Windows pwsh cannot
-# open by path, so the source is piped in on stdin instead.
-check_ps1() {
-    local path="$1" staged="$2"
+check_bash() {
+    local path="$1"
+
+    check "$path" bash -n
+}
+
+check_zsh() {
+    local path="$1"
+
+    if ! command -v zsh >/dev/null 2>&1; then
+        report_skip "$path" "zsh not found"
+        return 0
+    fi
+
+    check "$path" zsh -n
+}
+
+check_powershell() {
+    local path="$1"
+
     if [ -z "$PWSH" ]; then
-        echo "  [SKIP] $path (pwsh not found)"
-        return
+        report_skip "$path" "pwsh not found"
+        return 0
     fi
-    local out
-    if ! out="$("$PWSH" -NoProfile -Command '
-        if ($PSStyle) { $PSStyle.OutputRendering = "PlainText" }
-        $src = [Console]::In.ReadToEnd()
-        $errors = $null
-        [System.Management.Automation.Language.Parser]::ParseInput($src, [ref]$null, [ref]$errors) | Out-Null
-        if ($errors) { $errors | ForEach-Object { $_.ToString() }; exit 1 }' < "$staged" 2>&1)"; then
-        fail "$path" "$(printf '%s' "$out" | tr -d '\r')"
-    fi
+
+    check "$path" "$PWSH" -NoProfile -Command "$PWSH_PARSE"
 }
+
+check_json() {
+    local path="$1"
+
+    if [ -z "$PYTHON" ]; then
+        report_skip "$path" "python not found"
+        return 0
+    fi
+
+    check "$path" "$PYTHON" -c "$PYTHON_PARSE"
+}
+
+# --- Main -----------------------------------------------------------------
 
 while IFS= read -r path; do
-    [ -n "$path" ] || continue
-    staged="$tmp/$(printf '%s' "$path" | tr '/' '_')"
-    git show ":$path" > "$staged" 2>/dev/null || continue
-
     case "$path" in
         *.bash|.githooks/*)
-            check "$path" "$staged" bash -n "$staged" ;;
-        .zsh/.z*|.zshenv)
-            if command -v zsh >/dev/null 2>&1; then
-                check "$path" "$staged" zsh -n "$staged"
-            else
-                echo "  [SKIP] $path (zsh not found)"
-            fi ;;
+            check_bash "$path"
+            ;;
+        *.zsh|.zsh/.z*|.zshenv)
+            check_zsh "$path"
+            ;;
         *.ps1)
-            check_ps1 "$path" "$staged" ;;
+            check_powershell "$path"
+            ;;
         *.json)
-            if ! command -v python3 >/dev/null 2>&1; then
-                echo "  [SKIP] $path (python3 not found)"
-                continue
-            fi
-            check "$path" "$staged" python3 -c 'import json, sys
-try:
-    json.load(open(sys.argv[1]))
-except json.JSONDecodeError as e:
-    sys.exit(str(e))' "$staged" ;;
+            check_json "$path"
+            ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=ACM)
 
@@ -92,4 +175,5 @@ if [ "$status" -ne 0 ]; then
     echo ""
     echo "pre-commit: syntax check failed. Fix the files above, or bypass with --no-verify."
 fi
+
 exit "$status"
