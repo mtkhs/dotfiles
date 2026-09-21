@@ -40,3 +40,16 @@ case ${OSTYPE} in
         echo "Unexpected system! Nothing to do!"
         ;;
 esac
+
+# --------------------------------------------------
+# Claude Code
+# --------------------------------------------------
+curl -fsSL https://claude.ai/install.sh | bash
+
+# required CLIs (~/.claude/CLAUDE.md)
+npm install -g '@google/gemini-cli'
+npm install -g agent-browser
+
+# plugins
+claude plugin marketplace add DietrichGebert/ponytail
+claude plugin install ponytail@ponytail

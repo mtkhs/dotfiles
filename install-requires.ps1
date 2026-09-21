@@ -37,3 +37,7 @@ irm https://claude.ai/install.ps1 | iex
 # required CLIs (~/.claude/CLAUDE.md)
 npm install -g '@google/gemini-cli'
 npm install -g agent-browser
+
+# plugins
+claude plugin marketplace add DietrichGebert/ponytail
+claude plugin install ponytail@ponytail
