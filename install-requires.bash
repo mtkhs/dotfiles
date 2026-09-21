@@ -52,7 +52,7 @@ npm install -g agent-browser
 # MCP servers
 claude mcp add serena -s user -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context claude-code --enable-web-dashboard false
 claude mcp add context7 -s user -- npx -y @upstash/context7-mcp@latest
-claude mcp add playwright -s user -- npx @playwright/mcp@latest
+claude mcp add playwright -s user -- npx -y @playwright/mcp@latest
 
 # plugins
 claude plugin marketplace add DietrichGebert/ponytail
