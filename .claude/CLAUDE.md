@@ -11,7 +11,7 @@
 - **Context7 MCP**: ライブラリ情報
 
 ### 必須CLI
-- **gemini-cli**: Web検索
+- **gemini-cli**: Gemini MCP が内部で使用
 - **agent-browser**: ブラウザ操作（基本）
 
 ### 推奨MCP
@@ -54,14 +54,6 @@
 **注**: 現状、自動切り替えはできないため、Plan モードや Task ツールで明示的に指定する。
 
 ## 情報収集の方法
-
-### Web検索
-
-組み込みの WebSearch に加え、Gemini CLI 経由の検索も任意で使える。
-
-```bash
-gemini --skip-trust --prompt 'WebSearch: <検索クエリ>'
-```
 
 ### ライブラリ・フレームワークの情報取得
 
