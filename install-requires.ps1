@@ -43,7 +43,6 @@ claude mcp add serena -s user -- uvx --from git+https://github.com/oraios/serena
 claude mcp add context7 -s user -- npx -y '@upstash/context7-mcp@latest'
 claude mcp add playwright -s user -- npx '@playwright/mcp@latest'
 claude mcp add gemini-cli -s user -- npx -y gemini-mcp-tool
-claude mcp add codex -s user -- codex mcp-server
 
 # plugins
 claude plugin marketplace add DietrichGebert/ponytail
