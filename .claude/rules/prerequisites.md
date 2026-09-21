@@ -13,7 +13,7 @@
 **重要**:
 - ①は事前に一括チェックしない。各 skill/ツールが実際に必要になった時点で利用可否を判定し、欠落していれば本ドキュメントの該当インストール手順を案内する（実行は是正のみ、不可逆操作の承認ルールに従う）。
 - ②③を**毎セッション無条件に走らせない**こと。特にシンボル概要は高価で、段階取得（最初から全ファイルを読まない）の原則に反する。コード作業が実際に必要になった時だけ実行する。② で `check_onboarding_performed` が「No source files found」を返したらコードベースが無い→Serena をスキップ。
-- 以降の「必須MCP/CLI/プラグイン」節は、欠落に気づいた際の**インストール・是正リファレンス**として読む。
+- 以降の「必須MCP/CLI」節は、欠落に気づいた際の**インストール・是正リファレンス**として読む。
 
 ## 必須MCP（インストール是正リファレンス）
 
@@ -37,23 +37,6 @@ claude mcp add context7 -s user -- npx -y @upstash/context7-mcp@latest
 ```
 
 **注**: いずれかが未セットアップの場合、ユーザーに通知してインストール方法を提案する。
-
-## 必須プラグイン
-
-### superpowers（@obra）
-
-設計・計画・実装ワークフロー（brainstorming, writing-plans, subagent-driven-development, test-driven-development, executing-plans 等）を提供する。
-
-- **確認**: `~/.claude/plugins/known_marketplaces.json` に `superpowers-marketplace` があるか
-- **インストール**（Claude Code セッション内で実行）:
-```
-/plugin marketplace add obra/superpowers-marketplace
-/plugin install superpowers@superpowers-marketplace
-```
-
-インストール後 `/reload-plugins` で `superpowers:*` 系の skill が有効化される。
-
-**重要**: グローバル `~/.claude/skills/` に `brainstorming` `writing-plans` 等の同名スキルが残っていれば、superpowers と重複するので削除すること（`structured-thinking` 等のカスタムは残す）。
 
 ## 必須CLI（インストール是正リファレンス）
 
