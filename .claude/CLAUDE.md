@@ -11,7 +11,6 @@
 - **Context7 MCP**: ライブラリ情報
 
 ### 必須CLI
-- **gemini-cli**: Gemini MCP が内部で使用
 - **agent-browser**: ブラウザ操作（基本）
 
 ### 推奨MCP

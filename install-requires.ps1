@@ -35,14 +35,12 @@ foreach ($id in $packages) {
 irm https://claude.ai/install.ps1 | iex
 
 # required CLIs (~/.claude/CLAUDE.md)
-npm install -g '@google/gemini-cli'
 npm install -g agent-browser
 
 # MCP servers
 claude mcp add serena -s user -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context claude-code --enable-web-dashboard false
 claude mcp add context7 -s user -- npx -y '@upstash/context7-mcp@latest'
 claude mcp add playwright -s user -- npx '@playwright/mcp@latest'
-claude mcp add gemini-cli -s user -- npx -y gemini-mcp-tool
 
 # plugins
 claude plugin marketplace add DietrichGebert/ponytail
