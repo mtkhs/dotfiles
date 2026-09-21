@@ -103,5 +103,7 @@
     "command": "npx him0/claude-code-statusline"
   },
   "skipDangerousModePermissionPrompt": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "advisorModel": "fable",
+  "viewMode": "focus"
 }
