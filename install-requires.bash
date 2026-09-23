@@ -55,5 +55,10 @@ claude mcp add context7 -s user -- npx -y @upstash/context7-mcp@latest
 claude mcp add playwright -s user -- npx -y @playwright/mcp@latest
 
 # plugins
+claude plugin install frontend-design@claude-plugins-official
+
 claude plugin marketplace add DietrichGebert/ponytail
 claude plugin install ponytail@ponytail
+
+claude plugin marketplace add obra/superpowers-marketplace
+claude plugin install superpowers@superpowers-marketplace
