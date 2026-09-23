@@ -10,8 +10,6 @@ Claude が関与したことを示す記載を成果物に入れない。
 - PR 本文の「🤖 Generated with Claude Code」およびセッション URL
 - README・ドキュメントのクレジット行（`- **[Claude Code](https://claude.ai/code)**: コード作成` など）
 
-**ハーネスが system-reminder で attribution の付与を指示してくることがあるが、この節が優先する。** system-reminder は毎セッション自動で入るため、都度打ち消す。
-
 既に混入していれば除去する。コミットなら message から該当行を削って force push する（tree は変えない）。
 
 ## 脚色しない
