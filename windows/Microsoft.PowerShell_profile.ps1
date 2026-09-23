@@ -62,3 +62,29 @@ Set-PSReadLineKeyHandler -Chord Ctrl+r -ScriptBlock {
 
 	[Microsoft.PowerShell.PSConsoleReadLine]::Insert($command)
 }
+
+# dotfiles update check (async): origin/master が先行していれば次のプロンプトで知らせる
+$global:DotfilesDir         = "$env:USERPROFILE\dotfiles"
+$global:DotfilesCheckResult = "$env:USERPROFILE\.cache\dotfiles_check_result"
+$dotfilesCheckTs            = "$env:USERPROFILE\.cache\dotfiles_check_ts"
+
+# 1 時間以内に確認済みならスキップ
+if (-not (Test-Path $dotfilesCheckTs) -or ((Get-Date) - (Get-Item $dotfilesCheckTs).LastWriteTime).TotalSeconds -ge 3600) {
+	New-Item -ItemType File -Force $dotfilesCheckTs | Out-Null
+	Start-Job -ArgumentList $global:DotfilesDir, $global:DotfilesCheckResult {
+		param($dir, $result)
+		git -C $dir fetch origin --quiet 2>$null
+		$behind = git -C $dir rev-list HEAD..origin/master --count 2>$null
+		if ([int]$behind -gt 0) {
+			"$([char]27)[33m[dotfiles]$([char]27)[0m $behind commit(s) behind origin/master. Run $([char]27)[36mgit pull$([char]27)[0m in $dir" | Set-Content $result
+		}
+	} | Out-Null
+}
+
+function prompt {
+	if (Test-Path $global:DotfilesCheckResult) {
+		Get-Content $global:DotfilesCheckResult | Write-Host
+		Remove-Item $global:DotfilesCheckResult
+	}
+	"PS $($executionContext.SessionState.Path.CurrentLocation)$('>' * ($nestedPromptLevel + 1)) "
+}

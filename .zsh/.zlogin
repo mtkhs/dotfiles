@@ -44,11 +44,11 @@ function _dotfiles_notify() {
 add-zsh-hook precmd _dotfiles_notify
 
 function _dotfiles_check_async() {
-    # 1分以内に実行済みならスキップ
+    # 1時間以内に実行済みならスキップ
     if [[ -f "$_dotfiles_check_ts" ]]; then
         local last=$(cat "$_dotfiles_check_ts")
         local now=$(date +%s)
-        (( now - last < 60 )) && return
+        (( now - last < 3600 )) && return
     fi
 
     # タイムスタンプ更新
